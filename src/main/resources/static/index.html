@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Автозапчасти - Главная</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-container">
+            <a href="index.html" class="logo">🚗 AutoParts</a>
+            <div class="search-bar">
+                <span class="search-icon">🔍</span>
+                <input type="text" id="searchInput" placeholder="Поиск запчастей...">
+            </div>
+            <div class="header-actions">
+                <a href="cart.html" class="cart-icon">
+                    🛒
+                    <span class="cart-badge" style="display: none;">0</span>
+                </a>
+                <a href="login.html" class="btn btn-secondary">Войти</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-container">
+            <ul class="nav-list">
+                <li class="nav-item"><a href="index.html" class="nav-link active">Главная</a></li>
+                <li class="nav-item"><a href="products.html" class="nav-link">Каталог</a></li>
+                <li class="nav-item"><a href="categories.html" class="nav-link">Категории</a></li>
+                <li class="nav-item"><a href="about.html" class="nav-link">О нас</a></li>
+                <li class="nav-item"><a href="contact.html" class="nav-link">Контакты</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-container">
+        <!-- Hero Section -->
+        <section style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 4rem 2rem; border-radius: 12px; color: white; text-align: center; margin-bottom: 3rem;">
+            <h1 style="font-size: 3rem; margin-bottom: 1rem;">Автозапчасти для вашего автомобиля</h1>
+            <p style="font-size: 1.25rem; margin-bottom: 2rem;">Широкий ассортимент качественных запчастей по доступным ценам</p>
+            <a href="products.html" class="btn btn-primary" style="font-size: 1.25rem; padding: 1rem 2rem;">Перейти в каталог</a>
+        </section>
+
+        <!-- Categories -->
+        <section style="margin-bottom: 3rem;">
+            <h2 style="font-size: 2rem; margin-bottom: 1.5rem; color: var(--dark-color);">Популярные категории</h2>
+            <div class="products-grid">
+                <div class="product-card" onclick="window.location.href='products.html'">
+                    <div class="product-image">📦</div>
+                    <div class="product-info">
+                        <div class="product-name">Двигатель</div>
+                    </div>
+                </div>
+                <div class="product-card" onclick="window.location.href='products.html'">
+                    <div class="product-image">📦</div>
+                    <div class="product-info">
+                        <div class="product-name">Тормозная система</div>
+                    </div>
+                </div>
+                <div class="product-card" onclick="window.location.href='products.html'">
+                    <div class="product-image">📦</div>
+                    <div class="product-info">
+                        <div class="product-name">Подвеска</div>
+                    </div>
+                </div>
+                <div class="product-card" onclick="window.location.href='products.html'">
+                    <div class="product-image">📦</div>
+                    <div class="product-info">
+                        <div class="product-name">Электрика</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Featured Products -->
+        <section>
+            <h2 style="font-size: 2rem; margin-bottom: 1.5rem; color: var(--dark-color);">Популярные товары</h2>
+            <div class="products-grid" id="productsGrid">
+                <div class="product-card">
+                    <div class="product-image">🔧</div>
+                    <div class="product-info">
+                        <div class="product-category">Запчасти</div>
+                        <div class="product-name">Тормозные колодки передние</div>
+                        <div class="product-article">Артикул: BRK-001</div>
+                        <div class="product-price">3 500 ₽</div>
+                        <div class="product-stock stock-available">В наличии</div>
+                        <div class="product-actions">
+                            <button class="btn-add-cart">В корзину</button>
+                            <button class="btn-favorite">❤️</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image">🔧</div>
+                    <div class="product-info">
+                        <div class="product-category">Запчасти</div>
+                        <div class="product-name">Масляный фильтр</div>
+                        <div class="product-article">Артикул: OIL-002</div>
+                        <div class="product-price">850 ₽</div>
+                        <div class="product-stock stock-available">В наличии</div>
+                        <div class="product-actions">
+                            <button class="btn-add-cart">В корзину</button>
+                            <button class="btn-favorite">❤️</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image">🔧</div>
+                    <div class="product-info">
+                        <div class="product-category">Запчасти</div>
+                        <div class="product-name">Амортизатор передний</div>
+                        <div class="product-article">Артикул: SHK-003</div>
+                        <div class="product-price">5 200 ₽</div>
+                        <div class="product-stock stock-low">Мало в наличии</div>
+                        <div class="product-actions">
+                            <button class="btn-add-cart">В корзину</button>
+                            <button class="btn-favorite">❤️</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image">🔧</div>
+                    <div class="product-info">
+                        <div class="product-category">Запчасти</div>
+                        <div class="product-name">Свечи зажигания</div>
+                        <div class="product-article">Артикул: SPK-004</div>
+                        <div class="product-price">1 200 ₽</div>
+                        <div class="product-stock stock-available">В наличии</div>
+                        <div class="product-actions">
+                            <button class="btn-add-cart">В корзину</button>
+                            <button class="btn-favorite">❤️</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>О компании</h3>
+                <ul>
+                    <li><a href="about.html">О нас</a></li>
+                    <li><a href="contact.html">Контакты</a></li>
+                    <li><a href="#">Доставка</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Каталог</h3>
+                <ul>
+                    <li><a href="products.html">Все товары</a></li>
+                    <li><a href="categories.html">Категории</a></li>
+                    <li><a href="#">Бренды</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Помощь</h3>
+                <ul>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Возврат</a></li>
+                    <li><a href="#">Гарантия</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Контакты</h3>
+                <ul>
+                    <li>Телефон: +7 (999) 123-45-67</li>
+                    <li>Email: info@autoparts.ru</li>
+                    <li>Адрес: г. Москва, ул. Примерная, 1</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 AutoParts. Все права защищены.</p>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
+
+
+
+
+
+
