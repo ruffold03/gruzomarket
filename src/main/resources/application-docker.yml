@@ -1,0 +1,62 @@
+spring:
+  resources:
+    static-locations: classpath:/static/,classpath:/public/
+    cache:
+      cachecontrol:
+        max-age: 0
+        must-revalidate: true
+    chain:
+      cache: false
+      strategy:
+        content:
+          enabled: true
+          paths: /**
+  
+  web:
+    resources:
+      add-mappings: true
+      cache:
+        period: 0
+  
+  datasource:
+    url: jdbc:postgresql://postgres:5432/gruzomarket
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 5
+      minimum-idle: 2
+      idle-timeout: 10000
+      max-lifetime: 30000
+      connection-timeout: 30000
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+
+server:
+  port: 8080
+  servlet:
+    context-path: /
+
+logging:
+  level:
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+    org.springframework: INFO
+
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    enabled: true
+    path: /swagger-ui.html
+    operations-sorter: method
+    tags-sorter: alpha
+    try-it-out-enabled: true
+    display-request-duration: true

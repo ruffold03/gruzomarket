@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/base}" 
+      lang="ru">
+<head>
+    <title>Главная - ГрузоМаркет</title>
+    <th:block layout:fragment="styles">
+        <style>
+            :root {
+                --primary-color: #1a3a6e;
+                --accent-color: #2c5282;
+            }
+            
+            .hero-section {
+                position: relative;
+                background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%);
+                padding: 6rem 2rem;
+                border-radius: 12px;
+                color: white;
+                text-align: center;
+                margin: 2rem 0;
+                overflow: hidden;
+            }
+            
+            .hero-section::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: url('https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80') center/cover;
+                opacity: 0.2;
+                z-index: 0;
+            }
+            
+            .hero-content {
+                position: relative;
+                z-index: 1;
+                max-width: 800px;
+                margin: 0 auto;
+            }
+            
+            .feature-card {
+                border: 1px solid #e2e8f0;
+                border-radius: 8px;
+                padding: 1.5rem;
+                text-align: center;
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
+                height: 100%;
+                background: white;
+                box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            }
+            
+            .feature-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            }
+            
+            .feature-icon {
+                font-size: 2.5rem;
+                color: var(--primary-color);
+                margin-bottom: 1rem;
+            }
+            
+            .feature-title {
+                font-size: 1.5rem;
+                margin-bottom: 1rem;
+                color: #1a1a1a;
+            }
+            
+            .feature-text {
+                color: #666;
+                line-height: 1.6;
+                margin-bottom: 0;
+            }
+            
+            .category-card {
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
+                height: 100%;
+                border: 1px solid #e2e8f0;
+                border-radius: 8px;
+                padding: 2rem 1rem;
+                background: white;
+            }
+            
+            .category-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+                text-decoration: none;
+            }
+            
+            .category-card i {
+                font-size: 2.5rem;
+                margin-bottom: 1rem;
+                color: var(--primary-color);
+            }
+            
+            .category-card h5 {
+                color: #333;
+                margin-bottom: 0;
+            }
+        </style>
+    </th:block>
+</head>
+<body>
+    <div layout:fragment="content">
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-8">
+                        <h1 class="display-4 fw-bold mb-4">Запчасти для грузовых автомобилей</h1>
+                        <p class="lead mb-4">Широкий ассортимент качественных запчастей по доступным ценам</p>
+                        <a href="/catalog" class="btn btn-light btn-lg">В каталог</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="py-5">
+            <div class="container">
+                <h2 class="text-center mb-5">Почему выбирают нас</h2>
+                <div class="row g-4">
+                    <div class="col-md-4">
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <i class="fas fa-truck"></i>
+                            </div>
+                            <h3 class="feature-title">Быстрая доставка</h3>
+                            <p class="feature-text">Доставка по всей России в кратчайшие сроки. Отправка в день заказа.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-4">
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <i class="fas fa-shield-alt"></i>
+                            </div>
+                            <h3 class="feature-title">Гарантия качества</h3>
+                            <p class="feature-text">Только оригинальные запчасти и сертифицированные аналоги. Гарантия на все товары.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-4">
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <i class="fas fa-headset"></i>
+                            </div>
+                            <h3 class="feature-title">Поддержка 24/7</h3>
+                            <p class="feature-text">Квалифицированные консультации в любое время. Помощь с выбором и подбором запчастей.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Popular Categories -->
+        <section class="py-5 bg-light">
+            <div class="container">
+                <h2 class="text-center mb-5">Популярные категории</h2>
+                <div class="row g-4">
+                    <div class="col-md-3 col-6">
+                        <a href="/catalog/engine" class="text-decoration-none">
+                            <div class="category-card text-center">
+                                <i class="fas fa-cog"></i>
+                                <h5>Двигатель</h5>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-md-3 col-6">
+                        <a href="/catalog/transmission" class="text-decoration-none">
+                            <div class="category-card text-center">
+                                <i class="fas fa-cogs"></i>
+                                <h5>Трансмиссия</h5>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-md-3 col-6">
+                        <a href="/catalog/suspension" class="text-decoration-none">
+                            <div class="category-card text-center">
+                                <i class="fas fa-car-side"></i>
+                                <h5>Подвеска</h5>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-md-3 col-6">
+                        <a href="/catalog/brakes" class="text-decoration-none">
+                            <div class="category-card text-center">
+                                <i class="fas fa-brake-system"></i>
+                                <h5>Тормозная система</h5>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Scripts -->
+    <th:block layout:fragment="scripts">
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                console.log('Page loaded');
+                // Add any page-specific JavaScript here
+            });
+        </script>
+    </th:block>
+</body>
+</html>
+

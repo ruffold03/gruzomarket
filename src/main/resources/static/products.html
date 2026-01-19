@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Каталог товаров - Автозапчасти</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-container">
+            <a href="index.html" class="logo">🚗 AutoParts</a>
+            <div class="search-bar">
+                <span class="search-icon">🔍</span>
+                <input type="text" id="searchInput" placeholder="Поиск запчастей...">
+            </div>
+            <div class="header-actions">
+                <a href="cart.html" class="cart-icon">
+                    🛒
+                    <span class="cart-badge" style="display: none;">0</span>
+                </a>
+                <a href="login.html" class="btn btn-secondary">Войти</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-container">
+            <ul class="nav-list">
+                <li class="nav-item"><a href="index.html" class="nav-link">Главная</a></li>
+                <li class="nav-item"><a href="products.html" class="nav-link active">Каталог</a></li>
+                <li class="nav-item"><a href="categories.html" class="nav-link">Категории</a></li>
+                <li class="nav-item"><a href="about.html" class="nav-link">О нас</a></li>
+                <li class="nav-item"><a href="contact.html" class="nav-link">Контакты</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-container">
+        <div class="products-section">
+            <!-- Filters Sidebar -->
+            <aside class="filters-sidebar">
+                <h3 class="filters-title">Фильтры</h3>
+                
+                <!-- Category Filter -->
+                <div class="filter-group">
+                    <label class="filter-label">Категории</label>
+                    <div class="checkbox-group" id="categoryFilter">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="cat_1" value="1">
+                            <label for="cat_1">Двигатель</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="cat_2" value="2">
+                            <label for="cat_2">Тормозная система</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="cat_3" value="3">
+                            <label for="cat_3">Подвеска</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="cat_4" value="4">
+                            <label for="cat_4">Электрика</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Brand Filter -->
+                <div class="filter-group">
+                    <label class="filter-label">Бренды</label>
+                    <div class="checkbox-group" id="brandFilter">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="brand_1" value="1">
+                            <label for="brand_1">Bosch</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="brand_2" value="2">
+                            <label for="brand_2">Mann</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="brand_3" value="3">
+                            <label for="brand_3">TRW</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Price Range -->
+                <div class="filter-group">
+                    <label class="filter-label">Цена</label>
+                    <div class="price-range">
+                        <input type="number" id="minPrice" class="price-input" placeholder="От">
+                        <span>-</span>
+                        <input type="number" id="maxPrice" class="price-input" placeholder="До">
+                    </div>
+                </div>
+
+                <!-- Stock Filter -->
+                <div class="filter-group">
+                    <label class="filter-label">Наличие</label>
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="inStock">
+                            <label for="inStock">В наличии</label>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="btn btn-primary" onclick="applyFilters()" style="width: 100%; margin-top: 1rem;">Применить фильтры</button>
+            </aside>
+
+            <!-- Products -->
+            <div>
+                <div class="products-header">
+                    <div>
+                        <h2 class="products-title">Каталог товаров</h2>
+                        <span class="products-count">Найдено товаров: 8</span>
+                    </div>
+                    <select id="sortSelect" class="sort-select" onchange="applyFilters()">
+                        <option value="name_asc">По названию (А-Я)</option>
+                        <option value="name_desc">По названию (Я-А)</option>
+                        <option value="price_asc">По цене (возрастание)</option>
+                        <option value="price_desc">По цене (убывание)</option>
+                    </select>
+                </div>
+
+                <div class="products-grid">
+                    <div class="product-card">
+                        <div class="product-image">🔧</div>
+                        <div class="product-info">
+                            <div class="product-category">Тормозная система</div>
+                            <div class="product-name">Тормозные колодки передние</div>
+                            <div class="product-article">Артикул: BRK-001</div>
+                            <div class="product-price">3 500 ₽</div>
+                            <div class="product-stock stock-available">В наличии</div>
+                            <div class="product-actions">
+                                <button class="btn-add-cart">В корзину</button>
+                                <button class="btn-favorite">❤️</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-image">🔧</div>
+                        <div class="product-info">
+                            <div class="product-category">Двигатель</div>
+                            <div class="product-name">Масляный фильтр</div>
+                            <div class="product-article">Артикул: OIL-002</div>
+                            <div class="product-price">850 ₽</div>
+                            <div class="product-stock stock-available">В наличии</div>
+                            <div class="product-actions">
+                                <button class="btn-add-cart">В корзину</button>
+                                <button class="btn-favorite">❤️</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-image">🔧</div>
+                        <div class="product-info">
+                            <div class="product-category">Подвеска</div>
+                            <div class="product-name">Амортизатор передний</div>
+                            <div class="product-article">Артикул: SHK-003</div>
+                            <div class="product-price">5 200 ₽</div>
+                            <div class="product-stock stock-low">Мало в наличии (3)</div>
+                            <div class="product-actions">
+                                <button class="btn-add-cart">В корзину</button>
+                                <button class="btn-favorite">❤️</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-image">🔧</div>
+                        <div class="product-info">
+                            <div class="product-category">Двигатель</div>
+                            <div class="product-name">Свечи зажигания</div>
+                            <div class="product-article">Артикул: SPK-004</div>
+                            <div class="product-price">1 200 ₽</div>
+                            <div class="product-stock stock-available">В наличии</div>
+                            <div class="product-actions">
+                                <button class="btn-add-cart">В корзину</button>
+                                <button class="btn-favorite">❤️</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-image">🔧</div>
+                        <div class="product-info">
+                            <div class="product-category">Тормозная система</div>
+                            <div class="product-name">Тормозной диск</div>
+                            <div class="product-article">Артикул: BRK-005</div>
+                            <div class="product-price">4 800 ₽</div>
+                            <div class="product-stock stock-available">В наличии</div>
+                            <div class="product-actions">
+                                <button class="btn-add-cart">В корзину</button>
+                                <button class="btn-favorite">❤️</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-image">🔧</div>
+                        <div class="product-info">
+                            <div class="product-category">Электрика</div>
+                            <div class="product-name">Аккумулятор</div>
+                            <div class="product-article">Артикул: BAT-006</div>
+                            <div class="product-price">6 500 ₽</div>
+                            <div class="product-stock stock-available">В наличии</div>
+                            <div class="product-actions">
+                                <button class="btn-add-cart">В корзину</button>
+                                <button class="btn-favorite">❤️</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-image">🔧</div>
+                        <div class="product-info">
+                            <div class="product-category">Двигатель</div>
+                            <div class="product-name">Воздушный фильтр</div>
+                            <div class="product-article">Артикул: AIR-007</div>
+                            <div class="product-price">650 ₽</div>
+                            <div class="product-stock stock-low">Мало в наличии (5)</div>
+                            <div class="product-actions">
+                                <button class="btn-add-cart">В корзину</button>
+                                <button class="btn-favorite">❤️</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-image">🔧</div>
+                        <div class="product-info">
+                            <div class="product-category">Подвеска</div>
+                            <div class="product-name">Стойка стабилизатора</div>
+                            <div class="product-article">Артикул: STB-008</div>
+                            <div class="product-price">1 800 ₽</div>
+                            <div class="product-stock stock-available">В наличии</div>
+                            <div class="product-actions">
+                                <button class="btn-add-cart">В корзину</button>
+                                <button class="btn-favorite">❤️</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pagination -->
+                <div class="pagination">
+                    <button class="pagination-btn" disabled>Назад</button>
+                    <button class="pagination-btn active">1</button>
+                    <button class="pagination-btn">2</button>
+                    <button class="pagination-btn">Вперед</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>О компании</h3>
+                <ul>
+                    <li><a href="about.html">О нас</a></li>
+                    <li><a href="contact.html">Контакты</a></li>
+                    <li><a href="#">Доставка</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Каталог</h3>
+                <ul>
+                    <li><a href="products.html">Все товары</a></li>
+                    <li><a href="categories.html">Категории</a></li>
+                    <li><a href="#">Бренды</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Помощь</h3>
+                <ul>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Возврат</a></li>
+                    <li><a href="#">Гарантия</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Контакты</h3>
+                <ul>
+                    <li>Телефон: +7 (999) 123-45-67</li>
+                    <li>Email: info@autoparts.ru</li>
+                    <li>Адрес: г. Москва, ул. Примерная, 1</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 AutoParts. Все права защищены.</p>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
+
+
+
+
+
+
+
+
