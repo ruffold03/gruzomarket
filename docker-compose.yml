@@ -18,6 +18,26 @@ services:
       timeout: 5s
       retries: 5
 
+  app:
+    build: .
+    container_name: gruzomarket_app
+    ports:
+      - "8080:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/gruzomarket
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+    volumes:
+      - ./mvnw:/app/mvnw
+      - ./.mvn:/app/.mvn
+      - ./pom.xml:/app/pom.xml
+      - ./src:/app/src
+    working_dir: /app
+    command: ./mvnw spring-boot:run -Dspring-boot.run.jvmArguments='-Dspring.profiles.active=dev -Dspring.config.location=classpath:/application-docker.yml'
+
 volumes:
   postgres_data:
-
