@@ -23,6 +23,27 @@ spring:
     username: ${MAIL_USERNAME:}
     password: ${MAIL_PASSWORD:}
 
+  thymeleaf:
+    cache: false                     # Отключить кэш для разработки
+    prefix: classpath:/templates/    # Где искать шаблоны
+    suffix: .html                    # Расширение файлов
+    mode: HTML                       # Режим HTML
+    encoding: UTF-8                  # Кодировка
+
+  # Настройки для статических ресурсов (CSS, JS, картинки):
+  web:
+    resources:
+      static-locations:
+        - classpath:/static/         # Стандартное место
+        - classpath:/public/         # Альтернативное место
+        - classpath:/resources/      # Еще одно альтернативное
+      cache:
+        period: 0                    # Для разработки - без кэширования
+
+  # Для Windows/Linux различия в путях:
+  mvc:
+    static-path-pattern: /**
+
 server:
   port: 8080
 

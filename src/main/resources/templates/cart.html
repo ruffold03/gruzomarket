@@ -1,63 +1,64 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/base}"
+      lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Корзина - Автозапчасти</title>
-    <link rel="stylesheet" th:href="@{/css/style.css}" href="/css/style.css">
+    <title>Корзина</title>
 </head>
 <body>
-    <header class="header">
-        <div class="header-container">
-            <a href="/" class="logo">🚗 AutoParts</a>
-            <div class="search-bar">
-                <span class="search-icon">🔍</span>
-                <input type="text" id="searchInput" placeholder="Поиск запчастей...">
+<div layout:fragment="content">
+    <section class="categories-section">
+        <div class="container page-container">
+            <div class="section-title">
+                <h2>Корзина</h2>
+                <p class="text-muted mt-3">Проверьте товары и отправьте заявку</p>
             </div>
-            <div class="header-actions">
-                <a href="/cart" class="cart-icon">🛒</a>
-                <a href="/login" class="btn btn-secondary">Войти</a>
+
+            <div class="row g-4">
+                <div class="col-lg-8">
+                    <div class="feature-card">
+                        <h3 class="feature-title">Товары</h3>
+                        <div id="cartItems"></div>
+                        <div class="d-flex justify-content-between align-items-center mt-4">
+                            <button id="clearCartBtn" class="reset-btn" type="button">Очистить корзину</button>
+                            <div class="h5 mb-0">Итого: <span id="cartTotal">0 ₽</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="feature-card">
+                        <h3 class="feature-title">Оформление заявки</h3>
+                        <form id="checkoutForm">
+                            <div class="mb-3">
+                                <label class="form-label">Имя</label>
+                                <input name="customerName" class="form-control" placeholder="Как к вам обращаться">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Телефон *</label>
+                                <input name="phone" class="form-control" placeholder="+7..." required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Email *</label>
+                                <input name="email" type="email" class="form-control" placeholder="you@mail.ru" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Комментарий</label>
+                                <textarea name="notes" class="form-control" rows="4" placeholder="Например: VIN, срочность, пожелания"></textarea>
+                            </div>
+                            <button class="filter-btn" type="submit">Отправить заявку</button>
+                        </form>
+                        <div id="checkoutResult" class="text-muted small mt-3"></div>
+                    </div>
+                </div>
             </div>
-        </div>
-    </header>
 
-    <nav class="nav">
-        <div class="nav-container">
-            <ul class="nav-list">
-                <li class="nav-item"><a href="/" class="nav-link">Главная</a></li>
-                <li class="nav-item"><a href="/products" class="nav-link">Каталог</a></li>
-                <li class="nav-item"><a href="/categories" class="nav-link">Категории</a></li>
-                <li class="nav-item"><a href="/about" class="nav-link">О нас</a></li>
-                <li class="nav-item"><a href="/contact" class="nav-link">Контакты</a></li>
-            </ul>
         </div>
-    </nav>
-
-    <main class="main-container">
-        <h1 style="font-size: 2.5rem; margin-bottom: 2rem; color: var(--dark-color);">Корзина</h1>
-        <div style="background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
-            <p style="font-size: 1.125rem; text-align: center; color: var(--text-color);">
-                Ваша корзина пуста. <a href="/products" style="color: var(--primary-color);">Перейти в каталог</a>
-            </p>
-        </div>
-    </main>
-
-    <footer class="footer">
-        <div class="footer-container">
-            <div class="footer-section">
-                <h3>О компании</h3>
-                <ul>
-                    <li><a href="/about">О нас</a></li>
-                    <li><a href="/contact">Контакты</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; 2024 AutoParts. Все права защищены.</p>
-        </div>
-    </footer>
-
-    <script th:src="@{/js/main.js}" src="/js/main.js"></script>
+    </section>
+</div>
 </body>
 </html>
+
+
 

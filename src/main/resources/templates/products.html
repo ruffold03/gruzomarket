@@ -1,194 +1,72 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/base}"
+      lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Каталог товаров - Автозапчасти</title>
-    <link rel="stylesheet" th:href="@{/css/style.css}" href="/css/style.css">
+    <title>Каталог</title>
 </head>
 <body>
-    <!-- Header -->
-    <header class="header">
-        <div class="header-container">
-            <a href="/" class="logo">🚗 AutoParts</a>
-            <div class="search-bar">
-                <span class="search-icon">🔍</span>
-                <input type="text" id="searchInput" th:value="${searchTerm ?: ''}" placeholder="Поиск запчастей...">
+<div layout:fragment="content">
+
+    <section class="categories-section">
+        <div class="container page-container">
+            <div class="section-title">
+                <h2>Каталог</h2>
+                <p class="text-muted mt-3">Подберите запчасти по фильтрам и добавьте в корзину</p>
             </div>
-            <div class="header-actions">
-                <a href="/cart" class="cart-icon">
-                    🛒
-                    <span class="cart-badge" style="display: none;">0</span>
-                </a>
-                <a href="/login" class="btn btn-secondary">Войти</a>
-            </div>
-        </div>
-    </header>
 
-    <!-- Navigation -->
-    <nav class="nav">
-        <div class="nav-container">
-            <ul class="nav-list">
-                <li class="nav-item"><a href="/" class="nav-link">Главная</a></li>
-                <li class="nav-item"><a href="/products" class="nav-link active">Каталог</a></li>
-                <li class="nav-item"><a href="/categories" class="nav-link">Категории</a></li>
-                <li class="nav-item"><a href="/about" class="nav-link">О нас</a></li>
-                <li class="nav-item"><a href="/contact" class="nav-link">Контакты</a></li>
-            </ul>
-        </div>
-    </nav>
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="filters-sidebar">
+                        <h4 class="filter-title"><i class="fas fa-filter me-2"></i>Фильтры</h4>
 
-    <!-- Main Content -->
-    <main class="main-container">
-        <div class="products-section">
-            <!-- Filters Sidebar -->
-            <aside class="filters-sidebar">
-                <h3 class="filters-title">Фильтры</h3>
-                
-                <!-- Category Filter -->
-                <div class="filter-group">
-                    <label class="filter-label">Категории</label>
-                    <div class="checkbox-group" id="categoryFilter">
-                        <div class="checkbox-item" th:each="category : ${allCategories}">
-                            <input type="checkbox" th:id="'cat_' + ${category.id}" th:value="${category.id}" 
-                                   th:checked="${selectedCategories != null && selectedCategories.contains(category.id)}">
-                            <label th:for="'cat_' + ${category.id}" th:text="${category.name}">Категория</label>
+                        <div class="filter-group">
+                            <h6>Категория</h6>
+                            <div id="filterCategories"></div>
                         </div>
-                    </div>
-                </div>
 
-                <!-- Brand Filter -->
-                <div class="filter-group">
-                    <label class="filter-label">Бренды</label>
-                    <div class="checkbox-group" id="brandFilter">
-                        <div class="checkbox-item" th:each="brand : ${allBrands}">
-                            <input type="checkbox" th:id="'brand_' + ${brand.id}" th:value="${brand.id}"
-                                   th:checked="${selectedBrands != null && selectedBrands.contains(brand.id)}">
-                            <label th:for="'brand_' + ${brand.id}" th:text="${brand.name}">Бренд</label>
+                        <div class="filter-group">
+                            <h6>Бренд</h6>
+                            <div id="filterBrands"></div>
                         </div>
-                    </div>
-                </div>
 
-                <!-- Price Range -->
-                <div class="filter-group">
-                    <label class="filter-label">Цена</label>
-                    <div class="price-range">
-                        <input type="number" id="minPrice" class="price-input" placeholder="От" th:value="${minPrice}">
-                        <span>-</span>
-                        <input type="number" id="maxPrice" class="price-input" placeholder="До" th:value="${maxPrice}">
-                    </div>
-                </div>
-
-                <!-- Stock Filter -->
-                <div class="filter-group">
-                    <label class="filter-label">Наличие</label>
-                    <div class="checkbox-group">
-                        <div class="checkbox-item">
-                            <input type="checkbox" id="inStock" th:checked="${inStock != null && inStock}">
-                            <label for="inStock">В наличии</label>
-                        </div>
-                    </div>
-                </div>
-
-                <button class="btn btn-primary" onclick="applyFilters()" style="width: 100%; margin-top: 1rem;">Применить фильтры</button>
-            </aside>
-
-            <!-- Products -->
-            <div>
-                <div class="products-header">
-                    <div>
-                        <h2 class="products-title">Каталог товаров</h2>
-                        <span class="products-count" th:text="'Найдено товаров: ' + ${products.size()}">Найдено товаров: 0</span>
-                    </div>
-                    <select id="sortSelect" class="sort-select" onchange="applyFilters()">
-                        <option value="name_asc" th:selected="${sort == 'name_asc'}">По названию (А-Я)</option>
-                        <option value="name_desc" th:selected="${sort == 'name_desc'}">По названию (Я-А)</option>
-                        <option value="price_asc" th:selected="${sort == 'price_asc'}">По цене (возрастание)</option>
-                        <option value="price_desc" th:selected="${sort == 'price_desc'}">По цене (убывание)</option>
-                    </select>
-                </div>
-
-                <div class="products-grid" th:if="${!products.isEmpty()}">
-                    <div class="product-card" th:each="product : ${products}">
-                        <div class="product-image">🔧</div>
-                        <div class="product-info">
-                            <div class="product-category" th:text="${categoryMap[product.categoryId] ?: 'Запчасти'}">Запчасти</div>
-                            <div class="product-name" th:text="${product.name}">Название товара</div>
-                            <div class="product-article" th:text="'Артикул: ' + ${product.article}">Артикул: 12345</div>
-                            <div class="product-price" th:text="${#numbers.formatDecimal(product.price, 0, 'COMMA', 2, 'POINT')} + ' ₽'">5000 ₽</div>
-                            <div class="product-stock" th:classappend="${product.quantity > 10 ? 'stock-available' : (product.quantity > 0 ? 'stock-low' : 'stock-unavailable')}"
-                                 th:text="${product.quantity > 10 ? 'В наличии' : (product.quantity > 0 ? 'Мало в наличии (' + ${product.quantity} + ')' : 'Нет в наличии')}">В наличии</div>
-                            <div class="product-actions">
-                                <button class="btn-add-cart" th:onclick="'addToCart(' + ${product.id} + ')'" 
-                                        th:disabled="${product.quantity == 0}">В корзину</button>
-                                <button class="btn-favorite">❤️</button>
+                        <div class="filter-group">
+                            <h6>Цена, ₽</h6>
+                            <input id="maxPriceSlider" type="range" class="form-range price-slider" min="0" max="200000" step="1000" value="50000">
+                            <div class="price-values">
+                                <span>0 ₽</span>
+                                <span>50 000 ₽</span>
                             </div>
                         </div>
+
+                        <div class="filter-group">
+                            <h6>Наличие</h6>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="available" checked>
+                                <label class="form-check-label" for="available">В наличии</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="order">
+                                <label class="form-check-label" for="order">Под заказ</label>
+                            </div>
+                        </div>
+
+                        <button id="applyFiltersBtn" class="filter-btn">Применить фильтры</button>
+                        <button id="resetFiltersBtn" class="reset-btn">Сбросить все</button>
                     </div>
                 </div>
 
-                <div th:if="${products.isEmpty()}" style="text-align: center; padding: 3rem;">
-                    <p style="font-size: 1.25rem; color: var(--text-color);">Товары не найдены</p>
-                    <p style="color: #6b7280; margin-top: 0.5rem;">Попробуйте изменить параметры поиска или фильтры</p>
-                </div>
-
-                <!-- Pagination -->
-                <div class="pagination" th:if="${totalPages > 1}">
-                    <button class="pagination-btn" th:onclick="'window.location.href=\'?page=' + (${currentPage} - 1) + '\''" 
-                            th:disabled="${currentPage == 0}">Назад</button>
-                    <span th:each="page : ${#numbers.sequence(0, totalPages - 1)}">
-                        <button class="pagination-btn" th:classappend="${page == currentPage ? 'active' : ''}"
-                                th:onclick="'window.location.href=\'?page=' + ${page} + '\''" th:text="${page + 1}">1</button>
-                    </span>
-                    <button class="pagination-btn" th:onclick="'window.location.href=\'?page=' + (${currentPage} + 1) + '\''"
-                            th:disabled="${currentPage == totalPages - 1}">Вперед</button>
+                <div class="col-lg-9">
+                    <div class="section-title mt-0">
+                        <h2>Товары</h2>
+                    </div>
+                    <div id="productsGrid" class="row g-4"></div>
                 </div>
             </div>
         </div>
-    </main>
+    </section>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="footer-container">
-            <div class="footer-section">
-                <h3>О компании</h3>
-                <ul>
-                    <li><a href="/about">О нас</a></li>
-                    <li><a href="/contact">Контакты</a></li>
-                    <li><a href="/delivery">Доставка</a></li>
-                </ul>
-            </div>
-            <div class="footer-section">
-                <h3>Каталог</h3>
-                <ul>
-                    <li><a href="/products">Все товары</a></li>
-                    <li><a href="/categories">Категории</a></li>
-                    <li><a href="/brands">Бренды</a></li>
-                </ul>
-            </div>
-            <div class="footer-section">
-                <h3>Помощь</h3>
-                <ul>
-                    <li><a href="/faq">FAQ</a></li>
-                    <li><a href="/returns">Возврат</a></li>
-                    <li><a href="/warranty">Гарантия</a></li>
-                </ul>
-            </div>
-            <div class="footer-section">
-                <h3>Контакты</h3>
-                <ul>
-                    <li>Телефон: +7 (999) 123-45-67</li>
-                    <li>Email: info@autoparts.ru</li>
-                    <li>Адрес: г. Москва, ул. Примерная, 1</li>
-                </ul>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; 2024 AutoParts. Все права защищены.</p>
-        </div>
-    </footer>
-
-    <script th:src="@{/js/main.js}" src="/js/main.js"></script>
+</div>
 </body>
 </html>
-

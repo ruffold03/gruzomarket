@@ -1,75 +1,45 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/base}"
+      lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>О нас - Автозапчасти</title>
-    <link rel="stylesheet" th:href="@{/css/style.css}" href="/css/style.css">
+    <title>О нас</title>
 </head>
 <body>
-    <header class="header">
-        <div class="header-container">
-            <a href="/" class="logo">🚗 AutoParts</a>
-            <div class="search-bar">
-                <span class="search-icon">🔍</span>
-                <input type="text" id="searchInput" placeholder="Поиск запчастей...">
+<div layout:fragment="content">
+    <section class="categories-section">
+        <div class="container page-container">
+            <div class="section-title">
+                <h2>О компании</h2>
+                <p class="text-muted mt-3">GruzoMarket — магазин запчастей для грузовых автомобилей</p>
             </div>
-            <div class="header-actions">
-                <a href="/cart" class="cart-icon">🛒</a>
-                <a href="/login" class="btn btn-secondary">Войти</a>
-            </div>
-        </div>
-    </header>
 
-    <nav class="nav">
-        <div class="nav-container">
-            <ul class="nav-list">
-                <li class="nav-item"><a href="/" class="nav-link">Главная</a></li>
-                <li class="nav-item"><a href="/products" class="nav-link">Каталог</a></li>
-                <li class="nav-item"><a href="/categories" class="nav-link">Категории</a></li>
-                <li class="nav-item"><a href="/about" class="nav-link active">О нас</a></li>
-                <li class="nav-item"><a href="/contact" class="nav-link">Контакты</a></li>
-            </ul>
-        </div>
-    </nav>
-
-    <main class="main-container">
-        <h1 style="font-size: 2.5rem; margin-bottom: 2rem; color: var(--dark-color);">О компании</h1>
-        <div style="background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
-            <p style="font-size: 1.125rem; line-height: 1.8; margin-bottom: 1.5rem;">
-                Добро пожаловать в AutoParts - ваш надежный партнер в мире автозапчастей!
-            </p>
-            <p style="font-size: 1.125rem; line-height: 1.8; margin-bottom: 1.5rem;">
-                Мы специализируемся на продаже качественных автозапчастей для различных марок автомобилей. 
-                Наш каталог включает тысячи товаров от проверенных производителей.
-            </p>
-            <h2 style="font-size: 1.75rem; margin-top: 2rem; margin-bottom: 1rem; color: var(--dark-color);">Наши преимущества:</h2>
-            <ul style="font-size: 1.125rem; line-height: 1.8; padding-left: 2rem;">
-                <li>Широкий ассортимент запчастей</li>
-                <li>Качественные товары от проверенных производителей</li>
-                <li>Доступные цены</li>
-                <li>Быстрая доставка</li>
-                <li>Профессиональная консультация</li>
-            </ul>
-        </div>
-    </main>
-
-    <footer class="footer">
-        <div class="footer-container">
-            <div class="footer-section">
-                <h3>О компании</h3>
-                <ul>
-                    <li><a href="/about">О нас</a></li>
-                    <li><a href="/contact">Контакты</a></li>
-                </ul>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fas fa-box"></i></div>
+                        <h3 class="feature-title">Ассортимент</h3>
+                        <p>Запчасти для популярных брендов: MAN, Volvo, Scania, Mercedes, KAMAZ и др.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fas fa-medal"></i></div>
+                        <h3 class="feature-title">Качество</h3>
+                        <p>Работаем с надёжными поставщиками. Проверка товара перед отправкой.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fas fa-user-tie"></i></div>
+                        <h3 class="feature-title">Подбор</h3>
+                        <p>Помогаем подобрать запчасти по VIN/модели/артикулу.</p>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="footer-bottom">
-            <p>&copy; 2024 AutoParts. Все права защищены.</p>
-        </div>
-    </footer>
-
-    <script th:src="@{/js/main.js}" src="/js/main.js"></script>
+    </section>
+</div>
 </body>
 </html>
-

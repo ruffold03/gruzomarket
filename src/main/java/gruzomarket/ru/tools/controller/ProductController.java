@@ -1,6 +1,7 @@
 package gruzomarket.ru.tools.controller;
 
 import gruzomarket.ru.tools.dto.ProductDTO;
+import gruzomarket.ru.tools.dto.ProductSearchResponse;
 import gruzomarket.ru.tools.service.ProductService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -8,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -36,6 +38,27 @@ public class ProductController {
     @GetMapping("/search")
     public ResponseEntity<List<ProductDTO>> searchProducts(@RequestParam String name) {
         return ResponseEntity.ok(productService.findByNameContaining(name));
+    }
+
+    /**
+     * Универсальный поиск/фильтрация для каталога.
+     *
+     * Пример:
+     * /api/products/query?q=турбо&categoryIds=1,2&brandIds=3&minPrice=1000&maxPrice=50000&inStock=true&page=0&size=12&sort=price_desc
+     */
+    @GetMapping("/query")
+    public ResponseEntity<ProductSearchResponse<ProductDTO>> queryProducts(
+            @RequestParam(required = false) String q,
+            @RequestParam(required = false) List<Long> categoryIds,
+            @RequestParam(required = false) List<Long> brandIds,
+            @RequestParam(required = false) BigDecimal minPrice,
+            @RequestParam(required = false) BigDecimal maxPrice,
+            @RequestParam(required = false) Boolean inStock,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "12") int size,
+            @RequestParam(defaultValue = "name_asc") String sort
+    ) {
+        return ResponseEntity.ok(productService.search(q, categoryIds, brandIds, minPrice, maxPrice, inStock, page, size, sort));
     }
 
     @GetMapping("/category/{categoryId}")

@@ -8,11 +8,13 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
+@Controller
 @RequestMapping("/api/brands")
 @RequiredArgsConstructor
 @Tag(name = "Brands", description = "API для управления брендами автомобилей")
@@ -24,6 +26,15 @@ public class BrandController {
     @Operation(summary = "Получить все бренды", description = "Возвращает список всех брендов автомобилей")
     public ResponseEntity<List<BrandDTO>> getAllBrands() {
         return ResponseEntity.ok(brandService.findAll());
+    }
+
+    // Новый метод для Thymeleaf (без @ResponseBody)
+    @GetMapping("/page")
+    public String brandsPage(Model model) {
+        List<BrandDTO> brands = brandService.findAll();
+        model.addAttribute("title", "Бренды");
+        model.addAttribute("brands", brands);
+        return "brands"; // templates/brands.html
     }
 
     @GetMapping("/{id}")
