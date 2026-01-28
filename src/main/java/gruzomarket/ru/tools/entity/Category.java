@@ -37,6 +37,8 @@ public class Category {
 
     @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL)
     private Set<Category> children = new HashSet<>();
+
+    private Integer productCount;
 }
 
 

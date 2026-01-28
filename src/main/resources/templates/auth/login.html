@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/auth}"
+      lang="ru">
+<head>
+  <title th:text="${isRegister ? 'Регистрация | GruzoMarket' : 'Вход | GruzoMarket'}"></title>
+</head>
+<body>
+<div layout:fragment="content">
+  <div class="auth-container">
+    <div class="auth-wrapper">
+      <!-- Левая часть - информация -->
+      <div class="auth-left">
+        <a href="/" class="auth-logo">
+          <div class="auth-logo-text">
+            <span class="gruzo">Gruzo</span><span class="market">Market</span>
+          </div>
+        </a>
+
+        <h1>Добро пожаловать в <span class="highlight">GruzoMarket</span></h1>
+        <p>Войдите в свой аккаунт или создайте новый, чтобы получить доступ к эксклюзивным предложениям, отслеживать заказы и управлять вашими покупками запчастей для грузовых автомобилей.</p>
+
+        <div class="auth-features">
+          <div class="auth-feature">
+            <i class="fas fa-shipping-fast"></i>
+            <div class="auth-feature-content">
+              <h4>Быстрая доставка</h4>
+              <p>Отправка в день заказа по всей России</p>
+            </div>
+          </div>
+          <div class="auth-feature">
+            <i class="fas fa-shield-alt"></i>
+            <div class="auth-feature-content">
+              <h4>Безопасные платежи</h4>
+              <p>Защищенные транзакции и гарантия возврата</p>
+            </div>
+          </div>
+          <div class="auth-feature">
+            <i class="fas fa-tags"></i>
+            <div class="auth-feature-content">
+              <h4>Специальные скидки</h4>
+              <p>Эксклюзивные цены для зарегистрированных пользователей</p>
+            </div>
+          </div>
+          <div class="auth-feature">
+            <i class="fas fa-history"></i>
+            <div class="auth-feature-content">
+              <h4>История заказов</h4>
+              <p>Легкий доступ ко всем вашим покупкам</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Правая часть - формы -->
+      <div class="auth-card">
+        <!-- Заголовок -->
+        <div class="auth-header">
+          <h2 th:text="${isRegister ? 'Создать аккаунт' : 'Войти в аккаунт'}"></h2>
+          <p th:text="${isRegister ? 'Создайте новый аккаунт' : 'Введите ваши данные для входа'}"></p>
+        </div>
+
+        <!-- Табы переключения -->
+        <div class="auth-tabs">
+          <a th:href="@{/auth/login}" class="auth-tab" th:classappend="${!isRegister} ? 'active' : ''">
+            <i class="fas fa-sign-in-alt"></i>
+            <span>Вход</span>
+          </a>
+          <a th:href="@{/auth/register}" class="auth-tab" th:classappend="${isRegister} ? 'active' : ''">
+            <i class="fas fa-user-plus"></i>
+            <span>Регистрация</span>
+          </a>
+        </div>
+
+        <!-- Сообщения -->
+        <div id="authMessage" class="auth-message" th:if="${message}" th:classappend="${error} ? 'error' : 'success'" th:text="${message}"></div>
+
+        <!-- Форма входа -->
+        <form id="loginForm" class="auth-form" th:classappend="${!isRegister} ? 'active' : ''" th:action="@{/login}" method="post">
+          <div class="form-group">
+            <label class="form-label" for="loginEmail">Email</label>
+            <input type="email" id="loginEmail" name="email" class="form-control" placeholder="Ваш email" required th:value="${email}">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="loginPassword">Пароль</label>
+            <div class="password-input">
+              <input type="password" id="loginPassword" name="password" class="form-control" placeholder="Ваш пароль" required>
+              <button type="button" class="password-toggle" data-target="loginPassword">
+                <i class="fas fa-eye"></i>
+              </button>
+            </div>
+          </div>
+
+          <div class="form-options">
+            <div class="remember-me">
+              <input type="checkbox" id="rememberMe" name="remember-me">
+              <label for="rememberMe">Запомнить меня</label>
+            </div>
+            <a href="#" class="form-link" id="forgotPassword">Забыли пароль?</a>
+          </div>
+
+          <button type="submit" class="btn-auth" id="loginBtn">
+            <span>Войти в аккаунт</span>
+          </button>
+
+          <div class="divider">
+            <span>Или войдите через</span>
+          </div>
+
+          <div class="social-auth">
+            <button type="button" class="btn-social">
+              <i class="fab fa-vk"></i>
+              <span>VK</span>
+            </button>
+            <button type="button" class="btn-social">
+              <i class="fab fa-google"></i>
+              <span>Google</span>
+            </button>
+            <button type="button" class="btn-social">
+              <i class="fab fa-yandex"></i>
+              <span>Яндекс</span>
+            </button>
+          </div>
+        </form>
+
+        <!-- Форма регистрации -->
+        <form id="registerForm" class="auth-form" th:classappend="${isRegister} ? 'active' : ''" th:action="@{/auth/register}" method="post">
+          <div class="form-group">
+            <label class="form-label" for="registerFirstName">Имя</label>
+            <input type="text" id="registerFirstName" name="firstName" class="form-control" placeholder="Иван" required th:value="${firstName}">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="registerLastName">Имя</label>
+            <input type="text" id="registerLastName" name="lastName" class="form-control" placeholder="Иванов" required th:value="${lastName}">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="registerEmail">Email</label>
+            <input type="email" id="registerEmail" name="email" class="form-control" placeholder="ivan@example.com" required th:value="${email}">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="registerPhone">Телефон</label>
+            <input type="tel" id="registerPhone" name="phone" class="form-control" placeholder="+7 (___) ___-__-__" required th:value="${phone}">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="registerPassword">Пароль</label>
+            <div class="password-input">
+              <input type="password" id="registerPassword" name="password" class="form-control" placeholder="Придумайте надежный пароль" required>
+              <button type="button" class="password-toggle" data-target="registerPassword">
+                <i class="fas fa-eye"></i>
+              </button>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="registerConfirmPassword">Подтвердите пароль</label>
+            <div class="password-input">
+              <input type="password" id="registerConfirmPassword" name="confirmPassword" class="form-control" placeholder="Повторите пароль" required>
+              <button type="button" class="password-toggle" data-target="registerConfirmPassword">
+                <i class="fas fa-eye"></i>
+              </button>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="remember-me">
+              <input type="checkbox" id="acceptTerms" name="terms" required>
+              <label for="acceptTerms">
+                Я согласен с <a href="#" class="form-link">условиями использования</a> и <a href="#" class="form-link">политикой конфиденциальности</a>
+              </label>
+            </div>
+          </div>
+
+          <button type="submit" class="btn-auth" id="registerBtn">
+            <span>Создать аккаунт</span>
+          </button>
+        </form>
+
+        <div class="auth-footer">
+          <p th:if="${!isRegister}">
+            Нет аккаунта? <a th:href="@{/auth/register}" class="form-link">Зарегистрируйтесь</a>
+          </p>
+          <p th:if="${isRegister}">
+            Уже есть аккаунт? <a th:href="@{/auth/login}" class="form-link">Войдите</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

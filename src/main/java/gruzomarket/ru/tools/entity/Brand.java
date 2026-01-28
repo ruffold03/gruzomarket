@@ -31,6 +31,8 @@ public class Brand {
 
     @OneToMany(mappedBy = "brand", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<ProductByBrand> productLinks = new HashSet<>();
+
+    private Integer productCount;
 }
 
 

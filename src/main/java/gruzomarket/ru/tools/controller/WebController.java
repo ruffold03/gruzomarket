@@ -44,12 +44,12 @@ public class WebController {
         return "index";
     }
 
-    @GetMapping("/products")
-    public String products(Model model, HttpSession session) {
-        model.addAttribute("activePage", "products");
-        model.addAttribute("cartCount", cartService.count(session));
-        return "products";
-    }
+//    @GetMapping("/products")
+//    public String products(Model model, HttpSession session) {
+//        model.addAttribute("activePage", "products");
+//        model.addAttribute("cartCount", cartService.count(session));
+//        return "products";
+//    }
 
     @GetMapping("/brands")
     public String brands(Model model, HttpSession session) {

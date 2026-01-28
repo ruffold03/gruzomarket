@@ -5,6 +5,10 @@
       lang="ru">
 <head>
     <title>Каталог</title>
+    <!-- Дополнительный CSS для range slider с двумя точками -->
+    <style>
+
+    </style>
 </head>
 <body>
 <div layout:fragment="content">
@@ -17,56 +21,122 @@
             </div>
 
             <div class="row">
+                <!-- Фильтры -->
                 <div class="col-lg-3">
                     <div class="filters-sidebar">
                         <h4 class="filter-title"><i class="fas fa-filter me-2"></i>Фильтры</h4>
 
+                        <!-- Категории -->
                         <div class="filter-group">
                             <h6>Категория</h6>
-                            <div id="filterCategories"></div>
+                            <div th:each="category : ${categories}">
+                                <label class="custom-checkbox">
+                                    <input type="checkbox" class="category-filter"
+                                           th:id="'cat_' + ${category.id}"
+                                           th:value="${category.id}">
+                                    <span class="checkBox">
+                                        <div class="transition"></div>
+                                    </span>
+                                    <span class="check-label"
+                                          th:text="${category.name} + ' (' + ${category.productCount} + ')'">
+                                    </span>
+                                </label>
+                            </div>
                         </div>
 
+                        <!-- Бренды -->
                         <div class="filter-group">
                             <h6>Бренд</h6>
-                            <div id="filterBrands"></div>
+                            <div th:each="brand : ${brands}">
+                                <label class="custom-checkbox">
+                                    <input type="checkbox" class="brand-filter"
+                                           th:id="'brand_' + ${brand.id}"
+                                           th:value="${brand.id}">
+                                    <span class="checkBox">
+                                        <div class="transition"></div>
+                                    </span>
+                                    <span class="check-label"
+                                          th:text="${brand.name} + ' (' + ${brand.productCount} + ')'">
+                                    </span>
+                                </label>
+                            </div>
                         </div>
 
+                        <!-- Цена с двумя точками -->
                         <div class="filter-group">
                             <h6>Цена, ₽</h6>
-                            <input id="maxPriceSlider" type="range" class="form-range price-slider" min="0" max="200000" step="1000" value="50000">
-                            <div class="price-values">
-                                <span>0 ₽</span>
-                                <span>50 000 ₽</span>
+                            <div class="price-range-container">
+                                <div class="slider-track"></div>
+                                <div class="slider-filled" id="sliderFilled"></div>
+                                <input type="range" min="0" max="200000" step="100" value="0" class="min-slider" id="minSlider">
+                                <input type="range" min="0" max="200000" step="100" value="200000" class="max-slider" id="maxSlider">
+                            </div>
+                            <div class="price-inputs">
+                                <input type="number" id="minPriceInput" class="form-control form-control-sm"
+                                       placeholder="от" min="0" max="200000" value="0">
+                                <span class="text-muted align-self-center">-</span>
+                                <input type="number" id="maxPriceInput" class="form-control form-control-sm"
+                                       placeholder="до" min="0" max="200000" value="200000">
                             </div>
                         </div>
 
-                        <div class="filter-group">
-                            <h6>Наличие</h6>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="available" checked>
-                                <label class="form-check-label" for="available">В наличии</label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="order">
-                                <label class="form-check-label" for="order">Под заказ</label>
-                            </div>
+                        <!-- Кнопки фильтров -->
+                        <div class="filter-group mt-4">
+                            <button id="applyFiltersBtn" class="filter-btn">Применить фильтры</button>
+                            <button id="resetFiltersBtn" class="reset-btn">Сбросить все</button>
                         </div>
-
-                        <button id="applyFiltersBtn" class="filter-btn">Применить фильтры</button>
-                        <button id="resetFiltersBtn" class="reset-btn">Сбросить все</button>
                     </div>
                 </div>
 
+                <!-- Товары -->
                 <div class="col-lg-9">
-                    <div class="section-title mt-0">
-                        <h2>Товары</h2>
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <div class="section-title mb-0">
+                            <h2>Товары</h2>
+                        </div>
+                        <div class="d-flex align-items-center gap-3">
+                            <!-- Поиск -->
+                            <div class="search-box">
+                                <i class="fas fa-search"></i>
+                                <input type="text" id="searchInput" class="form-control search-input"
+                                       placeholder="Поиск по каталогу...">
+                            </div>
+                            <!-- Сортировка -->
+                            <select id="sortSelect" class="sort-select">
+                                <option value="name,asc">По названию (А-Я)</option>
+                                <option value="name,desc">По названию (Я-А)</option>
+                                <option value="price,asc">По цене (возрастание)</option>
+                                <option value="price,desc">По цене (убывание)</option>
+                                <option value="createdDate,desc">Новинки</option>
+                            </select>
+                        </div>
                     </div>
-                    <div id="productsGrid" class="row g-4"></div>
+
+                    <!-- Сетка товаров -->
+                    <div id="productsGrid" class="row g-4">
+                        <div class="col-12 text-center py-5">
+                            <div class="spinner-border text-primary" role="status">
+                                <span class="visually-hidden">Загрузка...</span>
+                            </div>
+                            <p class="mt-2 text-muted">Загрузка товаров...</p>
+                        </div>
+                    </div>
+
+                    <!-- Пагинация -->
+                    <div class="d-flex justify-content-center mt-4">
+                        <nav>
+                            <ul class="pagination" id="pagination">
+                                <!-- Пагинация через JS -->
+                            </ul>
+                        </nav>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- Подключаем скрипты -->
+    <script th:src="@{/js/products.js}" defer></script>
 </div>
 </body>
 </html>

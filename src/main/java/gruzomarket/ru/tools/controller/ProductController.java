@@ -49,8 +49,8 @@ public class ProductController {
     @GetMapping("/query")
     public ResponseEntity<ProductSearchResponse<ProductDTO>> queryProducts(
             @RequestParam(required = false) String q,
-            @RequestParam(required = false) List<Long> categoryIds,
-            @RequestParam(required = false) List<Long> brandIds,
+            @RequestParam(required = false) String categoryIds,
+            @RequestParam(required = false) String brandIds,
             @RequestParam(required = false) BigDecimal minPrice,
             @RequestParam(required = false) BigDecimal maxPrice,
             @RequestParam(required = false) Boolean inStock,

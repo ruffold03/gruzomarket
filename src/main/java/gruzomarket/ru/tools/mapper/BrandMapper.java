@@ -11,7 +11,7 @@ public class BrandMapper {
         if (brand == null) {
             return null;
         }
-        return new BrandDTO(brand.getId(), brand.getName());
+        return new BrandDTO(brand.getId(), brand.getName(), brand.getProductCount());
     }
 
     public Brand toEntity(BrandDTO dto) {

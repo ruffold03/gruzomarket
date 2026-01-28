@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 public class BrandDTO {
     private Long id;
     private String name;
+    private long productCount;
 }
 
 

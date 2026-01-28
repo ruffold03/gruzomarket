@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -65,8 +66,8 @@ public class ProductService {
     @Transactional(readOnly = true)
     public ProductSearchResponse<ProductDTO> search(
             String q,
-            List<Long> categoryIds,
-            List<Long> brandIds,
+            String categoryIds,
+            String brandIds,
             BigDecimal minPrice,
             BigDecimal maxPrice,
             Boolean inStock,
@@ -74,6 +75,19 @@ public class ProductService {
             int size,
             String sort
     ) {
+
+        List<Long> categoryIdList = (categoryIds == null || categoryIds.isBlank())
+                ? List.of()
+                : Arrays.stream(categoryIds.split(","))
+                .map(Long::valueOf)
+                .toList();
+
+        List<Long> brandIdList = (brandIds == null || brandIds.isBlank())
+                ? List.of()
+                : Arrays.stream(brandIds.split(","))
+                .map(Long::valueOf)
+                .toList();
+
         PageRequest pageable = PageRequest.of(
                 Math.max(page, 0),
                 Math.min(Math.max(size, 1), 100),
@@ -81,8 +95,8 @@ public class ProductService {
         );
 
         Specification<Product> spec = Specification.where(ProductSpecifications.textQuery(q))
-                .and(ProductSpecifications.categoryIds(categoryIds))
-                .and(ProductSpecifications.brandIds(brandIds))
+                .and(ProductSpecifications.categoryIds(categoryIdList))
+                .and(ProductSpecifications.brandIds(brandIdList))
                 .and(ProductSpecifications.priceBetween(minPrice, maxPrice))
                 .and(ProductSpecifications.inStock(inStock));
 
