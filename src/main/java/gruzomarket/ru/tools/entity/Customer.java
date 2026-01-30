@@ -43,6 +43,9 @@ public class Customer {
     private Boolean isActive = true;
     private Boolean isBlocked = false;
 
+    @Column(nullable = false)
+    private Boolean isAdmin = false;
+
     private OffsetDateTime lastLoginAt;
 
     @Column

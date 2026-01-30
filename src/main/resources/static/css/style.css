@@ -134,7 +134,7 @@ color: var(--accent-orange); /* #ff6b35 (оранжевый) для активн
 /* Hero Section */
 .hero-section {
     background: linear-gradient(rgba(0, 0, 0, 0.9), rgba(17, 17, 17, 0.9)),
-                url('background.jpg');
+                url('assets/background.jpg');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
@@ -967,5 +967,13 @@ input[type="range"]::-moz-range-thumb {
 .alert {
     animation: slideInRight 0.3s ease-out;
 }
+
+.container-fluid {
+    padding-left: 3rem !important;
+    padding-right: 3rem !important;
+}
+
+
+
 
 

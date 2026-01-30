@@ -46,6 +46,9 @@ public class BrandService {
             throw new AlreadyExistsException("Brand with name " + dto.getName() + " already exists");
         }
         Brand brand = brandMapper.toEntity(dto);
+        // Явно обнуляем ID и productCount для нового бренда
+        brand.setId(null);
+        brand.setProductCount(null);
         brand = brandRepository.save(brand);
         return brandMapper.toDTO(brand);
     }

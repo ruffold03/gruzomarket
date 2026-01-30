@@ -20,7 +20,8 @@ public class ProductMapper {
                 product.getPrice(),
                 product.getQuantity(),
                 categoryId,
-                product.getOriginalAuto()
+                product.getOriginalAuto(),
+                product.getIsVisible()
         );
     }
 
@@ -36,10 +37,14 @@ public class ProductMapper {
         product.setPrice(dto.getPrice());
         product.setQuantity(dto.getQuantity());
         product.setOriginalAuto(dto.getOriginalAuto());
+        product.setIsVisible(dto.getIsVisible() != null ? dto.getIsVisible() : true);
         // category устанавливается отдельно через сервис
         return product;
     }
 }
+
+
+
 
 
 

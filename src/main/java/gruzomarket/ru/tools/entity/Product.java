@@ -1,6 +1,7 @@
 package gruzomarket.ru.tools.entity;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -16,6 +17,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -55,7 +57,18 @@ public class Product {
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private Set<OrderItem> orderItems = new HashSet<>();
+
+    // Поле для совместимости с триггером БД (если есть updated_at в БД)
+    @Column(name = "updated_at", insertable = false, updatable = false)
+    private LocalDateTime updatedAt;
+
+    // Флаг видимости товара для клиентов (скрытые товары не показываются на сайте)
+    @Column(name = "is_visible", nullable = false)
+    private Boolean isVisible = true;
 }
+
+
+
 
 
 

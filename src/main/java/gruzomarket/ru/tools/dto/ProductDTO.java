@@ -21,7 +21,11 @@ public class ProductDTO {
     private Integer quantity;
     private Long categoryId;
     private String originalAuto;
+    private Boolean isVisible;
 }
+
+
+
 
 
 

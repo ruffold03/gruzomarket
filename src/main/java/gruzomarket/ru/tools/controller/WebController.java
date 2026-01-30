@@ -3,9 +3,11 @@ package gruzomarket.ru.tools.controller;
 import gruzomarket.ru.tools.dto.BrandDTO;
 import gruzomarket.ru.tools.dto.CategoryDTO;
 import gruzomarket.ru.tools.dto.ProductDTO;
+import gruzomarket.ru.tools.entity.Customer;
 import gruzomarket.ru.tools.service.CartService;
 import gruzomarket.ru.tools.service.BrandService;
 import gruzomarket.ru.tools.service.CategoryService;
+import gruzomarket.ru.tools.service.CustomerService;
 import gruzomarket.ru.tools.service.ProductService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +26,7 @@ public class WebController {
     private final CategoryService categoryService;
     private final BrandService brandService;
     private final CartService cartService;
+    private final CustomerService customerService;
 
     @GetMapping("/")
     public String index(Model model, HttpSession session) {
@@ -34,7 +37,7 @@ public class WebController {
         if (categories.size() > 6) categories = categories.subList(0, 6);
         model.addAttribute("categories", categories);
 
-        List<ProductDTO> products = productService.findAll();
+        List<ProductDTO> products = productService.findAllVisible();
         if (products.size() > 6) products = products.subList(0, 6);
         model.addAttribute("products", products);
 
@@ -84,6 +87,13 @@ public class WebController {
     public String cart(Model model, HttpSession session) {
         model.addAttribute("activePage", "cart");
         model.addAttribute("cartCount", cartService.count(session));
+
+        Customer current = null;
+        try {
+            current = customerService.getCurrentUser();
+        } catch (Exception ignored) {
+        }
+        model.addAttribute("customer", current);
         return "cart";
     }
 

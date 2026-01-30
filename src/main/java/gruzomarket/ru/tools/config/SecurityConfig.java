@@ -5,7 +5,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -25,15 +24,24 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/", "/products/**", "/brands/**", "/auth/**",
-                                "/css/**", "/js/**", "/images/**", "/api/products/**", "/delivery/**", "/about/**", "/contact/**", "/cart/**").permitAll()
+                                "/css/**", "/js/**", "/images/**", "/api/products/**",
+                                "/delivery/**", "/about/**", "/contact/**", "/cart/**").permitAll()
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
                         .loginPage("/auth/login")
                         .loginProcessingUrl("/login")
+                        .usernameParameter("email")
+                        .passwordParameter("password")
                         .defaultSuccessUrl("/", true)
                         .failureUrl("/auth/login?error=true")
                         .permitAll()
+                )
+                .rememberMe(remember -> remember
+                        .rememberMeParameter("remember-me")
+                        .rememberMeCookieName("GRUZOMARKET_REMEMBER_ME")
+                        .tokenValiditySeconds(14 * 24 * 60 * 60) // 14 дней
                 )
                 .logout(logout -> logout
                         .logoutUrl("/logout")

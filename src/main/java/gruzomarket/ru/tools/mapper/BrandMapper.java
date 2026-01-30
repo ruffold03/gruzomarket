@@ -19,11 +19,22 @@ public class BrandMapper {
             return null;
         }
         Brand brand = new Brand();
-        brand.setId(dto.getId());
+        // Устанавливаем ID только если он не null и > 0 (для обновления существующего)
+        // При создании нового бренда ID должен быть null, чтобы БД сама сгенерировала его
+        if (dto.getId() != null && dto.getId() > 0) {
+            brand.setId(dto.getId());
+        } else {
+            // Явно обнуляем ID для нового бренда
+            brand.setId(null);
+        }
         brand.setName(dto.getName());
+        // productCount не устанавливаем при создании/обновлении - это вычисляемое поле
         return brand;
     }
 }
+
+
+
 
 
 

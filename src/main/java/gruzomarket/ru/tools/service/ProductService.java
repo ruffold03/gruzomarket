@@ -39,6 +39,14 @@ public class ProductService {
                 .collect(Collectors.toList());
     }
 
+    // Метод для клиентов - только видимые товары
+    public List<ProductDTO> findAllVisible() {
+        Specification<Product> spec = ProductSpecifications.isVisible(true);
+        return productRepository.findAll(spec).stream()
+                .map(productMapper::toDTO)
+                .collect(Collectors.toList());
+    }
+
     public ProductDTO findById(Long id) {
         Product product = productRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Product not found with id: " + id));
@@ -53,12 +61,14 @@ public class ProductService {
 
     public List<ProductDTO> findByNameContaining(String namePart) {
         return productRepository.findByNameContainingIgnoreCase(namePart).stream()
+                .filter(p -> Boolean.TRUE.equals(p.getIsVisible()))
                 .map(productMapper::toDTO)
                 .collect(Collectors.toList());
     }
 
     public List<ProductDTO> findByCategoryId(Long categoryId) {
         return productRepository.findByCategoryId(categoryId).stream()
+                .filter(p -> Boolean.TRUE.equals(p.getIsVisible()))
                 .map(productMapper::toDTO)
                 .collect(Collectors.toList());
     }
@@ -98,7 +108,8 @@ public class ProductService {
                 .and(ProductSpecifications.categoryIds(categoryIdList))
                 .and(ProductSpecifications.brandIds(brandIdList))
                 .and(ProductSpecifications.priceBetween(minPrice, maxPrice))
-                .and(ProductSpecifications.inStock(inStock));
+                .and(ProductSpecifications.inStock(inStock))
+                .and(ProductSpecifications.isVisible(true)); // Только видимые товары для клиентов
 
         Page<ProductDTO> dtoPage = productRepository.findAll(spec, pageable).map(productMapper::toDTO);
         return new ProductSearchResponse<>(
@@ -156,6 +167,7 @@ public class ProductService {
         product.setPrice(dto.getPrice());
         product.setQuantity(dto.getQuantity());
         product.setOriginalAuto(dto.getOriginalAuto());
+        product.setIsVisible(dto.getIsVisible() != null ? dto.getIsVisible() : true);
         
         if (dto.getCategoryId() != null) {
             Category category = categoryRepository.findById(dto.getCategoryId())
