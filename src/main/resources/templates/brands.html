@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/base}"
+      lang="ru">
+<head>
+    <title>Бренды</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <section class="brands-section">
+        <div class="container page-container">
+            <div class="section-title">
+                <h2>Бренды</h2>
+                <p class="text-muted mt-3">Выберите производителя</p>
+            </div>
+
+            <div class="row g-4">
+                <div class="col-6 col-md-3 col-lg-2" th:each="b : ${brands}">
+                    <div class="brand-card">
+                        <div class="text-center">
+                            <div class="brand-logo" th:text="${b.name}">Brand</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+</body>
+</html>
+
+
+
+
+
+

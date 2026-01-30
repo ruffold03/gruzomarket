@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/base}"
+      lang="ru">
+<head>
+    <title>Админка — Бренды</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <section class="categories-section">
+        <div class="container page-container">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <div class="section-title mb-0">
+                    <h2>Бренды</h2>
+                </div>
+                <a th:href="@{/admin/brands/new}" class="btn btn-primary">Добавить бренд</a>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-dark table-striped align-middle">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Название</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="b : ${brands}">
+                        <td th:text="${b.id}">1</td>
+                        <td th:text="${b.name}">Бренд</td>
+                        <td class="text-end">
+                            <a th:href="@{'/admin/brands/' + ${b.id}}" class="btn btn-sm btn-outline-light me-1">Редактировать</a>
+                            <form th:action="@{'/admin/brands/' + ${b.id} + '/delete'}" method="post" class="d-inline">
+                                <button type="submit" class="btn btn-sm btn-outline-danger"
+                                        onclick="return confirm('Удалить бренд?')">Удалить</button>
+                            </form>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+</div>
+</body>
+</html>
+
+
+
+
+

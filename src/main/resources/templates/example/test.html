@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GruzoMarket - Запчасти для грузовых автомобилей</title>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+    
+    <style>
+
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light">
+            <div class="container">
+                <a class="navbar-brand" href="#">
+                    <span class="brand-highlight">Gruzo</span>Market
+                </a>
+                
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav mx-auto">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#">Главная</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Каталог</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Бренды</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Доставка</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">О нас</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Контакты</a>
+                        </li>
+                    </ul>
+                    
+                    <div class="search-box me-3">
+                        <i class="fas fa-search"></i>
+                        <input type="text" class="form-control" placeholder="Поиск запчастей...">
+                    </div>
+                    
+                    <a href="#" class="cart-icon me-3">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-count">3</span>
+                    </a>
+                    
+                    <a href="#" class="btn btn-outline-primary">Войти</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8 text-center hero-content animate-fadeInUp">
+                    <h1 class="hero-title">Запчасти для грузовых автомобилей</h1>
+                    <p class="hero-subtitle text-center">Более 500 наименований запчастей от ведущих производителей. Быстрая доставка по всей России. Гарантия качества на все товары.</p>
+                    <button class="btn btn-hero">
+                        <i class="fas fa-truck me-2"></i>Перейти в каталог
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-md-3">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-shipping-fast"></i>
+                        </div>
+                        <h3 class="feature-title">Быстрая доставка</h3>
+                        <p>Отправка в день заказа. Доставка по всей РФ от 1 до 5 дней.</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <h3 class="feature-title">Гарантия качества</h3>
+                        <p>Только оригинальные запчасти и сертифицированные аналоги.</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-headset"></i>
+                        </div>
+                        <h3 class="feature-title">Поддержка 24/7</h3>
+                        <p>Консультации по подбору запчастей и техподдержка.</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h3 class="feature-title">Безопасная оплата</h3>
+                        <p>Различные способы оплаты, безопасные транзакции.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content with Filters and Products -->
+    <section class="categories-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Популярные категории</h2>
+                <p class="text-muted mt-3">Выберите категорию или воспользуйтесь фильтрами для поиска</p>
+            </div>
+            
+            <div class="row">
+                <!-- Filters Sidebar -->
+                <div class="col-lg-3">
+                    <div class="filters-sidebar">
+                        <h4 class="filter-title"><i class="fas fa-filter me-2"></i>Фильтры</h4>
+                        
+                        <!-- Category Filter -->
+                        <div class="filter-group">
+                            <h6>Категория</h6>
+                            <label class="custom-checkbox">
+                                <input type="checkbox" checked>
+                                <span class="checkBox">
+                                    <div class="transition"></div>
+                                </span>
+                                <span class="check-label">Двигатель (142)</span>
+                            </label>
+                            
+                            <label class="custom-checkbox">
+                                <input type="checkbox">
+                                <span class="checkBox">
+                                    <div class="transition"></div>
+                                </span>
+                                <span class="check-label">Трансмиссия (89)</span>
+                            </label>
+                            <label class="custom-checkbox">
+                                <input type="checkbox" checked>
+                                <span class="checkBox">
+                                    <div class="transition"></div>
+                                </span>
+                                <span class="check-label">Подвеска (76)</span>
+                            </label>
+                            
+                            <label class="custom-checkbox">
+                                <input type="checkbox">
+                                <span class="checkBox">
+                                    <div class="transition"></div>
+                                </span>
+                                <span class="check-label">Тормоза (64)</span>
+                            </label>
+                            <label class="custom-checkbox">
+                                <input type="checkbox">
+                                <span class="checkBox">
+                                    <div class="transition"></div>
+                                </span>
+                                <span class="check-label">Электрика (123)</span>
+                            </label>
+                        </div>
+                        
+                        <!-- Brand Filter -->
+                        <div class="filter-group">
+                            <h6>Бренд</h6>
+                            <label class="custom-checkbox">
+                                <input type="checkbox" checked>
+                                <span class="checkBox">
+                                    <div class="transition"></div>
+                                </span>
+                                <span class="check-label">MAN</span>
+                            </label>
+                            
+                            <label class="custom-checkbox">
+                                <input type="checkbox">
+                                <span class="checkBox">
+                                    <div class="transition"></div>
+                                </span>
+                                <span class="check-label">Volvo</span>
+                            </label>
+                            <label class="custom-checkbox">
+                                <input type="checkbox" checked>
+                                <span class="checkBox">
+                                    <div class="transition"></div>
+                                </span>
+                                <span class="check-label">Schacman</span>
+                            </label>
+                            
+                            <label class="custom-checkbox">
+                                <input type="checkbox">
+                                <span class="checkBox">
+                                    <div class="transition"></div>
+                                </span>
+                                <span class="check-label">Scania</span>
+                            </label>
+                            <label class="custom-checkbox">
+                                <input type="checkbox">
+                                <span class="checkBox">
+                                    <div class="transition"></div>
+                                </span>
+                                <span class="check-label">Mercedes</span>
+                            </label>
+                        </div>
+                        
+                        <!-- Price Filter -->
+                        <div class="filter-group">
+                            <h6>Цена, ₽</h6>
+                            <input type="range" class="form-range price-slider" min="0" max="100000" step="1000" value="50000">
+                            <div class="price-values">
+                                <span>0 ₽</span>
+                                <span>100 000 ₽</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Availability Filter -->
+                        <div class="filter-group">
+                            <h6>Наличие</h6>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="available" checked>
+                                <label class="form-check-label" for="available">В наличии</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="order">
+                                <label class="form-check-label" for="order">Под заказ</label>
+                            </div>
+                        </div>
+                        
+                        <button class="filter-btn">Применить фильтры</button>
+                        <button class="reset-btn">Сбросить все</button>
+                    </div>
+                </div>
+                
+                <!-- Categories Grid -->
+                <div class="col-lg-9">
+                    <div class="row g-4">
+                        <!-- Category 1 -->
+                        <div class="col-md-4">
+                            <div class="category-card">
+                                <div class="category-image" style="background-image: url('engine.jpg');"></div>
+                                <div class="category-content">
+                                    <h5 class="category-title">Двигатель</h5>
+                                    <p class="text-muted small">Поршни, коленвалы, головки блока, турбины</p>
+                                    <div class="category-count">142 товара</div>
+                                    <a href="#" class="category-link"><i class="fas fa-arrow-right"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Category 2 -->
+                        <div class="col-md-4">
+                            <div class="category-card">
+                                <div class="category-image" style="background-image: url('transmission.jpg');"></div>
+                                <div class="category-content">
+                                    <h5 class="category-title">Трансмиссия</h5>
+                                    <p class="text-muted small">Коробки передач, сцепление, карданные валы</p>
+                                    <div class="category-count">89 товаров</div>
+                                    <a href="#" class="category-link"><i class="fas fa-arrow-right"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Category 3 -->
+                        <div class="col-md-4">
+                            <div class="category-card">
+                                <div class="category-image" style="background-image: url('podveska.jpg');"></div>
+                                <div class="category-content">
+                                    <h5 class="category-title">Подвеска</h5>
+                                    <p class="text-muted small">Амортизаторы, пружины, рычаги, сайлентблоки</p>
+                                    <div class="category-count">76 товаров</div>
+                                    <a href="#" class="category-link"><i class="fas fa-arrow-right"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Category 4 -->
+                        <div class="col-md-4">
+                            <div class="category-card">
+                                <div class="category-image" style="background-image: url('tormoz.jpg');"></div>
+                                <div class="category-content">
+                                    <h5 class="category-title">Тормозная система</h5>
+                                    <p class="text-muted small">Колодки, диски, суппорты, тормозные цилиндры</p>
+                                    <div class="category-count">54 товара</div>
+                                    <a href="#" class="category-link"><i class="fas fa-arrow-right"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Category 5 -->
+                        <div class="col-md-4">
+                            <div class="category-card">
+                                <div class="category-image" style="background-image: url('electric.jpg');"></div>
+                                <div class="category-content">
+                                    <h5 class="category-title">Электрика</h5>
+                                    <p class="text-muted small">Стартеры, генераторы, провода, датчики</p>
+                                    <div class="category-count">123 товара</div>
+                                    <a href="#" class="category-link"><i class="fas fa-arrow-right"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Category 6 -->
+                        <div class="col-md-4">
+                            <div class="category-card">
+                                <div class="category-image" style="background-image: url('kuzov.jpg');"></div>
+                                <div class="category-content">
+                                    <h5 class="category-title">Кузовные детали</h5>
+                                    <p class="text-muted small">Кабины, крылья, двери, зеркала, бампера</p>
+                                    <div class="category-count">67 товаров</div>
+                                    <a href="#" class="category-link"><i class="fas fa-arrow-right"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Products Section -->
+                    <div class="section-title mt-5">
+                        <h2>Рекомендуемые товары</h2>
+                    </div>
+                    
+                    <div class="row g-4">
+                        <!-- Product 1 -->
+                        <div class="col-md-4">
+                            <div class="product-card">
+                                <span class="product-badge">В наличии</span>
+                                <div class="product-image" style="background-image: url('turbo.jpg');">
+                                    <div class="product-overlay">
+                                        <button class="quick-view-btn">Быстрый просмотр</button>
+                                    </div>
+                                </div>
+                                <div class="product-content">
+                                    <div class="product-category">Двигатель</div>
+                                    <h5 class="product-title">Турбокомпрессор MAN D2676</h5>
+                                    <div class="product-article">Артикул: GM-MAN-2676-T</div>
+                                    <div class="product-price">89 500 ₽</div>
+                                    <div class="product-actions">
+                                        <button class="btn-add-cart"><i class="fas fa-cart-plus me-2"></i>В корзину</button>
+                                        <button class="btn-favorite">
+                                            <i class="far fa-heart"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Product 2 -->
+                        <div class="col-md-4">
+                            <div class="product-card">
+                                <span class="product-badge" style="background: #2d3748;">Под заказ</span>
+                                <div class="product-image" style="background-image: url('volvo.jpg');">
+                                    <div class="product-overlay">
+                                        <button class="quick-view-btn">Быстрый просмотр</button>
+                                    </div>
+                                </div>
+                                <div class="product-content">
+                                    <div class="product-category">Трансмиссия</div>
+                                    <h5 class="product-title">Сцепление Volvo FH16</h5>
+                                    <div class="product-article">Артикул: GM-VOL-FH16-C</div>
+                                    <div class="product-price">42 300 ₽</div>
+                                    <div class="product-actions">
+                                        <button class="btn-add-cart"><i class="fas fa-cart-plus me-2"></i>В корзину</button>
+                                        <button class="btn-favorite">
+                                            <i class="far fa-heart"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Product 3 -->
+                        <div class="col-md-4">
+                            <div class="product-card">
+                                <span class="product-badge">В наличии</span>
+                                <div class="product-image" style="background-image: url('scania.jpg');">
+                                    <div class="product-overlay">
+                                        <button class="quick-view-btn">Быстрый просмотр</button>
+                                    </div>
+                                </div>
+                                <div class="product-content">
+                                    <div class="product-category">Подвеска</div>
+                                    <h5 class="product-title">Амортизатор Scania R580</h5>
+                                    <div class="product-article">Артикул: GM-SCA-R580-S</div>
+                                    <div class="product-price">18 750 ₽</div>
+                                    <div class="product-actions">
+                                        <button class="btn-add-cart"><i class="fas fa-cart-plus me-2"></i>В корзину</button>
+                                        <button class="btn-favorite">
+                                            <i class="fas fa-heart" style="color: #ff4757;"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="text-center mt-5">
+                        <a href="#" class="btn btn-primary btn-lg">
+                            <i class="fas fa-list me-2"></i>Показать все товары
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Brands Section -->
+    <section class="brands-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Популярные бренды</h2>
+                <p class="text-muted mt-3">Запчасти от ведущих мировых производителей</p>
+            </div>
+            
+            <div class="row g-4">
+                <div class="col-6 col-md-3 col-lg-2">
+                    <div class="brand-card">
+                        <img src="Logo_MAN.png" alt="MAN" class="brand-logo">
+                    </div>
+                </div>
+                <div class="col-6 col-md-3 col-lg-2">
+                    <div class="brand-card">
+                        <img src="Volvo_logo.svg.png" alt="Volvo" class="brand-logo">
+                    </div>
+                </div>
+                <div class="col-6 col-md-3 col-lg-2">
+                    <div class="brand-card">
+                        <img src="Scania_Logo.svg.png" alt="Scania" class="brand-logo">
+                    </div>
+                </div>
+                <div class="col-6 col-md-3 col-lg-2">
+                    <div class="brand-card">
+                        <img src="KAMAZ_Logo.svg.png" alt="KAMAZ" class="brand-logo">
+                    </div>
+                </div>
+                <div class="col-6 col-md-3 col-lg-2">
+                    <div class="brand-card">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Mercedes-Logo.svg/2560px-Mercedes-Logo.svg.png" alt="Mercedes" class="brand-logo">
+                    </div>
+                </div>
+                <div class="col-6 col-md-3 col-lg-2">
+                    <div class="brand-card">
+                        <img src="shacman-logo.png" alt="Renault" class="brand-logo">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <h3 class="footer-title"><span class="brand-highlight">Gruzo</span>Market</h3>
+                    <p class="contact-info">Розничная продажа запчастей для грузовых автомобилей в России.</p>
+                    <div class="social-icons">
+                        <a href="#" class="social-icon"><i class="fab fa-vk"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-telegram"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-whatsapp"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h5 class="footer-title">Категории</h5>
+                    <ul class="footer-links">
+                        <li><a href="#">Двигатель</a></li>
+                        <li><a href="#">Трансмиссия</a></li>
+                        <li><a href="#">Подвеска</a></li>
+                        <li><a href="#">Тормозная система</a></li>
+                        <li><a href="#">Электрика</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h5 class="footer-title">Информация</h5>
+                    <ul class="footer-links">
+                        <li><a href="#">О компании</a></li>
+                        <li><a href="#">Доставка и оплата</a></li>
+                        <li><a href="#">Гарантия</a></li>
+                        <li><a href="#">Контакты</a></li>
+                        <li><a href="#">Блог</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 mb-4">
+                    <h5 class="footer-title">Контакты</h5>
+                    <div class="contact-info">
+                        <p><i class="fas fa-map-marker-alt"></i> Москва, ул. Промышленная, 15</p>
+                        <p><i class="fas fa-phone"></i> 8 (800) 555-35-35</p>
+                        <p><i class="fas fa-envelope"></i> info@gruzomarket.ru</p>
+                        <p><i class="fas fa-clock"></i> Пн-Пт: 9:00-19:00, Сб: 10:00-17:00</p>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2026 GruzoMarket. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Custom JS -->
+    <script>
+        // Simple interactions
+        document.addEventListener('DOMContentLoaded', function() {
+            // Cart count update
+            const addToCartButtons = document.querySelectorAll('.btn-add-cart');
+            const cartCount = document.querySelector('.cart-count');
+            
+            addToCartButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    let count = parseInt(cartCount.textContent);
+                    count++;
+                    cartCount.textContent = count;
+                    
+                    // Add animation
+                    cartCount.style.transform = 'scale(1.5)';
+                    setTimeout(() => {
+                        cartCount.style.transform = 'scale(1)';
+                    }, 300);
+                    
+                    // Show notification
+                    alert('Товар добавлен в корзину!');
+                });
+            });
+            
+            // Favorite buttons
+            const favoriteButtons = document.querySelectorAll('.btn-favorite');
+            favoriteButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const icon = this.querySelector('i');
+                    if (icon.classList.contains('far')) {
+                        icon.classList.remove('far');
+                        icon.classList.add('fas');
+                        icon.style.color = '#ff4757';
+                    } else {
+                        icon.classList.remove('fas');
+                        icon.classList.add('far');
+                        icon.style.color = '';
+                    }
+                });
+            });
+            
+            // Price slider update
+            const priceSlider = document.querySelector('.price-slider');
+            const priceValues = document.querySelectorAll('.price-values span');
+            
+            if (priceSlider) {
+                priceSlider.addEventListener('input', function() {
+                    const value = parseInt(this.value).toLocaleString('ru-RU');
+                    priceValues[1].textContent = value + ' ₽';
+                });
+            }
+        });
+    </script>
+</body>
+</html>

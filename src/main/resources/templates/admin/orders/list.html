@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/base}"
+      lang="ru">
+<head>
+    <title>Админка — Заказы</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <section class="categories-section">
+        <div class="container page-container">
+            <div class="section-title">
+                <h2>Заказы</h2>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-dark table-striped align-middle">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Клиент</th>
+                        <th>Телефон</th>
+                        <th>Email</th>
+                        <th>Статус</th>
+                        <th>Сумма</th>
+                        <th>Создан</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="o : ${orders}">
+                        <td th:text="${o.id}">1</td>
+                        <td th:text="${o.customerName}">Имя</td>
+                        <td th:text="${o.phone}">Тел</td>
+                        <td th:text="${o.email}">Email</td>
+                        <td th:text="${o.status}">NEW</td>
+                        <td th:text="${#numbers.formatDecimal(o.totalAmount,0,'COMMA',2,'POINT')} + ' ₽'">0 ₽</td>
+                        <td th:text="${o.createdAt}">Дата</td>
+                        <td class="text-end">
+                            <a th:href="@{'/admin/orders/' + ${o.id}}" class="btn btn-sm btn-outline-light">Открыть</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+</div>
+</body>
+</html>
+
+
+
+
+

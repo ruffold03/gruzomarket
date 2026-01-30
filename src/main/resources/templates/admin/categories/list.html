@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/base}"
+      lang="ру">
+<head>
+    <title>Админка — Категории</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <section class="categories-section">
+        <div class="container page-container">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <div class="section-title mb-0">
+                    <h2>Категории</h2>
+                </div>
+                <a th:href="@{/admin/categories/new}" class="btn btn-primary">Добавить категорию</a>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-dark table-striped align-middle">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Название</th>
+                        <th>Родитель</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="c : ${categories}">
+                        <td th:text="${c.id}">1</td>
+                        <td th:text="${c.name}">Категория</td>
+                        <td th:text="${c.parentId}">-</td>
+                        <td class="text-end">
+                            <a th:href="@{'/admin/categories/' + ${c.id}}" class="btn btn-sm btn-outline-light me-1">Редактировать</a>
+                            <form th:action="@{'/admin/categories/' + ${c.id} + '/delete'}" method="post" class="d-inline">
+                                <button type="submit" class="btn btn-sm btn-outline-danger"
+                                        onclick="return confirm('Удалить категорию?')">Удалить</button>
+                            </form>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+</div>
+</body>
+</html>
+
+
+
+
+

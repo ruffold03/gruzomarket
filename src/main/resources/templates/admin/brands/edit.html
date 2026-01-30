@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/base}"
+      lang="ru">
+<head>
+    <title>Админка — Редактирование бренда</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <section class="categories-section">
+        <div class="container page-container">
+            <div class="section-title">
+                <h2 th:text="${brand.id == null} ? 'Новый бренд' : 'Редактирование бренда'">Бренд</h2>
+            </div>
+
+            <div class="feature-card">
+                <form th:action="@{/admin/brands/save}" th:object="${brand}" method="post">
+                    <input type="hidden" th:field="*{id}">
+
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Название</label>
+                            <input class="form-control" th:field="*{name}" required>
+                        </div>
+                    </div>
+
+                    <div class="mt-4 d-flex justify-content-between">
+                        <a th:href="@{/admin/brands}" class="reset-btn">Назад к списку</a>
+                        <button type="submit" class="filter-btn">Сохранить</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+</div>
+</body>
+</html>
+
+
+
+
+

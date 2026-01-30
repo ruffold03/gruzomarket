@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/base}"
+      lang="ru">
+<head>
+    <title>Админка</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <section class="categories-section">
+        <div class="container page-container">
+            <div class="section-title">
+                <h2>Административная панель</h2>
+                <p class="text-muted mt-3">Управление каталогом и заказами</p>
+            </div>
+
+            <div class="row g-4">
+                <div class="col-md-3">
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fas fa-boxes"></i></div>
+                        <h3 class="feature-title">Товары</h3>
+                        <p class="text-muted" th:text="'Всего: ' + ${productsCount}">Всего: 0</p>
+                        <a th:href="@{/admin/products}" class="btn btn-primary btn-sm mt-2">Управлять</a>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fas fa-list"></i></div>
+                        <h3 class="feature-title">Категории</h3>
+                        <p class="text-muted" th:text="'Всего: ' + ${categoriesCount}">Всего: 0</p>
+                        <a th:href="@{/admin/categories}" class="btn btn-primary btn-sm mt-2">Управлять</a>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fas fa-industry"></i></div>
+                        <h3 class="feature-title">Бренды</h3>
+                        <p class="text-muted" th:text="'Всего: ' + ${brandsCount}">Всего: 0</p>
+                        <a th:href="@{/admin/brands}" class="btn btn-primary btn-sm mt-2">Управлять</a>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fas fa-receipt"></i></div>
+                        <h3 class="feature-title">Заказы</h3>
+                        <p class="text-muted" th:text="'Всего: ' + ${ordersCount}">Всего: 0</p>
+                        <a th:href="@{/admin/orders}" class="btn btn-primary btn-sm mt-2">Просмотр</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+</body>
+</html>
+
+
+
+
+

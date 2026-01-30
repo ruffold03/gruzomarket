@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/base}"
+      lang="ru">
+<head>
+    <title>Админка — Заказ</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <section class="categories-section">
+        <div class="container page-container">
+            <div class="section-title">
+                <h2 th:text="'Заказ #' + ${order.id}">Заказ</h2>
+            </div>
+
+            <div class="feature-card mb-4">
+                <h3 class="feature-title">Информация о клиенте</h3>
+                <p><strong>Имя:</strong> <span th:text="${order.customerName}">Имя</span></p>
+                <p><strong>Телефон:</strong> <span th:text="${order.phone}">Тел</span></p>
+                <p><strong>Email:</strong> <span th:text="${order.email}">Email</span></p>
+                <p><strong>Комментарий:</strong> <span th:text="${order.notes}">Комментарий</span></p>
+            </div>
+
+            <div class="feature-card mb-4">
+                <h3 class="feature-title">Статус заказа</h3>
+                <form th:action="@{'/admin/orders/' + ${order.id} + '/status'}" method="post" class="row g-3 align-items-end">
+                    <div class="col-md-4">
+                        <label class="form-label">Статус</label>
+                        <select class="form-select" name="status">
+                            <option th:selected="${order.status == 'NEW'}" value="NEW">NEW</option>
+                            <option th:selected="${order.status == 'IN_PROGRESS'}" value="IN_PROGRESS">IN_PROGRESS</option>
+                            <option th:selected="${order.status == 'DONE'}" value="DONE">DONE</option>
+                            <option th:selected="${order.status == 'CANCELLED'}" value="CANCELLED">CANCELLED</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <button type="submit" class="filter-btn">Обновить статус</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="feature-card">
+                <h3 class="feature-title">Сумма</h3>
+                <p><strong>Итого:</strong> <span th:text="${#numbers.formatDecimal(order.totalAmount,0,'COMMA',2,'POINT')} + ' ₽'">0 ₽</span></p>
+                <a th:href="@{/admin/orders}" class="reset-btn mt-3 d-inline-block">Назад к списку</a>
+            </div>
+        </div>
+    </section>
+</div>
+</body>
+</html>
+
+
+
+
+
