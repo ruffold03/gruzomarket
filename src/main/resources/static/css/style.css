@@ -15,21 +15,21 @@
 }
 
 body {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Exo 2', sans-serif;
     color: #e2e8f0;
     background-color: #000000;
     overflow-x: hidden;
 }
 
 h1, h2, h3, h4, h5, h6 {
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Exo 2', sans-serif;
     font-weight: 700;
     color: #ffffff;
 }
 
 /* Header Styles */
 .navbar-brand {
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Aldrich', sans-serif;
     font-weight: 800;
     font-size: 1.8rem;
     color: #ffffff;
@@ -842,10 +842,10 @@ color: #ffffff !important;
 }
 
 .hero-subtitle {
-    text-align: center !important;
-    margin-left: auto;
-    margin-right: auto;
-    max-width: 700px; /* Ограничение ширины */
+    text-align: left !important; /* Выравнивание по левому краю */
+    margin-left: 0 !important; /* Убираем автоматический отступ слева */
+    margin-right: auto !important; /* Авто справа, если нужно ограничить ширину */
+    max-width: 700px; /* Сохраняем ограничение ширины, чтобы не растягивался */
 }
 @keyframes pulse {
     0% { transform: scale(1); }
@@ -973,6 +973,107 @@ input[type="range"]::-moz-range-thumb {
     padding-right: 3rem !important;
 }
 
+.container {
+    max-width: 1500px !important; /* Было 1320px */
+    padding-left: 2rem;
+    padding-right: 2rem;
+}
+
+.hero-search {
+    max-width: 600px; /* Ширина строки поиска, как на фото */
+    margin: 0 auto; /* Центрирование */
+}
+
+.hero-search .input-group {
+    border-radius: 30px; /* Закругленные углы, как на фото */
+    overflow: hidden; /* Чтобы углы не обрезались */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* Легкая тень для объема */
+    border: 2px solid #333333; /* Граница в стиле сайта */
+}
+
+.hero-search .form-control {
+    height: 50px; /* Высота, как на фото */
+    background-color: #111111; /* Темный фон, как в .search-box */
+    border: none; /* Без внутренних borders */
+    color: #ffffff; /* Белый текст */
+    padding-left: 20px;
+    font-size: 1.1rem;
+}
+
+.hero-search .form-control::placeholder {
+    color: #a0aec0; /* Серый плейсхолдер, как в style.css */
+}
+
+.hero-search .form-control:focus {
+    background-color: #1a1a1a; /* Легкий оттенок при фокусе, как в style.css */
+    border-color: var(--accent-orange);
+    box-shadow: none; /* Убрать стандартный фокус */
+}
+
+.hero-search .btn-hero {
+    height: 50px; /* Высота кнопки */
+    background: var(--accent-orange); /* Оранжевый акцент сайта */
+    color: white;
+    border: none;
+    padding: 0 2rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    transition: var(--transition);
+    box-shadow: 0 5px 15px rgba(255, 107, 53, 0.3); /* Тень, как у btn-hero */
+}
+
+.hero-search .btn-hero:hover {
+    background: #ff5a1f; /* Темнее оранжевый при ховере, как в style.css */
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(255, 107, 53, 0.4);
+}
+
+.hero-search {
+    max-width: 800px; /* Увеличенная ширина поля поиска */
+    margin: 0; /* Убрал auto, чтобы не центрировалось (теперь по левому краю) */
+}
+
+.hero-search .hero-input {
+    height: 50px; /* Высота инпута */
+    background-color: #111111; /* Темный фон */
+    border: 2px solid #333333; /* Граница в стиле сайта */
+    border-radius: 30px; /* Закругленные углы для инпута */
+    color: #ffffff; /* Белый текст */
+    padding-left: 20px;
+    font-size: 1.1rem;
+    flex-grow: 1; /* Растягивается на доступную ширину */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* Тень */
+}
+
+.hero-search .hero-input::placeholder {
+    color: #a0aec0; /* Серый плейсхолдер */
+}
+
+.hero-search .hero-input:focus {
+    background-color: #1a1a1a; /* Оттенок при фокусе */
+    border-color: var(--accent-orange);
+    box-shadow: 0 5px 15px rgba(255, 107, 53, 0.3); /* Тень при фокусе */
+}
+
+.hero-search .btn-hero {
+    height: 50px; /* Высота кнопки */
+    background: var(--accent-orange); /* Оранжевый акцент */
+    color: white;
+    border: none;
+    border-radius: 30px; /* Закругленные углы для кнопки */
+    padding: 0 2rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    transition: var(--transition);
+    box-shadow: 0 5px 15px rgba(255, 107, 53, 0.3); /* Тень */
+    white-space: nowrap; /* Чтобы текст не переносился */
+}
+
+.hero-search .btn-hero:hover {
+    background: #ff5a1f; /* Темнее при ховере */
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(255, 107, 53, 0.4);
+}
 
 
 

@@ -47,12 +47,14 @@ public class WebController {
         return "index";
     }
 
-//    @GetMapping("/products")
-//    public String products(Model model, HttpSession session) {
-//        model.addAttribute("activePage", "products");
-//        model.addAttribute("cartCount", cartService.count(session));
-//        return "products";
-//    }
+    @GetMapping("/products")  // URL для страницы, например /products
+    public String catalogPage(Model model) {
+        List<CategoryDTO> categories = categoryService.findAll();
+        List<BrandDTO> brands = brandService.findAll();
+        model.addAttribute("categories", categories);  // Добавляем категории
+        model.addAttribute("brands", brands);  // Добавляем бренды
+        return "products";  // Имя шаблона: products.html
+    }
 
     @GetMapping("/brands")
     public String brands(Model model, HttpSession session) {

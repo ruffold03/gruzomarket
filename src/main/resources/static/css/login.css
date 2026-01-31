@@ -5,7 +5,7 @@
 }
 
 body {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Exo 2', sans-serif;
     color: #e2e8f0;
     background-color: #000000;
     min-height: 100vh;
@@ -17,7 +17,7 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6 {
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Exo 2', sans-serif;
     font-weight: 700;
     color: #ffffff;
 }
@@ -62,11 +62,11 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .auth-logo-text {
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Aldrich', sans-serif;
     font-weight: 900;
     font-size: 2.5rem;
     color: #ffffff;
-    text-decoration: none;
+    text-decoration: none !important;
     transition: all 0.3s ease;
 }
 
@@ -393,7 +393,7 @@ h1, h2, h3, h4, h5, h6 {
     cursor: pointer;
     transition: all 0.3s ease;
     margin-top: 0.3rem;
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Exo 2', sans-serif;
     letter-spacing: 0.5px;
     position: relative;
     overflow: hidden;

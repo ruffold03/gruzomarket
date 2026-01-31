@@ -12,13 +12,17 @@
     <!-- Hero Section -->
     <section class="hero-section">
         <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-lg-8 text-center hero-content animate-fadeInUp">
-                    <h1 class="hero-title">Запчасти для грузовых автомобилей</h1>
-                    <p class="hero-subtitle text-center">
+            <div class="row justify-content-start">
+                <div class="col-lg-8 text-start hero-content animate-fadeInUp">
+                    <h1 class="hero-title">Ваш груз - наш маркет</h1>
+                    <p class="hero-subtitle">
                         Запчасти от проверенных производителей. Быстрая доставка по всей России. Гарантия качества на все товары.
                     </p>
-                    <a class="btn btn-hero" th:href="@{/products}">
+                    <form class="hero-search mt-4 d-flex align-items-center">
+                        <input type="text" class="form-control hero-input" placeholder="Поиск по артикулу или названию...">
+                        <button class="btn btn-hero ms-3" type="submit">Найти запчасть</button>
+                    </form>
+                    <a class="btn btn-hero mt-4" th:href="@{/products}">
                         <i class="fas fa-truck me-2"></i>Перейти в каталог
                     </a>
                 </div>
