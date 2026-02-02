@@ -65,6 +65,9 @@ public class Product {
     // Флаг видимости товара для клиентов (скрытые товары не показываются на сайте)
     @Column(name = "is_visible", nullable = false)
     private Boolean isVisible = true;
+
+    @Column(name = "image_url")
+    private String imageUrl;
 }
 
 

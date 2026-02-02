@@ -1045,9 +1045,7 @@ input[type="range"]::-moz-range-thumb {
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* Тень */
 }
 
-.hero-search .hero-input::placeholder {
-    color: #a0aec0; /* Серый плейсхолдер */
-}
+
 
 .hero-search .hero-input:focus {
     background-color: #1a1a1a; /* Оттенок при фокусе */
@@ -1074,6 +1072,23 @@ input[type="range"]::-moz-range-thumb {
     transform: translateY(-3px);
     box-shadow: 0 10px 20px rgba(255, 107, 53, 0.4);
 }
+
+.form-control::placeholder {
+    color: #a0aec0 !important;
+}
+
+input[type="file"] {
+    background-color: #111111;
+    border: 1px solid #333333;
+    color: #ffffff;
+    border-radius: 5px;
+    padding: 0.5rem;
+}
+
+input[type="file"]:focus {
+    border-color: var(--accent-orange);
+}
+
 
 
 

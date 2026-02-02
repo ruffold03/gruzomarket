@@ -28,6 +28,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const maxPriceInput = document.getElementById('maxPriceInput');
     const sliderFilled = document.getElementById('sliderFilled');
 
+
     // Минимальная разница между min и max
     const MIN_PRICE_DIFF = 100;
     const MAX_PRICE = 200000;
@@ -36,6 +37,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function formatPrice(price) {
         return new Intl.NumberFormat('ru-RU').format(Math.round(price));
     }
+
 
     // Обновление слайдера заполнения
     function updateSliderFilled() {
@@ -372,6 +374,12 @@ document.addEventListener('DOMContentLoaded', function() {
     function init() {
         // Настройка слайдера цены
         setupPriceSlider();
+        const urlParams = new URLSearchParams(window.location.search);
+        const searchTerm = urlParams.get('search');
+        if (searchTerm) {
+            searchInput.value = searchTerm;
+            filters.searchQuery = searchTerm;
+        }
 
         // Начальная загрузка
         updateSliderFilled();

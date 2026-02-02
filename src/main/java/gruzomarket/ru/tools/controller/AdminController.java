@@ -4,17 +4,22 @@ import gruzomarket.ru.tools.dto.BrandDTO;
 import gruzomarket.ru.tools.dto.CategoryDTO;
 import gruzomarket.ru.tools.dto.ProductDTO;
 import gruzomarket.ru.tools.dto.OrderDTO;
-import gruzomarket.ru.tools.service.BrandService;
-import gruzomarket.ru.tools.service.CategoryService;
-import gruzomarket.ru.tools.service.OrderService;
-import gruzomarket.ru.tools.service.ProductService;
+import gruzomarket.ru.tools.service.*;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
+import java.util.UUID;
 
 @Controller
 @RequestMapping("/admin")
@@ -25,6 +30,7 @@ public class AdminController {
     private final CategoryService categoryService;
     private final BrandService brandService;
     private final OrderService orderService;
+    private final ImageService imageService;
 
     private void common(Model model, HttpSession session) {
         model.addAttribute("activePage", "admin");
@@ -66,15 +72,30 @@ public class AdminController {
         return "admin/products/edit";
     }
 
-    @PostMapping("/products/save")
-    public String saveProduct(@ModelAttribute("product") ProductDTO dto) {
-        // Явно обнуляем ID, если он пустой или 0 (для создания нового товара)
+    @PostMapping(
+            value = "/products/save",
+            consumes = MediaType.MULTIPART_FORM_DATA_VALUE
+    )
+    public String saveProduct(
+            @ModelAttribute("product") ProductDTO dto,
+            @RequestParam(value = "imageFile", required = false) MultipartFile imageFile
+    ) {
+        try {
+            if (imageFile != null && !imageFile.isEmpty()) {
+                String imageUrl = imageService.saveImage(imageFile);
+                dto.setImageUrl(imageUrl);
+            }
+        } catch (IOException e) {
+            return "redirect:/admin/products?error=upload_failed";
+        }
+
         if (dto.getId() == null || dto.getId() <= 0) {
             dto.setId(null);
             productService.create(dto);
         } else {
             productService.update(dto.getId(), dto);
         }
+
         return "redirect:/admin/products";
     }
 
@@ -190,7 +211,3 @@ public class AdminController {
         return "redirect:/admin/orders/" + id;
     }
 }
-
-
-
-

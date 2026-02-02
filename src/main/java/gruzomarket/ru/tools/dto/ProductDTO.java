@@ -22,6 +22,7 @@ public class ProductDTO {
     private Long categoryId;
     private String originalAuto;
     private Boolean isVisible;
+    private String imageUrl;
 }
 
 

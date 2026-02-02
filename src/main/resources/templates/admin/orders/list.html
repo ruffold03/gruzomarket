@@ -10,8 +10,11 @@
 <div layout:fragment="content">
     <section class="categories-section">
         <div class="container page-container">
-            <div class="section-title">
-                <h2>Заказы</h2>
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <div class="section-title mb-0">
+                    <h2>Заказы</h2>
+                </div>
+                <a th:href="@{/admin}" class="btn btn-primary">Назад</a>
             </div>
 
             <div class="table-responsive">
@@ -49,6 +52,7 @@
 </div>
 </body>
 </html>
+
 
 
 

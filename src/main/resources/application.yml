@@ -16,6 +16,13 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         format_sql: true
+
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 20MB
+      max-request-size: 20MB
+      location: ${java.io.tmpdir}
   
   mail:
     host: localhost
@@ -36,7 +43,8 @@ spring:
       static-locations:
         - classpath:/static/         # Стандартное место
         - classpath:/public/         # Альтернативное место
-        - classpath:/resources/      # Еще одно альтернативное
+        - classpath:/resources/
+        - file:./uploads/  # Еще одно альтернативное
       cache:
         period: 0                    # Для разработки - без кэширования
 
@@ -61,4 +69,10 @@ springdoc:
     tags-sorter: alpha
     try-it-out-enabled: true
     display-request-duration: true
+
+telegram:
+  bot:
+    token: ${TELEGRAM_BOT_TOKEN:ВАШ_ТОКЕН_БОТА}
+  chat:
+    id: ${TELEGRAM_CHAT_ID:ВАШ_CHAT_ID}
 

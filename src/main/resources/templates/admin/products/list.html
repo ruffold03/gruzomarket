@@ -15,6 +15,46 @@
                     <h2>Товары</h2>
                 </div>
                 <a th:href="@{/admin/products/new}" class="btn btn-primary">Добавить товар</a>
+                <a th:href="@{/admin}" class="btn btn-primary">Назад</a>
+            </div>
+
+            <div class="row mb-4">
+                <div class="col-md-12">
+                    <div class="card bg-dark text-light">
+                        <div class="card-body">
+                            <h5 class="card-title">Фильтры</h5>
+                            <div class="row g-3">
+                                <div class="col-md-3">
+                                    <label for="filterName" class="form-label">По названию</label>
+                                    <input type="text" id="filterName" class="form-control" placeholder="Введите часть названия...">
+                                </div>
+                                <div class="col-md-3">
+                                    <label for="filterArticle" class="form-label">По артикулу</label>
+                                    <input type="text" id="filterArticle" class="form-control" placeholder="Введите артикул...">
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="form-label">По цене (от - до)</label>
+                                    <div class="d-flex gap-2">
+                                        <input type="number" id="filterMinPrice" class="form-control" placeholder="От" min="0">
+                                        <input type="number" id="filterMaxPrice" class="form-control" placeholder="До" min="0">
+                                    </div>
+                                </div>
+                                <div class="col-md-3 d-flex align-items-end">
+                                    <div>
+                                        <div class="form-check">
+                                            <input type="checkbox" id="filterNoArticle" class="form-check-input">
+                                            <label for="filterNoArticle" class="form-check-label">Только без артикула</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input type="checkbox" id="filterNoName" class="form-check-input">
+                                            <label for="filterNoName" class="form-check-label">Только без названия</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div class="table-responsive">
@@ -49,9 +89,12 @@
             </div>
         </div>
     </section>
+
+    <script th:src="@{/js/admin-products.js}" defer></script>
 </div>
 </body>
 </html>
+
 
 
 

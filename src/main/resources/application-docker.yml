@@ -1,6 +1,6 @@
 spring:
   resources:
-    static-locations: classpath:/static/,classpath:/public/
+    static-locations: classpath:/static/,classpath:/public/,file:/uploads/
     cache:
       cachecontrol:
         max-age: 0
@@ -17,6 +17,13 @@ spring:
       add-mappings: true
       cache:
         period: 0
+
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 20MB
+      max-request-size: 20MB
+      location: /tmp
   
   datasource:
     url: jdbc:postgresql://postgres:5432/gruzomarket
@@ -60,3 +67,9 @@ springdoc:
     tags-sorter: alpha
     try-it-out-enabled: true
     display-request-duration: true
+
+telegram:
+  bot:
+    token: ${TELEGRAM_BOT_TOKEN:ВАШ_ТОКЕН_БОТА}
+  chat:
+    id: ${TELEGRAM_CHAT_ID:ВАШ_CHAT_ID}

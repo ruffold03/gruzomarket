@@ -18,8 +18,8 @@
                     <p class="hero-subtitle">
                         Запчасти от проверенных производителей. Быстрая доставка по всей России. Гарантия качества на все товары.
                     </p>
-                    <form class="hero-search mt-4 d-flex align-items-center">
-                        <input type="text" class="form-control hero-input" placeholder="Поиск по артикулу или названию...">
+                    <form th:action="@{/products}" method="get" class="hero-search mt-4 d-flex align-items-center">
+                        <input type="text" name="search" class="form-control hero-input" placeholder="Поиск по артикулу или названию...">
                         <button class="btn btn-hero ms-3" type="submit">Найти запчасть</button>
                     </form>
                     <a class="btn btn-hero mt-4" th:href="@{/products}">

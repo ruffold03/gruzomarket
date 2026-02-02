@@ -168,6 +168,7 @@ public class ProductService {
         product.setQuantity(dto.getQuantity());
         product.setOriginalAuto(dto.getOriginalAuto());
         product.setIsVisible(dto.getIsVisible() != null ? dto.getIsVisible() : true);
+        product.setImageUrl(dto.getImageUrl());
         
         if (dto.getCategoryId() != null) {
             Category category = categoryRepository.findById(dto.getCategoryId())
