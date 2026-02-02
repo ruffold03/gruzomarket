@@ -19,6 +19,7 @@ public class OrderService {
 
     private final OrderRepository orderRepository;
     private final OrderMapper orderMapper;
+    private final TelegramService telegramService;
 
     public List<OrderDTO> findAll() {
         return orderRepository.findAll().stream()
@@ -53,13 +54,27 @@ public class OrderService {
     public OrderDTO create(OrderDTO dto) {
         Order order = orderMapper.toEntity(dto);
         order = orderRepository.save(order);
-        return orderMapper.toDTO(order);
+        OrderDTO savedDto = orderMapper.toDTO(order);
+
+        if (telegramService != null) {
+            telegramService.sendOrderNotification(
+                    savedDto.getId().toString(),
+                    savedDto.getCustomerName(),
+                    savedDto.getPhone(),
+                    savedDto.getTotalAmount(),
+                    savedDto.getStatus()
+            );
+        }
+
+        return savedDto;
     }
 
     public OrderDTO update(Long id, OrderDTO dto) {
         Order order = orderRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Order not found with id: " + id));
-        
+
+        String oldStatus = order.getStatus();
+
         order.setCustomerName(dto.getCustomerName());
         order.setPhone(dto.getPhone());
         order.setEmail(dto.getEmail());
@@ -67,9 +82,19 @@ public class OrderService {
         order.setTotalAmount(dto.getTotalAmount());
         order.setNotes(dto.getNotes());
         // createdAt не обновляется
-        
-        order = orderRepository.save(order);
-        return orderMapper.toDTO(order);
+
+        OrderDTO updatedDto = orderMapper.toDTO(orderRepository.save(order));
+
+        // Отправляем уведомление об изменении статуса
+        if (telegramService != null && !oldStatus.equals(updatedDto.getStatus())) {
+            telegramService.sendOrderStatusUpdate(
+                    updatedDto.getId().toString(),
+                    oldStatus,
+                    updatedDto.getStatus()
+            );
+        }
+
+        return updatedDto;
     }
 
     public void delete(Long id) {

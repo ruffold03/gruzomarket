@@ -28,10 +28,10 @@
                     <div class="col-md-4">
                         <label class="form-label">Статус</label>
                         <select class="form-select" name="status">
-                            <option th:selected="${order.status == 'NEW'}" value="NEW">NEW</option>
-                            <option th:selected="${order.status == 'IN_PROGRESS'}" value="IN_PROGRESS">IN_PROGRESS</option>
-                            <option th:selected="${order.status == 'DONE'}" value="DONE">DONE</option>
-                            <option th:selected="${order.status == 'CANCELLED'}" value="CANCELLED">CANCELLED</option>
+                            <option th:selected="${order.status == 'НОВЫЙ'}" value="НОВЫЙ">НОВЫЙ</option>
+                            <option th:selected="${order.status == 'В_ПРОЦЕССЕ'}" value="В_ПРОЦЕССЕ">В_ПРОЦЕССЕ</option>
+                            <option th:selected="${order.status == 'ВЫПОЛНЕНО'}" value="ВЫПОЛНЕНО">ВЫПОЛНЕНО</option>
+                            <option th:selected="${order.status == 'ОТМЕНЕНО'}" value="ОТМЕНЕНО">ОТМЕНЕНО</option>
                         </select>
                     </div>
                     <div class="col-md-4">

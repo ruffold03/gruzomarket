@@ -416,6 +416,18 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
 
+        const globalSearchInput = document.getElementById('globalSearchInput');
+        if (globalSearchInput) {
+            globalSearchInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    const query = e.target.value.trim();
+
+                    // Перенаправляем на страницу каталога с параметром поиска
+                    window.location.href = `/products?search=${encodeURIComponent(query)}`;
+                }
+            });
+        }
+
         // События сортировки
         if (sortSelect) {
             sortSelect.addEventListener('change', updateFilters);

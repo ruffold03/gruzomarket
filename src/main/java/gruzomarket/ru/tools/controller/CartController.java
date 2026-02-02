@@ -7,13 +7,17 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import gruzomarket.ru.tools.service.TelegramService;
+import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @RequestMapping("/api/cart")
 @RequiredArgsConstructor
+@Slf4j
 public class CartController {
 
     private final CartService cartService;
+    private final TelegramService telegramService;
 
     @GetMapping
     public ResponseEntity<CartSummaryDTO> getCart(HttpSession session) {
@@ -51,6 +55,8 @@ public class CartController {
 
     @PostMapping("/checkout")
     public ResponseEntity<OrderDTO> checkout(@RequestBody CheckoutRequest req, HttpSession session) {
+        log.info("Оформление заказа для клиента: {}, телефон: {}",
+                req.getCustomerName(), req.getPhone());
         Order order = cartService.checkout(session, req.getCustomerName(), req.getPhone(), req.getEmail(), req.getNotes());
         OrderDTO dto = new OrderDTO(
                 order.getId(),
@@ -62,6 +68,19 @@ public class CartController {
                 order.getNotes(),
                 order.getCreatedAt()
         );
+        try {
+            telegramService.sendOrderNotification(
+                    order.getId().toString(),
+                    order.getCustomerName(),
+                    order.getPhone(),
+                    order.getTotalAmount(),
+                    order.getStatus()
+            );
+            log.info("Telegram уведомление отправлено для заказа #{}", order.getId());
+        } catch (Exception e) {
+            // Логируем ошибку, но не прерываем выполнение
+            log.error("Не удалось отправить Telegram уведомление: {}", e.getMessage());
+        }
         return ResponseEntity.ok(dto);
     }
 }

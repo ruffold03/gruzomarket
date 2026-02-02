@@ -70,6 +70,6 @@ springdoc:
 
 telegram:
   bot:
-    token: ${TELEGRAM_BOT_TOKEN:ВАШ_ТОКЕН_БОТА}
+    token: ${8400149455:AAGyqhpjx3SLgioc57HpqAM75TWoSvre6k4}
   chat:
-    id: ${TELEGRAM_CHAT_ID:ВАШ_CHAT_ID}
+    id: ${-5019285628}

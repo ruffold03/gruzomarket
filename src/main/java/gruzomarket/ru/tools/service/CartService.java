@@ -127,7 +127,7 @@ public class CartService {
         order.setCustomerName(customerName.trim());
         order.setPhone(phone.trim());
         order.setEmail(email.trim());
-        order.setStatus("NEW");
+        order.setStatus("НОВЫЙ");
         order.setTotalAmount(summary.getTotalAmount());
         order.setNotes(notes);
         order = orderRepository.save(order);
