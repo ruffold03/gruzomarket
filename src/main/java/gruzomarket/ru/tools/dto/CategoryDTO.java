@@ -11,7 +11,7 @@ public class CategoryDTO {
     private Long id;
     private String name;
     private Long parentId;
-    private long productCount;
+    private Integer productCount;
 }
 
 

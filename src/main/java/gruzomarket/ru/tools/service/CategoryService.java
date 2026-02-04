@@ -1,6 +1,7 @@
 package gruzomarket.ru.tools.service;
 
 import gruzomarket.ru.tools.dto.CategoryDTO;
+import gruzomarket.ru.tools.dto.CategoryGroupDTO;
 import gruzomarket.ru.tools.entity.Category;
 import gruzomarket.ru.tools.exception.BadRequestException;
 import gruzomarket.ru.tools.exception.NotFoundException;
@@ -10,7 +11,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Service
@@ -85,6 +90,89 @@ public class CategoryService {
         }
         
         categoryRepository.deleteById(id);
+    }
+
+    public List<CategoryGroupDTO> getCategoryGroups() {
+        List<CategoryGroupDTO> groups = new ArrayList<>();
+
+        // Получаем все категории из базы и мапим в DTO
+        Map<Long, CategoryDTO> allCategories = categoryRepository.findAll()
+                .stream()
+                .map(categoryMapper::toDTO) // Используем mapper
+                .collect(Collectors.toMap(CategoryDTO::getId, Function.identity()));
+
+        // Двигатель и силовая установка
+        CategoryGroupDTO engineGroup = new CategoryGroupDTO();
+        engineGroup.setGroupName("Двигатель и силовая установка");
+        engineGroup.setCategories(getCategoriesByIds(Arrays.asList(
+                22L, 8L, 41L, 13L, 23L, 2L, 34L, 32L, 38L // Замените на реальные ID
+        ), allCategories));
+        groups.add(engineGroup);
+
+        // Трансмиссия и привод
+        CategoryGroupDTO transmissionGroup = new CategoryGroupDTO();
+        transmissionGroup.setGroupName("Трансмиссия и привод");
+        transmissionGroup.setCategories(getCategoriesByIds(Arrays.asList(
+                33L, 17L, 7L, 27L, 6L, 16L, 40L, 42L
+        ), allCategories));
+        groups.add(transmissionGroup);
+
+        // Ходовая часть и подвеска
+        CategoryGroupDTO chassisGroup = new CategoryGroupDTO();
+        chassisGroup.setGroupName("Ходовая часть и подвеска");
+        chassisGroup.setCategories(getCategoriesByIds(Arrays.asList(
+                1L, 25L, 30L, 37L, 3L, 21L, 12L
+        ), allCategories));
+        groups.add(chassisGroup);
+
+        // Рулевое управление
+        CategoryGroupDTO steeringGroup = new CategoryGroupDTO();
+        steeringGroup.setGroupName("Рулевое управление");
+        steeringGroup.setCategories(getCategoriesByIds(Arrays.asList(
+                29L, 19L
+        ), allCategories));
+        groups.add(steeringGroup);
+
+        // Тормозная система
+        CategoryGroupDTO brakesGroup = new CategoryGroupDTO();
+        brakesGroup.setGroupName("Тормозная система");
+        brakesGroup.setCategories(getCategoriesByIds(Arrays.asList(
+                35L, 5L
+        ), allCategories));
+        groups.add(brakesGroup);
+
+        // Кузов и электроника
+        CategoryGroupDTO bodyGroup = new CategoryGroupDTO();
+        bodyGroup.setGroupName("Кузов и электроника");
+        bodyGroup.setCategories(getCategoriesByIds(Arrays.asList(
+                14L, 18L, 44L, 4L
+        ), allCategories));
+        groups.add(bodyGroup);
+
+        // Вспомогательные системы
+        CategoryGroupDTO auxiliaryGroup = new CategoryGroupDTO();
+        auxiliaryGroup.setGroupName("Вспомогательные системы");
+        auxiliaryGroup.setCategories(getCategoriesByIds(Arrays.asList(
+                36L, 20L, 43L, 39L, 10L
+        ), allCategories));
+        groups.add(auxiliaryGroup);
+
+        // Ремонт и прочее
+        CategoryGroupDTO repairGroup = new CategoryGroupDTO();
+        repairGroup.setGroupName("Ремонт и прочее");
+        repairGroup.setCategories(getCategoriesByIds(Arrays.asList(
+                28L, 24L, 31L, 15L, 11L, 9L
+        ), allCategories));
+        groups.add(repairGroup);
+
+        return groups;
+    }
+
+    private List<CategoryDTO> getCategoriesByIds(List<Long> ids, Map<Long, CategoryDTO> allCategories) {
+        return ids.stream()
+                .filter(allCategories::containsKey)
+                .map(allCategories::get)
+                .collect(Collectors.toList());
     }
 }
 

@@ -16,7 +16,7 @@ import lombok.ToString;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "product_brands")
+@Table(name = "product_by_brand")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

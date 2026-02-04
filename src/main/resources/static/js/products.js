@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function() {
         categoryIds: [],
         brandIds: [],
         minPrice: 0,
-        maxPrice: 200000,
+        maxPrice: 60000,
         searchQuery: '',
         sortBy: 'name,asc'
     };
@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Минимальная разница между min и max
     const MIN_PRICE_DIFF = 100;
-    const MAX_PRICE = 200000;
+    const MAX_PRICE = 60000;
 
     // Форматирование цены
     function formatPrice(price) {
