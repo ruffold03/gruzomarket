@@ -45,9 +45,16 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .navbar {
-    background: #111111;
+    background: transparent;
+    position: fixed; /* Или sticky, если нужно */
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    transition: background 0.3s ease;
+}
+.navbar-scrolled {
+    background: #000000;
     box-shadow: var(--shadow);
-    padding: 1rem 0;
 }
 
 .nav-link {
@@ -134,7 +141,7 @@ color: var(--accent-orange); /* #ff6b35 (оранжевый) для активн
 /* Hero Section */
 .hero-section {
     background: linear-gradient(rgba(0, 0, 0, 0.9), rgba(17, 17, 17, 0.9)),
-                url('assets/background.jpg');
+                url('/images/background.jpg');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
@@ -648,7 +655,7 @@ color: var(--accent-orange); /* #ff6b35 (оранжевый) для активн
 /* Brands Section */
 .brands-section {
     padding: 4rem 0;
-    background: #0a0a0a;
+    background: #000000;
 }
 
 .brand-card {
@@ -1138,28 +1145,16 @@ input[type="range"]::-moz-range-thumb {
     border-color: var(--accent-orange);
 }
 
+/* ИЗМЕНЕНИЕ ЗДЕСЬ: убираем ограничение высоты и скролл */
 .accordion-checkboxes {
-    max-height: 200px;
-    overflow-y: auto;
-    padding-right: 5px;
+    max-height: none !important;
+    overflow-y: visible !important;
+    padding-right: 0;
 }
 
+/* Убираем стили скроллбара, так как он больше не нужен */
 .accordion-checkboxes::-webkit-scrollbar {
-    width: 5px;
-}
-
-.accordion-checkboxes::-webkit-scrollbar-track {
-    background: #222222;
-    border-radius: 3px;
-}
-
-.accordion-checkboxes::-webkit-scrollbar-thumb {
-    background: var(--accent-orange);
-    border-radius: 3px;
-}
-
-.accordion-checkboxes::-webkit-scrollbar-thumb:hover {
-    background: #ff5a1f;
+    display: none;
 }
 
 /* Улучшенные стили для чекбоксов внутри аккордеона */
@@ -1190,4 +1185,177 @@ input[type="range"]::-moz-range-thumb {
 
 .accordion-body .checkBox div {
     background-color: var(--accent-orange);
+}
+
+.accordion-collapse {
+    transition: all 0.3s ease-in-out !important;
+    overflow: hidden;
+}
+
+/* Когда аккордеон закрыт */
+.accordion-collapse:not(.show) {
+    display: block !important; /* Важно для анимации */
+    max-height: 0 !important;
+    opacity: 0;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: none !important;
+}
+
+/* Когда аккордеон открыт */
+.accordion-collapse.show {
+    max-height: 1000px !important; /* Достаточное значение для всех пунктов */
+    opacity: 1;
+}
+
+/* Плавное появление содержимого */
+.accordion-collapse.show .accordion-body {
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.accordion-collapse.collapsing {
+transition: all 0.3s ease-in-out !important;
+}
+/* Добавьте анимацию для закрытия */
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+}
+.accordion-collapse.collapsing .accordion-body {
+animation: fadeOut 0.3s ease-in-out;
+}
+
+.pagination {
+    justify-content: center;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+.page-item {
+    margin: 0 4px;
+}
+.page-link {
+    background-color: #111111;
+    border: 1px solid #333333;
+    color: #cbd5e0;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    transition: var(--transition);
+}
+.page-link:hover {
+    background-color: #2a2a2a;
+    border-color: var(--accent-orange);
+    color: var(--accent-orange);
+}
+.page-item.active .page-link {
+    background-color: var(--accent-orange);
+    border-color: var(--accent-orange);
+    color: #ffffff;
+}
+.page-item.disabled .page-link {
+    background-color: #111111;
+    border-color: #333333;
+    color: #666666;
+    cursor: not-allowed;
+}
+.page-link:focus {
+    box-shadow: 0 0 0 0.2rem rgba(255, 107, 53, 0.25);
+}
+
+/* Стили для селекта сортировки */
+.sort-select {
+    background-color: #111111;
+    border: 1px solid #333333;
+    color: #cbd5e0;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    transition: var(--transition);
+    font-size: 14px;
+    appearance: base-select; /* Новое свойство для кастомизации, поддерживается в новых версиях браузеров */
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23cbd5e0'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 12px;
+    cursor: pointer;
+}
+
+.sort-select::picker(select) {
+    appearance: base-select; /* Дополнительно для псевдоэлемента */
+}
+
+.sort-select:hover {
+    background-color: #2a2a2a;
+    border-color: var(--accent-orange);
+    color: var(--accent-orange);
+}
+
+.sort-select:focus {
+    border-color: var(--accent-orange);
+    box-shadow: 0 0 0 0.2rem rgba(255, 107, 53, 0.25);
+    outline: none;
+    color: var(--accent-orange);
+}
+
+.sort-select option {
+    background-color: #111111 !important;
+    color: #cbd5e0 !important;
+}
+
+.sort-select option:hover,
+.sort-select option:focus,
+.sort-select option:active,
+.sort-select option:checked {
+    background-color: #2a2a2a !important;
+    color: var(--accent-orange) !important;
+}
+
+/* Анимированный скроллбар */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #1a1a1a;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--accent-orange);
+    border-radius: 10px;
+    transition: all 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #ff8c5a;
+    box-shadow: 0 0 10px rgba(255, 107, 53, 0.5);
+    transform: scale(1.05);
+}
+
+/* Плавное появление скроллбара при скролле */
+body {
+    scroll-behavior: smooth;
+}
+
+/* Firefox */
+html {
+    scrollbar-color: var(--accent-orange) #1a1a1a;
+    scrollbar-width: thin;
 }

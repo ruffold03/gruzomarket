@@ -5,6 +5,199 @@
       lang="ru">
 <head>
     <title>Личный кабинет</title>
+    <style>
+        .favorites-section {
+            margin-top: 2rem;
+        }
+
+        .favorites-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        .favorites-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .favorite-product-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+
+        .favorite-product-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+        }
+
+        .favorite-product-image {
+            height: 180px;
+            background-size: cover;
+            background-position: center;
+            background-color: #f5f5f5;
+            position: relative;
+        }
+
+        .favorite-remove-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #e53e3e;
+            font-size: 1.2rem;
+            z-index: 2;
+            transition: all 0.3s ease;
+            opacity: 0;
+        }
+
+        .favorite-product-card:hover .favorite-remove-btn {
+            opacity: 1;
+        }
+
+        .favorite-remove-btn:hover {
+            background: #e53e3e;
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .favorite-product-info {
+            padding: 1rem;
+        }
+
+        .favorite-product-category {
+            color: #718096;
+            font-size: 0.875rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .favorite-product-name {
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 0.5rem;
+            line-height: 1.3;
+            height: 2.6em;
+            overflow: hidden;
+        }
+
+        .favorite-product-price {
+            color: var(--accent-orange);
+            font-weight: 700;
+            font-size: 1.25rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .favorite-product-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .favorites-empty {
+            text-align: center;
+            padding: 3rem 1rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .favorites-empty i {
+            font-size: 3rem;
+            color: #e2e8f0;
+            margin-bottom: 1rem;
+        }
+
+        .favorites-empty h4 {
+            color: #4a5568;
+            margin-bottom: 0.5rem;
+        }
+
+        .favorites-empty p {
+            color: #718096;
+            margin-bottom: 1.5rem;
+        }
+
+        .clear-favorites-btn {
+            background: #e53e3e;
+            color: white;
+            border: none;
+            padding: 0.5rem 1.5rem;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .clear-favorites-btn:hover {
+            background: #c53030;
+            transform: translateY(-2px);
+        }
+
+        .favorites-count {
+            background: var(--accent-orange);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            margin-left: 0.5rem;
+        }
+
+        .profile-tabs {
+            display: flex;
+            border-bottom: 2px solid #e2e8f0;
+            margin-bottom: 2rem;
+        }
+
+        .profile-tab {
+            padding: 0.75rem 1.5rem;
+            background: none;
+            border: none;
+            font-size: 1rem;
+            font-weight: 500;
+            color: #718096;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .profile-tab:hover {
+            color: #4a5568;
+        }
+
+        .profile-tab.active {
+            color: var(--accent-orange);
+        }
+
+        .profile-tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--accent-orange);
+        }
+
+        .profile-tab-content {
+            display: none;
+        }
+
+        .profile-tab-content.active {
+            display: block;
+        }
+    </style>
 </head>
 <body>
 <div layout:fragment="content">
@@ -12,197 +205,387 @@
         <div class="container page-container">
             <div class="section-title">
                 <h2>Личный кабинет</h2>
-                <p class="text-muted mt-3">Обновите свои данные профиля</p>
+                <p class="text-muted mt-3">Управляйте вашим профилем и избранным</p>
             </div>
 
-            <div class="row g-4">
-                <div class="col-lg-4">
-                    <div class="feature-card">
-                        <div class="feature-icon"><i class="fas fa-user-circle"></i></div>
-                        <h3 class="feature-title" th:text="${user.firstName} + ' ' + ${user.lastName}">Имя Фамилия</h3>
-                        <p class="text-muted mb-1" th:text="${user.email}">email@example.com</p>
-                        <p class="text-muted mb-1" th:text="${user.phone}">+7...</p>
-                        <p class="text-muted mb-0" th:text="${user.city} ?: 'Город не указан'">Город</p>
+            <!-- Табы для переключения между профилем и избранным -->
+            <div class="profile-tabs">
+                <button class="profile-tab active" onclick="switchTab('profile')">
+                    <i class="fas fa-user me-2"></i>Профиль
+                </button>
+                <button class="profile-tab" onclick="switchTab('favorites')">
+                    <i class="fas fa-heart me-2"></i>Избранное
+                    <span class="favorites-count" id="favoritesCount">0</span>
+                </button>
+            </div>
+
+            <!-- Контент вкладки профиля -->
+            <div id="profileTab" class="profile-tab-content active">
+                <div class="row g-4">
+                    <div class="col-lg-4">
+                        <div class="feature-card">
+                            <div class="feature-icon"><i class="fas fa-user-circle"></i></div>
+                            <h3 class="feature-title" th:text="${user.firstName} + ' ' + ${user.lastName}">Имя Фамилия</h3>
+                            <p class="text-muted mb-1" th:text="${user.email}">email@example.com</p>
+                            <p class="text-muted mb-1" th:text="${user.phone}">+7...</p>
+                            <p class="text-muted mb-0" th:text="${user.city} ?: 'Город не указан'">Город</p>
+                        </div>
                     </div>
-                </div>
 
-                <div class="col-lg-8">
-                    <div class="feature-card">
-                        <h3 class="feature-title">Редактирование профиля</h3>
+                    <div class="col-lg-8">
+                        <div class="feature-card">
+                            <h3 class="feature-title">Редактирование профиля</h3>
 
-                        <div th:if="${successMessage}" class="alert alert-success" th:text="${successMessage}"></div>
-                        <div th:if="${errorMessage}" class="alert alert-danger" th:text="${errorMessage}"></div>
+                            <div th:if="${successMessage}" class="alert alert-success" th:text="${successMessage}"></div>
+                            <div th:if="${errorMessage}" class="alert alert-danger" th:text="${errorMessage}"></div>
 
-                        <form th:action="@{/profile/update}" th:object="${updateRequest}" method="post">
-                            <div class="row g-3">
-                                <div class="col-md-6">
-                                    <label class="form-label">Имя</label>
-                                    <input type="text" class="form-control" th:field="*{firstName}"
-                                           th:placeholder="${user.firstName}">
+                            <form th:action="@{/profile/update}" th:object="${updateRequest}" method="post">
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <label class="form-label">Имя</label>
+                                        <input type="text" class="form-control" th:field="*{firstName}"
+                                               th:placeholder="${user.firstName}">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label">Фамилия</label>
+                                        <input type="text" class="form-control" th:field="*{lastName}"
+                                               th:placeholder="${user.lastName}">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label">Город</label>
+                                        <input type="text" class="form-control" th:field="*{city}"
+                                               th:placeholder="${user.city} ?: 'Ваш город'">
+                                    </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <label class="form-label">Фамилия</label>
-                                    <input type="text" class="form-control" th:field="*{lastName}"
-                                           th:placeholder="${user.lastName}">
-                                </div>
-                                <div class="col-md-6">
-                                    <label class="form-label">Город</label>
-                                    <input type="text" class="form-control" th:field="*{city}"
-                                           th:placeholder="${user.city} ?: 'Ваш город'">
-                                </div>
-                            </div>
 
-                            <hr class="my-4">
+                                <hr class="my-4">
 
-                            <p class="text-muted small mb-2">Чтобы изменить пароль, введите текущий и новый пароль.</p>
-                            <div class="row g-3">
-                                <div class="col-md-6">
-                                    <label class="form-label">Текущий пароль</label>
-                                    <input type="password" class="form-control" th:field="*{currentPassword}">
+                                <p class="text-muted small mb-2">Чтобы изменить пароль, введите текущий и новый пароль.</p>
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <label class="form-label">Текущий пароль</label>
+                                        <input type="password" class="form-control" th:field="*{currentPassword}">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label">Новый пароль</label>
+                                        <input type="password" class="form-control" th:field="*{newPassword}">
+                                    </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <label class="form-label">Новый пароль</label>
-                                    <input type="password" class="form-control" th:field="*{newPassword}">
-                                </div>
-                            </div>
 
-                            <div class="mt-4 d-flex justify-content-between">
-                                <a th:href="@{/}" class="reset-btn">На главную</a>
-                                <button type="submit" class="filter-btn">Сохранить изменения</button>
-                            </div>
-                        </form>
+                                <div class="mt-4 d-flex justify-content-between">
+                                    <a th:href="@{/}" class="reset-btn">На главную</a>
+                                    <button type="submit" class="filter-btn">Сохранить изменения</button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
 
+            <!-- Контент вкладки избранного -->
+            <div id="favoritesTab" class="profile-tab-content">
+                <div class="favorites-section">
+                    <div class="favorites-header">
+                        <div>
+                            <h3>Избранные товары</h3>
+                            <p class="text-muted">Товары, которые вы добавили в избранное</p>
+                        </div>
+                        <button id="clearFavoritesBtn" class="clear-favorites-btn">
+                            <i class="fas fa-trash me-2"></i>Очистить всё
+                        </button>
+                    </div>
+
+                    <div id="favoritesGrid" class="favorites-grid">
+                        <!-- Рендерим избранное через Thymeleaf -->
+                        <div th:each="product : ${favoriteProducts}" class="favorite-product-card">
+                            <button class="favorite-remove-btn" onclick="removeFromFavorites([[${product.id}]], this)">
+                                <i class="fas fa-times"></i>
+                            </button>
+
+                            <div class="favorite-product-image"
+                                 th:style="'background-image: url(\'' + (${product.imageUrl} ?: '/images/no-image.jpg') + '\');'">
+                    <span th:class="${product.quantity > 0} ? 'stock-badge in-stock' : 'stock-badge out-of-stock'"
+                          th:text="${product.quantity > 0} ? 'В наличии' : 'Под заказ'">
+                    </span>
+                            </div>
+
+                            <div class="favorite-product-info">
+                                <div class="favorite-product-category" th:text="${product.category?.name} ?: 'Запчасти'"></div>
+                                <h5 class="favorite-product-name" th:text="${product.name}"></h5>
+                                <div class="favorite-product-price" th:text="${#numbers.formatDecimal(product.price, 0, 'COMMA', 0, 'POINT') + ' ₽'}"></div>
+                                <div class="favorite-product-actions">
+                                    <button class="btn-add-cart"
+                                            th:onclick="'addToCartFromProfile(' + ${product.id} + ')'"
+                                            th:disabled="${product.quantity <= 0}"
+                                            style="flex: 1; padding: 8px 12px;">
+                                        <i class="fas fa-cart-plus me-2"></i>В корзину
+                                    </button>
+                                    <button class="btn-favorite"
+                                            th:onclick="'toggleFavoriteFromProfile(' + ${product.id} + ', this)'"
+                                            style="width: 40px; padding: 8px;">
+                                        <i class="fas fa-heart" style="color: #ff4757;"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Пустое состояние -->
+                        <div th:if="${favoriteProducts.empty}" id="emptyFavorites" class="favorites-empty">
+                            <i class="far fa-heart"></i>
+                            <h4>В избранном пока пусто</h4>
+                            <p>Добавляйте товары в избранное, чтобы они не потерялись. Так вы сможете быстро найти их позже.</p>
+                            <a th:href="@{/products}" class="filter-btn">
+                                <i class="fas fa-shopping-cart me-2"></i>Перейти в каталог
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
-</div>
-</body>
-</html>
 
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layouts/main}"
-      lang="ru">
-<head>
-    <title th:text="${title}"></title>
-    <link rel="stylesheet" href="/css/profile.css" th:href="@{/css/profile.css}">
-</head>
-<body>
-<div layout:fragment="content">
-    <div class="profile-container">
-        <!-- Боковое меню -->
-        <div class="profile-sidebar">
-            <div class="profile-avatar">
-                <div class="avatar-circle">
-                    <span th:text="${#strings.substring(user.firstName, 0, 1)} + ${#strings.substring(user.lastName, 0, 1)}"></span>
-                </div>
-                <h3 th:text="${user.firstName + ' ' + user.lastName}"></h3>
-                <p class="text-muted" th:text="${user.email}"></p>
-            </div>
-            <nav class="profile-nav">
-                <a href="#" class="nav-item active">
-                    <i class="fas fa-user"></i> Профиль
-                </a>
-                <a href="#" class="nav-item">
-                    <i class="fas fa-shopping-bag"></i> Мои заказы
-                </a>
-                <a href="#" class="nav-item">
-                    <i class="fas fa-map-marker-alt"></i> Адреса доставки
-                </a>
-                <a href="#" class="nav-item">
-                    <i class="fas fa-bell"></i> Уведомления
-                </a>
-                <a href="/logout" class="nav-item">
-                    <i class="fas fa-sign-out-alt"></i> Выход
-                </a>
-            </nav>
-        </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Функция переключения вкладок
+            window.switchTab = function(tabName) {
+                // Обновляем активные табы
+                document.querySelectorAll('.profile-tab').forEach(tab => {
+                    tab.classList.remove('active');
+                });
+                document.querySelectorAll('.profile-tab-content').forEach(content => {
+                    content.classList.remove('active');
+                });
 
-        <!-- Основной контент -->
-        <div class="profile-content">
-            <div class="profile-header">
-                <h2>Личный кабинет</h2>
-                <p>Управляйте вашей учетной записью и настройками</p>
-            </div>
+                // Активируем выбранный таб
+                event.currentTarget.classList.add('active');
+                document.getElementById(tabName + 'Tab').classList.add('active');
 
-            <!-- Сообщения об успехе/ошибке -->
-            <div th:if="${successMessage}" class="alert alert-success" role="alert">
-                <span th:text="${successMessage}"></span>
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div th:if="${errorMessage}" class="alert alert-danger" role="alert">
-                <span th:text="${errorMessage}"></span>
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
+                // Если переключились на вкладку избранного, загружаем товары
+                if (tabName === 'favorites') {
+                    loadFavorites();
+                }
+            };
 
-            <!-- Форма редактирования профиля -->
-            <div class="card profile-card">
-                <div class="card-header">
-                    <h4>Основная информация</h4>
-                    <p>Обновите ваши личные данные</p>
-                </div>
-                <div class="card-body">
-                    <form th:action="@{/profile/update}" method="post" th:object="${updateRequest}">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="firstName">Имя</label>
-                                    <input type="text" class="form-control" id="firstName" th:field="*{firstName}" th:value="${user.firstName}">
+            // Форматирование цены
+            function formatPrice(price) {
+                return new Intl.NumberFormat('ru-RU').format(Math.round(price));
+            }
+
+            // Загрузка избранных товаров
+            async function loadFavorites() {
+                const favoritesGrid = document.getElementById('favoritesGrid');
+                const emptyFavorites = document.getElementById('emptyFavorites');
+                const favoritesCount = document.getElementById('favoritesCount');
+
+                try {
+                    const response = await fetch('/api/favorites/my');
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+
+                    const products = await response.json();
+
+                    // Обновляем счетчик
+                    favoritesCount.textContent = products.length;
+
+                    if (products.length === 0) {
+                        favoritesGrid.style.display = 'none';
+                        emptyFavorites.style.display = 'block';
+                        return;
+                    }
+
+                    emptyFavorites.style.display = 'none';
+                    favoritesGrid.style.display = 'grid';
+
+                    // Рендерим товары
+                    favoritesGrid.innerHTML = products.map(product => `
+                        <div class="favorite-product-card">
+                            <button class="favorite-remove-btn" onclick="removeFromFavorites(${product.id}, this)">
+                                <i class="fas fa-times"></i>
+                            </button>
+
+                            <div class="favorite-product-image"
+                                 style="background-image: url('${product.imageUrl || '/images/no-image.jpg'}');">
+                                ${product.quantity > 0 ?
+                                    '<span style="position: absolute; top: 10px; left: 10px; background: #38a169; color: white; padding: 4px 8px; border-radius: 4px; font-size: 0.75rem;">В наличии</span>' :
+                                    '<span style="position: absolute; top: 10px; left: 10px; background: #2d3748; color: white; padding: 4px 8px; border-radius: 4px; font-size: 0.75rem;">Под заказ</span>'
+                                }
+                            </div>
+
+                            <div class="favorite-product-info">
+                                <div class="favorite-product-category">${product.category?.name || 'Запчасти'}</div>
+                                <h5 class="favorite-product-name">${product.name}</h5>
+                                <div class="favorite-product-price">${formatPrice(product.price || 0)} ₽</div>
+                                <div class="favorite-product-actions">
+                                    <button class="btn-add-cart"
+                                            onclick="addToCart(${product.id})"
+                                            ${product.quantity <= 0 ? 'disabled' : ''}
+                                            style="flex: 1; padding: 8px 12px;">
+                                        <i class="fas fa-cart-plus me-2"></i>В корзину
+                                    </button>
+                                    <button class="btn-favorite"
+                                            onclick="toggleFavoriteFromProfile(${product.id}, this)"
+                                            style="width: 40px; padding: 8px;">
+                                        <i class="fas fa-heart" style="color: #ff4757;"></i>
+                                    </button>
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="lastName">Фамилия</label>
-                                    <input type="text" class="form-control" id="lastName" th:field="*{lastName}" th:value="${user.lastName}">
-                                </div>
+                        </div>
+                    `).join('');
+
+                } catch (error) {
+                    console.error('Ошибка загрузки избранного:', error);
+                    favoritesGrid.innerHTML = `
+                        <div class="col-12">
+                            <div class="alert alert-danger">
+                                <i class="fas fa-exclamation-triangle me-2"></i>
+                                Ошибка загрузки избранных товаров
                             </div>
                         </div>
-                        
-                        <div class="form-group">
-                            <label for="city">Город</label>
-                            <input type="text" class="form-control" id="city" th:field="*{city}" th:value="${user.city}" placeholder="Введите ваш город">
-                            <small class="form-text text-muted">Укажите город для более точного отображения информации о доставке</small>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="email">Email</label>
-                            <input type="email" class="form-control" id="email" th:value="${user.email}" disabled>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="phone">Телефон</label>
-                            <input type="tel" class="form-control" id="phone" th:value="${user.phone}" disabled>
-                        </div>
-                        
-                        <hr class="my-4">
-                        <h5 class="mb-3">Смена пароля</h5>
-                        
-                        <div class="form-group">
-                            <label for="currentPassword">Текущий пароль</label>
-                            <input type="password" class="form-control" id="currentPassword" th:field="*{currentPassword}" placeholder="Введите текущий пароль">
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="newPassword">Новый пароль</label>
-                            <input type="password" class="form-control" id="newPassword" th:field="*{newPassword}" placeholder="Оставьте пустым, если не хотите менять">
-                            <small class="form-text text-muted">Минимум 6 символов</small>
-                        </div>
-                        
-                        <div class="form-group text-right">
-                            <button type="submit" class="btn btn-primary">Сохранить изменения</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
+                    `;
+                }
+            }
+
+            // Удаление из избранного со страницы профиля
+            window.removeFromFavorites = async function(productId, button) {
+                try {
+                    const response = await fetch(`/api/favorites/${productId}`, {
+                        method: 'DELETE'
+                    });
+
+                    if (response.ok) {
+                        // Анимация удаления
+                        const productCard = button.closest('.favorite-product-card');
+                        productCard.style.opacity = '0.5';
+                        productCard.style.transform = 'translateX(-20px)';
+
+                        setTimeout(() => {
+                            productCard.remove();
+                            loadFavorites(); // Перезагружаем список
+                        }, 300);
+
+                        showNotification('Удалено из избранного', 'info');
+                    } else {
+                        throw new Error('Ошибка удаления из избранного');
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    showNotification('Ошибка удаления', 'error');
+                }
+            };
+
+            // Переключение избранного со страницы профиля
+            window.toggleFavoriteFromProfile = async function(productId, button) {
+                try {
+                    const icon = button.querySelector('i');
+
+                    if (icon.style.color === 'rgb(255, 71, 87)') {
+                        // Удаляем из избранного
+                        const response = await fetch(`/api/favorites/${productId}`, {
+                            method: 'DELETE'
+                        });
+
+                        if (response.ok) {
+                            icon.style.color = '';
+                            button.closest('.favorite-product-card').remove();
+                            loadFavorites(); // Перезагружаем список
+                            showNotification('Удалено из избранного', 'info');
+                        }
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    showNotification('Ошибка операции', 'error');
+                }
+            };
+
+            // Очистка всех избранных
+            if (clearFavoritesBtn) {
+                clearFavoritesBtn.addEventListener('click', async function() {
+                    if (confirm('Вы уверены, что хотите удалить все товары из избранного?')) {
+                        try {
+                            const response = await fetch('/api/favorites/clear', {
+                                method: 'DELETE',
+                                credentials: 'include'
+                            });
+
+                            if (response.ok) {
+                                // Перезагружаем страницу
+                                window.location.reload();
+                            } else {
+                                throw new Error('Ошибка очистки избранного');
+                            }
+                        } catch (error) {
+                            console.error('Error:', error);
+                            showNotification('Ошибка очистки', 'error');
+                        }
+                    }
+                });
+            }
+
+            // Функция добавления в корзину
+            window.addToCart = function(productId) {
+                fetch('/api/cart/items', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        productId: productId,
+                        quantity: 1
+                    })
+                })
+                .then(response => {
+                    if (response.ok) {
+                        showNotification('Товар добавлен в корзину!', 'success');
+                    } else {
+                        showNotification('Ошибка добавления товара', 'error');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    showNotification('Ошибка сети', 'error');
+                });
+            };
+
+            // Функция показа уведомлений
+            function showNotification(message, type = 'info') {
+                const notification = document.createElement('div');
+                notification.className = `alert alert-${type === 'success' ? 'success' : type === 'error' ? 'danger' : 'info'} alert-dismissible fade show`;
+                notification.style.position = 'fixed';
+                notification.style.top = '20px';
+                notification.style.right = '20px';
+                notification.style.zIndex = '9999';
+                notification.style.minWidth = '300px';
+                notification.innerHTML = `
+                    ${message}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                `;
+
+                document.body.appendChild(notification);
+
+                setTimeout(() => {
+                    notification.remove();
+                }, 3000);
+            }
+
+            // При загрузке страницы сразу загружаем количество избранного
+            async function loadFavoritesCount() {
+                const favoritesCount = document.getElementById('favoritesCount');
+                try {
+                    const response = await fetch('/api/favorites/count');
+                    if (response.ok) {
+                        const count = await response.text();
+                        favoritesCount.textContent = count;
+                    }
+                } catch (error) {
+                    console.error('Ошибка загрузки счетчика избранного:', error);
+                }
+            }
+
+            // Инициализация
+            loadFavoritesCount();
+        });
+    </script>
 </div>
 </body>
 </html>

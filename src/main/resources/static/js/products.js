@@ -137,6 +137,40 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
+    // После функции fetchProducts в init() добавьте:
+    async function checkFavoriteStatus() {
+        try {
+            const response = await fetch('/api/favorites/ids');
+            if (response.ok) {
+                const favoriteIds = await response.json();
+
+                // Обновляем иконки на странице
+                document.querySelectorAll('.btn-favorite').forEach(btn => {
+                    const onclickAttr = btn.getAttribute('onclick');
+                    if (!onclickAttr) return;
+
+                    const match = onclickAttr.match(/toggleFavorite\((\d+)\)/);
+                    if (!match) return;
+
+                    const productId = parseInt(match[1]);
+                    const icon = btn.querySelector('i');
+
+                    if (favoriteIds.includes(productId)) {
+                        icon.classList.remove('far');
+                        icon.classList.add('fas');
+                        icon.style.color = '#ff4757';
+                    } else {
+                        icon.classList.remove('fas');
+                        icon.classList.add('far');
+                        icon.style.color = '';
+                    }
+                });
+            }
+        } catch (error) {
+            console.error('Ошибка загрузки избранного:', error);
+        }
+    }
+
     // Рендеринг товаров
     function renderProducts(products) {
         if (!products || products.length === 0) {
@@ -187,6 +221,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 </div>
             </div>
         `).join('');
+        setTimeout(checkFavoriteStatus, 100);
     }
 
     // Рендеринг пагинации
@@ -474,24 +509,73 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     };
 
-    window.toggleFavorite = function(productId) {
+    window.toggleFavorite = async function(productId) {
         const btn = event.currentTarget;
         const icon = btn.querySelector('i');
 
-        if (icon.classList.contains('far')) {
-            icon.classList.remove('far');
-            icon.classList.add('fas');
-            icon.style.color = '#ff4757';
-            // TODO: Добавить в избранное через API
-            showNotification('Добавлено в избранное', 'info');
-        } else {
-            icon.classList.remove('fas');
-            icon.classList.add('far');
-            icon.style.color = '';
-            // TODO: Удалить из избранного через API
-            showNotification('Удалено из избранного', 'info');
+        try {
+            if (icon.classList.contains('far')) {
+                // Добавляем в избранное
+                const response = await fetch(`/api/favorites/${productId}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (response.ok) {
+                    icon.classList.remove('far');
+                    icon.classList.add('fas');
+                    icon.style.color = '#ff4757';
+                    showNotification('Добавлено в избранное', 'success');
+                } else {
+                    throw new Error('Ошибка добавления в избранное');
+                }
+            } else {
+                // Удаляем из избранного
+                const response = await fetch(`/api/favorites/${productId}`, {
+                    method: 'DELETE'
+                });
+
+                if (response.ok) {
+                    icon.classList.remove('fas');
+                    icon.classList.add('far');
+                    icon.style.color = '';
+                    showNotification('Удалено из избранного', 'info');
+                } else {
+                    throw new Error('Ошибка удаления из избранного');
+                }
+            }
+
+            // Обновляем счетчик избранного на всех страницах
+            updateFavoriteCounterOnAllPages();
+
+        } catch (error) {
+            console.error('Error:', error);
+            showNotification('Ошибка операции', 'error');
         }
     };
+
+    // Функция для обновления счетчика на всех страницах
+    async function updateFavoriteCounterOnAllPages() {
+        try {
+            const response = await fetch('/api/favorites/count');
+            if (response.ok) {
+                const count = await response.text();
+
+                // Обновляем счетчики везде, где они есть
+                document.querySelectorAll('.favorite-count').forEach(counter => {
+                    counter.textContent = count;
+                    counter.classList.add('pulse');
+                    setTimeout(() => {
+                        counter.classList.remove('pulse');
+                    }, 500);
+                });
+            }
+        } catch (error) {
+            console.error('Ошибка обновления счетчика избранного:', error);
+        }
+    }
 
     function showNotification(message, type = 'info') {
         // Создаем уведомление

@@ -6,6 +6,7 @@ import gruzomarket.ru.tools.entity.Customer;
 import gruzomarket.ru.tools.exception.UnauthorizedException;
 import gruzomarket.ru.tools.mapper.CustomerMapper;
 import gruzomarket.ru.tools.repository.CustomerRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -62,6 +63,11 @@ public class CustomerService {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         return customerRepository.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("Пользователь не найден"));
+    }
+
+    public Customer getCustomerByEmail(String email) {
+        return customerRepository.findByEmail(email)
+                .orElseThrow(() -> new EntityNotFoundException("Пользователь не найден"));
     }
 }
 

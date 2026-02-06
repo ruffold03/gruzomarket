@@ -3,6 +3,7 @@ package gruzomarket.ru.tools.service;
 import gruzomarket.ru.tools.dto.ProductDTO;
 import gruzomarket.ru.tools.dto.ProductSearchResponse;
 import gruzomarket.ru.tools.entity.Category;
+import gruzomarket.ru.tools.entity.Customer;
 import gruzomarket.ru.tools.entity.Product;
 import gruzomarket.ru.tools.exception.AlreadyExistsException;
 import gruzomarket.ru.tools.exception.NotFoundException;
@@ -10,6 +11,7 @@ import gruzomarket.ru.tools.mapper.ProductMapper;
 import gruzomarket.ru.tools.repository.CategoryRepository;
 import gruzomarket.ru.tools.repository.ProductRepository;
 import gruzomarket.ru.tools.repository.spec.ProductSpecifications;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -187,6 +189,11 @@ public class ProductService {
             throw new NotFoundException("Product not found with id: " + id);
         }
         productRepository.deleteById(id);
+    }
+
+    public Product getProductById(Long productId) {
+        return productRepository.findById(productId)
+                .orElseThrow(() -> new EntityNotFoundException("Товар не найден"));
     }
 }
 

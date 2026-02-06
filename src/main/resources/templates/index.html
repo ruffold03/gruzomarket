@@ -81,7 +81,7 @@
                             <a class="text-decoration-none" th:href="@{/products}">
                                 <div class="category-card">
                                     <div class="category-image"
-                                         th:style="'background-image: url(' + @{/assets/engine.jpg} + ');'"></div>
+                                         th:style="'background-image: url(' + @{/images/engine.jpg} + ');'"></div>
                                     <div class="category-content">
                                         <h5 class="category-title" th:text="${c.name}">Категория</h5>
                                         <p class="text-muted small">Запчасти и комплектующие</p>
@@ -102,7 +102,7 @@
                             <div class="product-card">
                                 <span class="product-badge" th:text="${p.quantity != null && p.quantity > 0 ? 'В наличии' : 'Под заказ'}">В наличии</span>
                                 <div class="product-image"
-                                     th:style="'background-image: url(' + @{/assets/turbo.jpg} + ');'">
+                                     th:style="'background-image: url(' + @{/images/turbo.jpg} + ');'">
                                     <div class="product-overlay">
                                         <a class="quick-view-btn" th:href="@{/products}">Открыть каталог</a>
                                     </div>

@@ -3,6 +3,7 @@ package gruzomarket.ru.tools.controller;
 import gruzomarket.ru.tools.dto.ProfileUpdateRequest;
 import gruzomarket.ru.tools.service.CartService;
 import gruzomarket.ru.tools.service.CustomerService;
+import gruzomarket.ru.tools.service.FavoriteService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -21,15 +22,25 @@ public class ProfileController {
 
     private final CustomerService customerService;
     private final CartService cartService;
+    private final FavoriteService favoriteService; // Добавляем сервис избранного
 
     @GetMapping
     @PreAuthorize("isAuthenticated()")
     public String profilePage(Model model, HttpSession session) {
         model.addAttribute("activePage", "profile");
         model.addAttribute("cartCount", cartService.count(session));
-        model.addAttribute("user", customerService.getCurrentUser());
+
+        // Получаем текущего пользователя
+        var customer = customerService.getCurrentUser();
+        model.addAttribute("user", customer);
         model.addAttribute("updateRequest", new ProfileUpdateRequest());
         model.addAttribute("title", "Личный кабинет | GruzoMarket");
+
+        // Получаем избранные товары для отображения на странице профиля
+        var favoriteProducts = favoriteService.getFavoriteProducts(customer.getEmail());
+        model.addAttribute("favoriteProducts", favoriteProducts);
+        model.addAttribute("favoriteCount", favoriteProducts.size());
+
         return "profile/index";
     }
 
@@ -38,14 +49,14 @@ public class ProfileController {
     public String updateProfile(
             @ModelAttribute("updateRequest") ProfileUpdateRequest request,
             RedirectAttributes redirectAttributes) {
-        
+
         try {
             customerService.updateProfile(request);
             redirectAttributes.addFlashAttribute("successMessage", "Профиль успешно обновлен");
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("errorMessage", "Ошибка при обновлении профиля: " + e.getMessage());
         }
-        
+
         return "redirect:/profile";
     }
 }

@@ -51,6 +51,7 @@ public class WebController {
     public String catalogPage(Model model) {
         List<CategoryDTO> categories = categoryService.findAll();
         List<BrandDTO> brands = brandService.findAll();
+        model.addAttribute("activePage", "products");
         model.addAttribute("categories", categories);  // Добавляем категории
         model.addAttribute("brands", brands);  // Добавляем бренды
         return "products";  // Имя шаблона: products.html
