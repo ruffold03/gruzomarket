@@ -82,9 +82,13 @@
   }
 
   async function refreshCartCount() {
-    const count = await fetchJson(API.cartCount);
-    const badge = $("#cartCountBadge");
-    if (badge) badge.textContent = String(count ?? 0);
+      try {
+          const count = await fetchJson(API.cartCount);
+          const badge = $("#cartCountBadge");
+          if (badge) badge.textContent = String(count ?? 0);
+      } catch (err) {
+          console.warn("Не удалось обновить счетчик корзины:", err);
+      }
   }
 
   async function loadCart() {

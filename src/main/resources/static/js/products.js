@@ -82,14 +82,13 @@ document.addEventListener('DOMContentLoaded', function() {
     async function fetchProducts(page = 0) {
         try {
             // Показываем индикатор загрузки
-            productsGrid.innerHTML = `
-                <div class="col-12 text-center py-5">
-                    <div class="spinner-border text-primary" role="status">
-                        <span class="visually-hidden">Загрузка...</span>
-                    </div>
-                    <p class="mt-2 text-muted">Загрузка товаров...</p>
-                </div>
-            `;
+            const productsGrid = document.getElementById('productsGrid');
+                // Проверяем, существует ли элемент
+            if (!productsGrid) {
+                console.error('Элемент productsGrid не найден!');
+                return;
+            }
+            productsGrid.innerHTML = '<div class="spinner-border text-primary" role="status"><span class="visually-hidden">Загрузка...</span></div>';
 
             // Собираем параметры запроса
             const params = new URLSearchParams({
@@ -125,15 +124,11 @@ document.addEventListener('DOMContentLoaded', function() {
             renderPagination();
 
         } catch (error) {
+            const productsGrid = document.getElementById('productsGrid');
+            if (productsGrid) {
+                productsGrid.innerHTML = '<p class="text-danger">Ошибка загрузки товаров</p>';
+            }
             console.error('Ошибка загрузки товаров:', error);
-            productsGrid.innerHTML = `
-                <div class="col-12">
-                    <div class="alert alert-danger">
-                        <i class="fas fa-exclamation-triangle me-2"></i>
-                        Ошибка загрузки товаров: ${error.message}
-                    </div>
-                </div>
-            `;
         }
     }
 
@@ -484,7 +479,7 @@ document.addEventListener('DOMContentLoaded', function() {
     };
 
     window.addToCart = function(productId) {
-        fetch('/api/cart/items', {
+        fetch('/api/cart/add', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

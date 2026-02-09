@@ -12,7 +12,7 @@ public class CategoryMapper {
             return null;
         }
         Long parentId = category.getParent() != null ? category.getParent().getId() : null;
-        return new CategoryDTO(category.getId(), category.getName(), parentId, category.getProductCount());
+        return new CategoryDTO(category.getId(), category.getName(), parentId, category.getProductCount(), category.getImageUrl());
     }
 
     public Category toEntity(CategoryDTO dto) {
@@ -22,6 +22,7 @@ public class CategoryMapper {
         Category category = new Category();
         category.setId(dto.getId());
         category.setName(dto.getName());
+        category.setImageUrl(dto.getImageUrl());
         // parent устанавливается отдельно через сервис
         return category;
     }

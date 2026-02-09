@@ -12,6 +12,7 @@ public class CategoryDTO {
     private String name;
     private Long parentId;
     private Integer productCount;
+    private String imageUrl;
 }
 
 
