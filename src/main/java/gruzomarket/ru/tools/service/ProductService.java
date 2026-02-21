@@ -85,26 +85,24 @@ public class ProductService {
             Boolean inStock,
             int page,
             int size,
-            String sort
-    ) {
+            String sort) {
 
         List<Long> categoryIdList = (categoryIds == null || categoryIds.isBlank())
                 ? List.of()
                 : Arrays.stream(categoryIds.split(","))
-                .map(Long::valueOf)
-                .toList();
+                        .map(Long::valueOf)
+                        .toList();
 
         List<Long> brandIdList = (brandIds == null || brandIds.isBlank())
                 ? List.of()
                 : Arrays.stream(brandIds.split(","))
-                .map(Long::valueOf)
-                .toList();
+                        .map(Long::valueOf)
+                        .toList();
 
         PageRequest pageable = PageRequest.of(
                 Math.max(page, 0),
                 Math.min(Math.max(size, 1), 100),
-                parseSort(sort)
-        );
+                parseSort(sort));
 
         Specification<Product> spec = Specification.where(ProductSpecifications.textQuery(q))
                 .and(ProductSpecifications.categoryIds(categoryIdList))
@@ -121,8 +119,7 @@ public class ProductService {
                 dtoPage.getTotalElements(),
                 dtoPage.getTotalPages(),
                 dtoPage.isFirst(),
-                dtoPage.isLast()
-        );
+                dtoPage.isLast());
     }
 
     private Sort parseSort(String sort) {
@@ -141,15 +138,15 @@ public class ProductService {
         if (productRepository.findByArticle(dto.getArticle()).isPresent()) {
             throw new AlreadyExistsException("Product with article " + dto.getArticle() + " already exists");
         }
-        
+
         Product product = productMapper.toEntity(dto);
-        
+
         if (dto.getCategoryId() != null) {
             Category category = categoryRepository.findById(dto.getCategoryId())
                     .orElseThrow(() -> new NotFoundException("Category not found with id: " + dto.getCategoryId()));
             product.setCategory(category);
         }
-        
+
         product = productRepository.save(product);
         return productMapper.toDTO(product);
     }
@@ -157,12 +154,12 @@ public class ProductService {
     public ProductDTO update(Long id, ProductDTO dto) {
         Product product = productRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Product not found with id: " + id));
-        
-        if (!product.getArticle().equals(dto.getArticle()) 
+
+        if (!product.getArticle().equals(dto.getArticle())
                 && productRepository.findByArticle(dto.getArticle()).isPresent()) {
             throw new AlreadyExistsException("Product with article " + dto.getArticle() + " already exists");
         }
-        
+
         product.setName(dto.getName());
         product.setArticle(dto.getArticle());
         product.setDescription(dto.getDescription());
@@ -171,7 +168,19 @@ public class ProductService {
         product.setOriginalAuto(dto.getOriginalAuto());
         product.setIsVisible(dto.getIsVisible() != null ? dto.getIsVisible() : true);
         product.setImageUrl(dto.getImageUrl());
-        
+
+        // Handle additional images if provided in DTO (e.g. for existing images during
+        // update)
+        if (dto.getAdditionalImageUrls() != null) {
+            product.getImages().clear();
+            for (String url : dto.getAdditionalImageUrls()) {
+                gruzomarket.ru.tools.entity.ProductImage img = new gruzomarket.ru.tools.entity.ProductImage();
+                img.setImageUrl(url);
+                img.setProduct(product);
+                product.getImages().add(img);
+            }
+        }
+
         if (dto.getCategoryId() != null) {
             Category category = categoryRepository.findById(dto.getCategoryId())
                     .orElseThrow(() -> new NotFoundException("Category not found with id: " + dto.getCategoryId()));
@@ -179,7 +188,7 @@ public class ProductService {
         } else {
             product.setCategory(null);
         }
-        
+
         product = productRepository.save(product);
         return productMapper.toDTO(product);
     }
@@ -196,4 +205,3 @@ public class ProductService {
                 .orElseThrow(() -> new EntityNotFoundException("Товар не найден"));
     }
 }
-

@@ -1,53 +1,86 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layouts/base}"
-      lang="ru">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layouts/base}" lang="ru">
+
 <head>
     <title>Админка — Редактирование категории</title>
 </head>
+
 <body>
-<div layout:fragment="content">
-    <section class="categories-section">
-        <div class="container page-container">
-            <div class="section-title">
-                <h2 th:text="${category.id == null} ? 'Новая категория' : 'Редактирование категории'">Категория</h2>
-            </div>
+    <div layout:fragment="content">
+        <section class="categories-section">
+            <div class="container page-container">
+                <div class="section-title">
+                    <h2 th:text="${category.id == null} ? 'Новая категория' : 'Редактирование категории'">Категория</h2>
+                </div>
 
-            <div class="feature-card">
-                <form th:action="@{/admin/categories/save}" th:object="${category}" method="post">
-                    <input type="hidden" th:field="*{id}">
+                <div class="feature-card">
+                    <form th:action="@{/admin/categories/save}" th:object="${category}" method="post"
+                        enctype="multipart/form-data">
+                        <input type="hidden" th:field="*{id}">
 
-                    <div class="row g-3">
-                        <div class="col-md-6">
-                            <label class="form-label">Название</label>
-                            <input class="form-control" th:field="*{name}" required>
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Название</label>
+                                <input class="form-control" th:field="*{name}" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Родительская категория</label>
+                                <select class="form-select" th:field="*{parentId}">
+                                    <option th:value="${null}">Без родителя</option>
+                                    <option th:each="c : ${allCategories}" th:value="${c.id}" th:text="${c.name}">
+                                        Категория</option>
+                                </select>
+                            </div>
+
+                            <!-- Добавление фото категории -->
+                            <div class="col-md-6">
+                                <label class="form-label">Фото категории</label>
+                                <input type="file" name="categoryImage" id="categoryImageInput" class="form-control"
+                                    accept="image/*">
+                                <small class="form-text text-muted">Используется на главной странице.</small>
+                                <div id="categoryImagePreview" class="mt-2" style="max-width: 200px;"></div>
+                            </div>
+
+                            <div class="col-md-6" th:if="${category.imageUrl != null}">
+                                <label class="form-label">Текущее фото</label>
+                                <div class="position-relative" style="max-width: 200px;" id="catImageContainer">
+                                    <img th:src="${category.imageUrl}" alt="Category Image" class="img-thumbnail">
+                                    <input type="hidden" th:field="*{imageUrl}" id="catImageUrlInput">
+                                    <button type="button"
+                                        class="btn btn-danger btn-sm position-absolute top-0 end-0 m-1"
+                                        onclick="document.getElementById('catImageUrlInput').value=''; document.getElementById('catImageContainer').style.display='none';">×</button>
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-md-6">
-                            <label class="form-label">Родительская категория</label>
-                            <select class="form-select" th:field="*{parentId}">
-                                <option th:value="${null}">Без родителя</option>
-                                <option th:each="c : ${allCategories}"
-                                        th:value="${c.id}"
-                                        th:text="${c.name}">Категория</option>
-                            </select>
-                        </div>
-                    </div>
 
-                    <div class="mt-4 d-flex justify-content-between">
-                        <a th:href="@{/admin/categories}" class="reset-btn">Назад к списку</a>
-                        <button type="submit" class="filter-btn">Сохранить</button>
-                    </div>
-                </form>
+                        <div class="mt-4 d-flex justify-content-between">
+                            <a th:href="@{/admin/categories}" class="reset-btn">Назад к списку</a>
+                            <button type="submit" class="filter-btn">Сохранить</button>
+                        </div>
+                    </form>
+                </div>
             </div>
-        </div>
-    </section>
-</div>
+        </section>
+    </div>
+
+    <script layout:fragment="scripts">
+        document.getElementById('categoryImageInput').addEventListener('change', function (event) {
+            const preview = document.getElementById('categoryImagePreview');
+            preview.innerHTML = '';
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.className = 'img-thumbnail';
+                    preview.appendChild(img);
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+    </script>
 </body>
+
 </html>
-
-
-
-
-
-

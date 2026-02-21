@@ -20,7 +20,8 @@ public class BrandMapper {
         }
         Brand brand = new Brand();
         // Устанавливаем ID только если он не null и > 0 (для обновления существующего)
-        // При создании нового бренда ID должен быть null, чтобы БД сама сгенерировала его
+        // При создании нового бренда ID должен быть null, чтобы БД сама сгенерировала
+        // его
         if (dto.getId() != null && dto.getId() > 0) {
             brand.setId(dto.getId());
         } else {
@@ -32,17 +33,3 @@ public class BrandMapper {
         return brand;
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-

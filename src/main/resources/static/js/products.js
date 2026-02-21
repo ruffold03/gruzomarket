@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     // Состояние
     let currentPage = 0;
     const pageSize = 12;
@@ -83,7 +83,7 @@ document.addEventListener('DOMContentLoaded', function() {
         try {
             // Показываем индикатор загрузки
             const productsGrid = document.getElementById('productsGrid');
-                // Проверяем, существует ли элемент
+            // Проверяем, существует ли элемент
             if (!productsGrid) {
                 console.error('Элемент productsGrid не найден!');
                 return;
@@ -183,22 +183,32 @@ document.addEventListener('DOMContentLoaded', function() {
             <div class="col-md-4 col-lg-3 mb-4">
                 <div class="product-card h-100">
                     ${product.quantity > 0 ?
-                        '<span class="product-badge">В наличии</span>' :
-                        '<span class="product-badge" style="background: #2d3748;">Под заказ</span>'
-                    }
+                '<span class="product-badge">В наличии</span>' :
+                '<span class="product-badge" style="background: #2d3748;">Под заказ</span>'
+            }
 
-                    <div class="product-image"
-                         style="background-image: url('${product.imageUrl || '/images/no-image.jpg'}');">
-                        <div class="product-overlay">
-                            <button class="quick-view-btn" onclick="quickView(${product.id})">
-                                Быстрый просмотр
-                            </button>
-                        </div>
-                    </div>
+                    <a href="/products/${product.id}" class="product-image-link">
+                        ${product.imageUrl ?
+                `<div class="product-image" style="background-image: url('${product.imageUrl}');">
+                                <div class="product-overlay">
+                                    <span class="quick-view-btn">Подробнее</span>
+                                </div>
+                            </div>` :
+                `<div class="product-image no-image-placeholder">
+                                <i class="fas fa-image fa-3x mb-2"></i>
+                                <span>Нет фото</span>
+                                <div class="product-overlay">
+                                    <span class="quick-view-btn">Подробнее</span>
+                                </div>
+                            </div>`
+            }
+                    </a>
 
                     <div class="product-content">
                         <div class="product-category">${product.category?.name || 'Запчасти'}</div>
-                        <h5 class="product-title">${product.name}</h5>
+                        <a href="/products/${product.id}" class="text-decoration-none">
+                            <h5 class="product-title">${product.name}</h5>
+                        </a>
                         <div class="product-article">Артикул: ${product.article || 'N/A'}</div>
                         <div class="product-price">${formatPrice(product.price || 0)} ₽</div>
 
@@ -286,7 +296,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Смена страницы
-    window.changePage = function(page) {
+    window.changePage = function (page) {
         if (page >= 0 && page < totalPages) {
             fetchProducts(page);
             window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -404,6 +414,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function init() {
         // Настройка слайдера цены
         setupPriceSlider();
+        // Начальная загрузка
         const urlParams = new URLSearchParams(window.location.search);
         const searchTerm = urlParams.get('search');
         if (searchTerm) {
@@ -411,7 +422,24 @@ document.addEventListener('DOMContentLoaded', function() {
             filters.searchQuery = searchTerm;
         }
 
-        // Начальная загрузка
+        const categoryIdsParam = urlParams.get('categoryIds');
+        if (categoryIdsParam) {
+            const ids = categoryIdsParam.split(',').map(id => parseInt(id));
+            filters.categoryIds = ids;
+            ids.forEach(id => {
+                const checkbox = document.querySelector(`.category-filter[value="${id}"]`);
+                if (checkbox) {
+                    checkbox.checked = true;
+                    // Раскрываем аккордеон, если он закрыт
+                    const collapse = checkbox.closest('.accordion-collapse');
+                    if (collapse) {
+                        const bsCollapse = new bootstrap.Collapse(collapse, { toggle: false });
+                        bsCollapse.show();
+                    }
+                }
+            });
+        }
+
         updateSliderFilled();
         fetchProducts(0);
 
@@ -473,12 +501,12 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Вспомогательные функции
-    window.quickView = function(productId) {
+    window.quickView = function (productId) {
         // TODO: Реализовать модальное окно
         console.log('Быстрый просмотр товара ID:', productId);
     };
 
-    window.addToCart = function(productId) {
+    window.addToCart = function (productId) {
         fetch('/api/cart/add', {
             method: 'POST',
             headers: {
@@ -489,22 +517,22 @@ document.addEventListener('DOMContentLoaded', function() {
                 quantity: 1
             })
         })
-        .then(response => {
-            if (response.ok) {
-                // Показываем уведомление
-                showNotification('Товар добавлен в корзину!', 'success');
-                updateCartCounter();
-            } else {
-                showNotification('Ошибка добавления товара', 'error');
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            showNotification('Ошибка сети', 'error');
-        });
+            .then(response => {
+                if (response.ok) {
+                    // Показываем уведомление
+                    showNotification('Товар добавлен в корзину!', 'success');
+                    updateCartCounter();
+                } else {
+                    showNotification('Ошибка добавления товара', 'error');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                showNotification('Ошибка сети', 'error');
+            });
     };
 
-    window.toggleFavorite = async function(productId) {
+    window.toggleFavorite = async function (productId) {
         const btn = event.currentTarget;
         const icon = btn.querySelector('i');
 

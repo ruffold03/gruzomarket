@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -23,18 +24,5 @@ public class ProductDTO {
     private String originalAuto;
     private Boolean isVisible;
     private String imageUrl;
+    private List<String> additionalImageUrls;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-

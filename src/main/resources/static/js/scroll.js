@@ -1,5 +1,5 @@
 // Добавляем в конец файла перед </body> или в отдельный script.js
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const carousel = document.getElementById('categoriesCarousel');
 
     if (!carousel) return;
@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Обработка прокрутки колесиком
     let wheelTimeout;
-    carousel.addEventListener('wheel', function(e) {
+    carousel.addEventListener('wheel', function (e) {
         e.preventDefault();
 
         // Дебаунс
@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }, { passive: false });
 
     // Добавляем классы для анимации при ручном переключении
-    carousel.addEventListener('slide.bs.carousel', function(e) {
+    carousel.addEventListener('slide.bs.carousel', function (e) {
         const items = carousel.querySelectorAll('.carousel-item');
         items.forEach(item => {
             item.classList.remove('slide-in', 'slide-out');
@@ -54,7 +54,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const prevBtn = brandsCarousel.querySelector('.brand-arrow-prev');
     const nextBtn = brandsCarousel.querySelector('.brand-arrow-next');
 
-    // Данные брендов (можно получить с сервера)
     const brands = [
         { id: 1, name: 'КАМАЗ', image: '/images/brands/kamaz.png' },
         { id: 2, name: 'HOWO', image: '/images/brands/howo.png' },
@@ -68,146 +67,129 @@ document.addEventListener('DOMContentLoaded', function() {
         { id: 10, name: 'ДТ-75', image: '/images/brands/dt75.png' }
     ];
 
-    let currentIndex = 2; // Стартуем с центрального элемента
-    const visibleCount = 5; // Сколько брендов показывать одновременно
+    let currentIndex = 2;
+    let autoSlideInterval;
 
-    // Инициализация карусели
     function initCarousel() {
-        // Очищаем трек и индикаторы
         track.innerHTML = '';
         indicatorsContainer.innerHTML = '';
 
-        // Создаем элементы брендов
         brands.forEach((brand, index) => {
             const brandItem = document.createElement('div');
             brandItem.className = 'brand-item';
             brandItem.dataset.index = index;
 
             brandItem.innerHTML = `
-                <img src="${brand.image}" alt="${brand.name}" class="brand-logo">
+                <img src="${brand.image}" alt="${brand.name}" class="brand-logo" 
+                     onerror="this.src='/images/engine.jpg'; this.style.opacity='0.5'">
                 <div class="brand-name">${brand.name}</div>
             `;
 
+            // Кликабельность - переход в каталог
+            brandItem.style.cursor = 'pointer';
+            brandItem.addEventListener('click', () => {
+                window.location.href = `/products?brands=${brand.id}`;
+            });
+
             track.appendChild(brandItem);
 
-            // Создаем индикатор
             const indicator = document.createElement('div');
             indicator.className = 'brand-indicator';
             indicator.dataset.index = index;
-            indicator.addEventListener('click', () => goToSlide(index));
+            indicator.addEventListener('click', (e) => {
+                e.stopPropagation();
+                goToSlide(index);
+            });
             indicatorsContainer.appendChild(indicator);
         });
 
-        updateCarousel();
-
-        // Автопрокрутка
-        let autoSlideInterval = setInterval(() => {
-            nextSlide();
-        }, 4000);
-
-        // Останавливаем автопрокрутку при наведении
-        brandsCarousel.addEventListener('mouseenter', () => {
-            clearInterval(autoSlideInterval);
-        });
-
-        brandsCarousel.addEventListener('mouseleave', () => {
-            autoSlideInterval = setInterval(() => {
-                nextSlide();
-            }, 4000);
-        });
+        setTimeout(updateCarousel, 100);
+        startAutoSlide();
     }
 
-    // Обновление отображения карусели
     function updateCarousel() {
         const brandItems = track.querySelectorAll('.brand-item');
         const indicators = indicatorsContainer.querySelectorAll('.brand-indicator');
+        if (brandItems.length === 0) return;
 
-        // Сбрасываем все классы
         brandItems.forEach(item => {
             item.classList.remove('active', 'side-1', 'side-2', 'side-3', 'side-4');
         });
-
         indicators.forEach(ind => ind.classList.remove('active'));
 
-        // Устанавливаем активный элемент и его соседей
-        brandItems[currentIndex]?.classList.add('active');
-        indicators[currentIndex]?.classList.add('active');
+        const activeItem = brandItems[currentIndex];
+        if (activeItem) {
+            activeItem.classList.add('active');
+            indicators[currentIndex].classList.add('active');
 
-        // Устанавливаем классы для соседних элементов
-        for (let i = 1; i <= 2; i++) {
-            const prevIndex = (currentIndex - i + brands.length) % brands.length;
-            const nextIndex = (currentIndex + i) % brands.length;
+            // Эффект глубины
+            for (let i = 1; i <= 2; i++) {
+                const prevIdx = (currentIndex - i + brands.length) % brands.length;
+                const nextIdx = (currentIndex + i) % brands.length;
+                brandItems[prevIdx]?.classList.add(`side-${i}`);
+                brandItems[nextIdx]?.classList.add(`side-${i}`);
+            }
 
-            if (brandItems[prevIndex]) {
-                brandItems[prevIndex].classList.add(`side-${i}`);
-            }
-            if (brandItems[nextIndex]) {
-                brandItems[nextIndex].classList.add(`side-${i}`);
-            }
+            // Точное центрирование по координатам
+            const containerWidth = brandsCarousel.offsetWidth;
+            const itemWidth = activeItem.offsetWidth;
+            const itemOffsetLeft = activeItem.offsetLeft;
+
+            // Центр контейнера минус центр элемента
+            const targetTranslate = (containerWidth / 2) - (itemOffsetLeft + itemWidth / 2);
+            track.style.transform = `translateX(${targetTranslate}px)`;
         }
-
-        // Прокручиваем трек к активному элементу
-        const itemWidth = brandItems[0]?.offsetWidth + 20; // 20px это gap
-        const offset = currentIndex * itemWidth - (track.offsetWidth / 2) + (itemWidth / 2);
-        track.style.transform = `translateX(-${offset}px)`;
     }
 
-    // Переход к слайду
     function goToSlide(index) {
         currentIndex = index;
         updateCarousel();
+        resetAutoSlide();
     }
 
-    // Следующий слайд
     function nextSlide() {
         currentIndex = (currentIndex + 1) % brands.length;
         updateCarousel();
     }
 
-    // Предыдущий слайд
     function prevSlide() {
         currentIndex = (currentIndex - 1 + brands.length) % brands.length;
         updateCarousel();
     }
 
-    // Обработчики событий
-    prevBtn.addEventListener('click', prevSlide);
-    nextBtn.addEventListener('click', nextSlide);
+    function startAutoSlide() {
+        clearInterval(autoSlideInterval);
+        autoSlideInterval = setInterval(nextSlide, 5000);
+    }
 
-    // Прокрутка колесиком мыши
-    track.addEventListener('wheel', function(e) {
-        e.preventDefault();
+    function resetAutoSlide() {
+        startAutoSlide();
+    }
 
-        if (e.deltaY > 5) {
-            nextSlide();
-        } else if (e.deltaY < -5) {
-            prevSlide();
-        }
-    }, { passive: false });
+    prevBtn.addEventListener('click', (e) => { e.stopPropagation(); prevSlide(); resetAutoSlide(); });
+    nextBtn.addEventListener('click', (e) => { e.stopPropagation(); nextSlide(); resetAutoSlide(); });
 
-    // Инициализируем карусель
-    initCarousel();
+    brandsCarousel.addEventListener('mouseenter', () => clearInterval(autoSlideInterval));
+    brandsCarousel.addEventListener('mouseleave', startAutoSlide);
 
-    // Ресайз окна
     window.addEventListener('resize', updateCarousel);
 
-    document.querySelectorAll('.brand-logo').forEach(img => {
-        console.log('Image size:', img.naturalWidth, 'x', img.naturalHeight);
-        console.log('Current CSS size:', img.offsetWidth, 'x', img.offsetHeight);
+    initCarousel();
 
-        // Принудительно меняем размер
-        img.style.width = '300px';
-        img.style.height = '300px';
-        img.style.minWidth = '300px';
-        img.style.minHeight = '300px';
-        img.style.maxWidth = '300px';
-        img.style.maxHeight = '300px';
-        img.style.objectFit = 'contain';
-    });
+    // Принудительная подстройка размеров (для анимации и шрифтов)
+    function forceSizes() {
+        const activeLogo = track.querySelector('.brand-item.active .brand-logo');
+        if (activeLogo) {
+            document.querySelectorAll('.brand-logo').forEach(img => {
+                if (img !== activeLogo) {
+                    img.style.width = '250px';
+                    img.style.height = '250px';
+                }
+            });
+            activeLogo.style.width = '350px';
+            activeLogo.style.height = '350px';
+        }
+    }
 
-    // Для активного элемента
-    document.querySelectorAll('.brand-item.active .brand-logo').forEach(img => {
-        img.style.width = '400px';
-        img.style.height = '400px';
-    });
+    setInterval(forceSizes, 500);
 });

@@ -7,19 +7,13 @@ import gruzomarket.ru.tools.dto.OrderDTO;
 import gruzomarket.ru.tools.service.*;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
-import java.util.UUID;
 
 @Controller
 @RequestMapping("/admin")
@@ -72,18 +66,38 @@ public class AdminController {
         return "admin/products/edit";
     }
 
-    @PostMapping(
-            value = "/products/save",
-            consumes = MediaType.MULTIPART_FORM_DATA_VALUE
-    )
+    @PostMapping("/products/save")
     public String saveProduct(
             @ModelAttribute("product") ProductDTO dto,
-            @RequestParam(value = "imageFile", required = false) MultipartFile imageFile
-    ) {
+            @RequestParam(value = "imageFile", required = false) MultipartFile imageFile,
+            @RequestParam(value = "additionalImages", required = false) java.util.List<MultipartFile> additionalImages) {
         try {
             if (imageFile != null && !imageFile.isEmpty()) {
                 String imageUrl = imageService.saveImage(imageFile);
                 dto.setImageUrl(imageUrl);
+            }
+
+            if (additionalImages != null && !additionalImages.isEmpty()) {
+                java.util.List<String> additionalUrls = new java.util.ArrayList<>();
+                // Keep existing images if updating (they will be in the DTO if we add them to
+                // the form)
+                // For now, let's just append new ones.
+                // To keep it simple, we expect the DTO to already have existing URLs if they
+                // were sent back.
+
+                for (MultipartFile file : additionalImages) {
+                    if (file != null && !file.isEmpty()) {
+                        String url = imageService.saveImage(file);
+                        additionalUrls.add(url);
+                    }
+                }
+
+                if (!additionalUrls.isEmpty()) {
+                    if (dto.getAdditionalImageUrls() == null) {
+                        dto.setAdditionalImageUrls(new java.util.ArrayList<>());
+                    }
+                    dto.getAdditionalImageUrls().addAll(additionalUrls);
+                }
             }
         } catch (IOException e) {
             return "redirect:/admin/products?error=upload_failed";
@@ -130,7 +144,19 @@ public class AdminController {
     }
 
     @PostMapping("/categories/save")
-    public String saveCategory(@ModelAttribute("category") CategoryDTO dto) {
+    public String saveCategory(
+            @ModelAttribute("category") CategoryDTO dto,
+            @RequestParam(value = "categoryImage", required = false) MultipartFile categoryImage) {
+
+        if (categoryImage != null && !categoryImage.isEmpty()) {
+            try {
+                String imageUrl = imageService.saveImage(categoryImage);
+                dto.setImageUrl(imageUrl);
+            } catch (IOException e) {
+                return "redirect:/admin/categories?error=upload_failed";
+            }
+        }
+
         // Явно обнуляем ID, если он пустой или 0 (для создания новой категории)
         if (dto.getId() == null || dto.getId() <= 0) {
             dto.setId(null);

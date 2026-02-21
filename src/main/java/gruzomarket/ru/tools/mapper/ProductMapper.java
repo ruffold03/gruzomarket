@@ -22,8 +22,10 @@ public class ProductMapper {
                 categoryId,
                 product.getOriginalAuto(),
                 product.getIsVisible(),
-                product.getImageUrl()
-        );
+                product.getImageUrl(),
+                product.getImages() != null ? product.getImages().stream()
+                        .map(gruzomarket.ru.tools.entity.ProductImage::getImageUrl)
+                        .collect(java.util.stream.Collectors.toList()) : java.util.Collections.emptyList());
     }
 
     public Product toEntity(ProductDTO dto) {
@@ -40,21 +42,17 @@ public class ProductMapper {
         product.setOriginalAuto(dto.getOriginalAuto());
         product.setIsVisible(dto.getIsVisible() != null ? dto.getIsVisible() : true);
         product.setImageUrl(dto.getImageUrl());
+
+        if (dto.getAdditionalImageUrls() != null) {
+            for (String url : dto.getAdditionalImageUrls()) {
+                gruzomarket.ru.tools.entity.ProductImage img = new gruzomarket.ru.tools.entity.ProductImage();
+                img.setImageUrl(url);
+                img.setProduct(product);
+                product.getImages().add(img);
+            }
+        }
+
         // category устанавливается отдельно через сервис
         return product;
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-

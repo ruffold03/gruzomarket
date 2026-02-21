@@ -40,11 +40,6 @@ spring:
   # Настройки для статических ресурсов (CSS, JS, картинки):
   web:
     resources:
-      static-locations:
-        - classpath:/static/         # Стандартное место
-        - classpath:/public/         # Альтернативное место
-        - classpath:/resources/
-        - file:./uploads/  # Еще одно альтернативное
       cache:
         period: 0                    # Для разработки - без кэширования
 
@@ -54,6 +49,8 @@ spring:
 
 server:
   port: 8080
+  tomcat:
+    max-part-count: 100
 
 logging:
   level:

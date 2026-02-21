@@ -23,8 +23,18 @@ public class CustomerService {
     private final PasswordEncoder passwordEncoder;
 
     public void register(RegisterRequest request) {
+        // Проверяем email
         if (customerRepository.existsByEmail(request.getEmail())) {
-            throw new RuntimeException("Email уже используется");
+            throw new IllegalArgumentException("Пользователь с таким email уже зарегистрирован");
+        }
+        
+        // Проверяем телефон (если он указан)
+        if (request.getPhone() != null && !request.getPhone().trim().isEmpty()) {
+            // Очищаем телефон от всего, кроме цифр для проверки
+            String cleanPhone = request.getPhone().replaceAll("\\D+", "");
+            if (customerRepository.existsByPhone(cleanPhone.substring(1))) { // Ищем по номеру без +7
+                throw new IllegalArgumentException("Пользователь с таким номером телефона уже зарегистрирован");
+            }
         }
 
         Customer customer = customerMapper.toEntity(request, passwordEncoder);

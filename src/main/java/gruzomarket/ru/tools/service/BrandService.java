@@ -56,12 +56,12 @@ public class BrandService {
     public BrandDTO update(Long id, BrandDTO dto) {
         Brand brand = brandRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Brand not found with id: " + id));
-        
-        if (!brand.getName().equalsIgnoreCase(dto.getName()) 
+
+        if (!brand.getName().equalsIgnoreCase(dto.getName())
                 && brandRepository.existsByNameIgnoreCase(dto.getName())) {
             throw new AlreadyExistsException("Brand with name " + dto.getName() + " already exists");
         }
-        
+
         brand.setName(dto.getName());
         brand = brandRepository.save(brand);
         return brandMapper.toDTO(brand);
@@ -78,4 +78,3 @@ public class BrandService {
         return brandRepository.existsByNameIgnoreCase(name);
     }
 }
-

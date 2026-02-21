@@ -19,57 +19,55 @@ import java.util.List;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-                .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/", "/products/**", "/brands/**", "/auth/**",
-                                "/css/**", "/js/**", "/images/**", "/api/products/**",
-                                "/delivery/**", "/about/**", "/contact/**", "/cart/**", "/api/test/**", "/api/cart/**").permitAll()
-                        .requestMatchers("/admin/**").hasRole("ADMIN")
-                        .anyRequest().authenticated()
-                )
-                .formLogin(form -> form
-                        .loginPage("/auth/login")
-                        .loginProcessingUrl("/login")
-                        .usernameParameter("email")
-                        .passwordParameter("password")
-                        .defaultSuccessUrl("/", true)
-                        .failureUrl("/auth/login?error=true")
-                        .permitAll()
-                )
-                .rememberMe(remember -> remember
-                        .rememberMeParameter("remember-me")
-                        .rememberMeCookieName("GRUZOMARKET_REMEMBER_ME")
-                        .tokenValiditySeconds(14 * 24 * 60 * 60) // 14 дней
-                )
-                .logout(logout -> logout
-                        .logoutUrl("/logout")
-                        .logoutSuccessUrl("/auth/login?logout=true")
-                        .permitAll()
-                )
-                .csrf(csrf -> csrf.disable()); // Для разработки
+        @Bean
+        public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+                http
+                                .authorizeHttpRequests(auth -> auth
+                                                .requestMatchers("/", "/products/**", "/brands/**", "/auth/**",
+                                                                "/css/**", "/js/**", "/images/**", "/api/products/**",
+                                                                "/delivery/**", "/about/**", "/contact/**", "/cart/**",
+                                                                "/api/test/**", "/api/cart/**", "/uploads/**")
+                                                .permitAll()
+                                                .requestMatchers("/admin/**").hasRole("ADMIN")
+                                                .anyRequest().authenticated())
+                                .formLogin(form -> form
+                                                .loginPage("/auth/login")
+                                                .loginProcessingUrl("/login")
+                                                .usernameParameter("email")
+                                                .passwordParameter("password")
+                                                .defaultSuccessUrl("/", true)
+                                                .failureUrl("/auth/login?error=true")
+                                                .permitAll())
+                                .rememberMe(remember -> remember
+                                                .rememberMeParameter("remember-me")
+                                                .rememberMeCookieName("GRUZOMARKET_REMEMBER_ME")
+                                                .tokenValiditySeconds(14 * 24 * 60 * 60) // 14 дней
+                                )
+                                .logout(logout -> logout
+                                                .logoutUrl("/logout")
+                                                .logoutSuccessUrl("/auth/login?logout=true")
+                                                .permitAll())
+                                .csrf(csrf -> csrf.disable()); // Для разработки
 
-        return http.build();
-    }
+                return http.build();
+        }
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+        @Bean
+        public PasswordEncoder passwordEncoder() {
+                return new BCryptPasswordEncoder();
+        }
 
-    @Bean
-    public CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("*")); // В продакшене указать конкретные домены
-        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
-        configuration.setAllowedHeaders(List.of("*"));
-        configuration.setAllowCredentials(false);
-        configuration.setMaxAge(3600L);
+        @Bean
+        public CorsConfigurationSource corsConfigurationSource() {
+                CorsConfiguration configuration = new CorsConfiguration();
+                configuration.setAllowedOrigins(List.of("*")); // В продакшене указать конкретные домены
+                configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
+                configuration.setAllowedHeaders(List.of("*"));
+                configuration.setAllowCredentials(false);
+                configuration.setMaxAge(3600L);
 
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration);
-        return source;
-    }
+                UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+                source.registerCorsConfiguration("/**", configuration);
+                return source;
+        }
 }
-

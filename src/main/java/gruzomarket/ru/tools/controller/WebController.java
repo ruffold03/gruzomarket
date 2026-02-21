@@ -14,7 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
@@ -34,27 +34,47 @@ public class WebController {
         model.addAttribute("cartCount", cartService.count(session));
 
         List<CategoryDTO> categories = categoryService.findAll();
-        if (categories.size() > 6) categories = categories.subList(0, 6);
+        // Сортируем по количеству товаров (от большего к меньшему), чтобы показать
+        // реально "популярные"
+        categories.sort((c1, c2) -> {
+            int count1 = c1.getProductCount() != null ? c1.getProductCount() : 0;
+            int count2 = c2.getProductCount() != null ? c2.getProductCount() : 0;
+            return Integer.compare(count2, count1);
+        });
+
+        if (categories.size() > 6)
+            categories = categories.subList(0, 6);
         model.addAttribute("categories", categories);
 
         List<ProductDTO> products = productService.findAllVisible();
-        if (products.size() > 6) products = products.subList(0, 6);
+        if (products.size() > 6)
+            products = products.subList(0, 6);
         model.addAttribute("products", products);
 
         List<BrandDTO> brands = brandService.findAll();
-        if (brands.size() > 6) brands = brands.subList(0, 6);
+        if (brands.size() > 6)
+            brands = brands.subList(0, 6);
         model.addAttribute("brands", brands);
         return "index";
     }
 
-    @GetMapping("/products")  // URL для страницы, например /products
+    @GetMapping("/products") // URL для страницы, например /products
     public String catalogPage(Model model) {
         List<CategoryDTO> categories = categoryService.findAll();
         List<BrandDTO> brands = brandService.findAll();
         model.addAttribute("activePage", "products");
-        model.addAttribute("categories", categories);  // Добавляем категории
-        model.addAttribute("brands", brands);  // Добавляем бренды
-        return "products";  // Имя шаблона: products.html
+        model.addAttribute("categories", categories); // Добавляем категории
+        model.addAttribute("brands", brands); // Добавляем бренды
+        return "products"; // Имя шаблона: products.html
+    }
+
+    @GetMapping("/products/{id}")
+    public String productDetails(@PathVariable Long id, Model model, HttpSession session) {
+        ProductDTO product = productService.findById(id);
+        model.addAttribute("product", product);
+        model.addAttribute("activePage", "products");
+        model.addAttribute("cartCount", cartService.count(session));
+        return "product_view";
     }
 
     @GetMapping("/brands")
@@ -105,4 +125,3 @@ public class WebController {
         return "login";
     }
 }
-

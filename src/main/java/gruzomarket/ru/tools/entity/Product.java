@@ -18,7 +18,9 @@ import lombok.ToString;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -26,7 +28,7 @@ import java.util.Set;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString(exclude = {"productLinks", "orderItems"})
+@ToString(exclude = { "productLinks", "orderItems", "images" })
 public class Product {
 
     @Id
@@ -58,6 +60,9 @@ public class Product {
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private Set<OrderItem> orderItems = new HashSet<>();
 
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ProductImage> images = new ArrayList<>();
+
     // Поле для совместимости с триггером БД (если есть updated_at в БД)
     @Column(name = "updated_at", insertable = false, updatable = false)
     private LocalDateTime updatedAt;
@@ -69,17 +74,3 @@ public class Product {
     @Column(name = "image_url")
     private String imageUrl;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-

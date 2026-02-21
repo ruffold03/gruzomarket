@@ -58,11 +58,28 @@ public class AuthController {
         if (!request.getPassword().equals(request.getConfirmPassword())) {
             model.addAttribute("error", true);
             model.addAttribute("message", "Пароли не совпадают");
-            return "auth";
+            model.addAttribute("isRegister", true);
+            return "auth/login";
         }
 
-        customerService.register(request);
-        return "redirect:/auth/login?registered";
+        try {
+            customerService.register(request);
+            return "redirect:/auth/login?registered";
+        } catch (IllegalArgumentException e) {
+            model.addAttribute("error", true);
+            model.addAttribute("message", e.getMessage());
+            model.addAttribute("isRegister", true);
+            return "auth/login";
+        }
+    }
+    
+    private Model prefillModelWithRequestData(RegisterRequest request) {
+        Model model = (Model) new org.springframework.ui.ExtendedModelMap();
+        model.addAttribute("firstName", request.getFirstName());
+        model.addAttribute("lastName", request.getLastName());
+        model.addAttribute("email", request.getEmail());
+        model.addAttribute("phone", request.getPhone());
+        return model;
     }
 
 }
