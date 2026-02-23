@@ -1,7 +1,9 @@
 package gruzomarket.ru.tools.service;
 
 import gruzomarket.ru.tools.dto.OrderDTO;
+import gruzomarket.ru.tools.dto.OrderItemDTO;
 import gruzomarket.ru.tools.entity.Order;
+import gruzomarket.ru.tools.repository.OrderItemRepository;
 import gruzomarket.ru.tools.exception.NotFoundException;
 import gruzomarket.ru.tools.mapper.OrderMapper;
 import gruzomarket.ru.tools.repository.OrderRepository;
@@ -18,19 +20,29 @@ import java.util.stream.Collectors;
 public class OrderService {
 
     private final OrderRepository orderRepository;
+    private final OrderItemRepository orderItemRepository;
     private final OrderMapper orderMapper;
     private final TelegramService telegramService;
 
     public List<OrderDTO> findAll() {
         return orderRepository.findAll().stream()
-                .map(orderMapper::toDTO)
+                .map(this::populateItems)
                 .collect(Collectors.toList());
     }
 
     public OrderDTO findById(Long id) {
         Order order = orderRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Order not found with id: " + id));
-        return orderMapper.toDTO(order);
+        return populateItems(order);
+    }
+
+    private OrderDTO populateItems(Order order) {
+        OrderDTO dto = orderMapper.toDTO(order);
+        List<OrderItemDTO> items = orderItemRepository.findByOrderId(order.getId()).stream()
+                .map(orderMapper::toItemDTO)
+                .collect(Collectors.toList());
+        dto.setItems(items);
+        return dto;
     }
 
     public List<OrderDTO> findByStatus(String status) {
@@ -57,13 +69,7 @@ public class OrderService {
         OrderDTO savedDto = orderMapper.toDTO(order);
 
         if (telegramService != null) {
-            telegramService.sendOrderNotification(
-                    savedDto.getId().toString(),
-                    savedDto.getCustomerName(),
-                    savedDto.getPhone(),
-                    savedDto.getTotalAmount(),
-                    savedDto.getStatus()
-            );
+            telegramService.sendOrderNotification(populateItems(order));
         }
 
         return savedDto;
@@ -90,8 +96,7 @@ public class OrderService {
             telegramService.sendOrderStatusUpdate(
                     updatedDto.getId().toString(),
                     oldStatus,
-                    updatedDto.getStatus()
-            );
+                    updatedDto.getStatus());
         }
 
         return updatedDto;
@@ -104,4 +109,3 @@ public class OrderService {
         orderRepository.deleteById(id);
     }
 }
-

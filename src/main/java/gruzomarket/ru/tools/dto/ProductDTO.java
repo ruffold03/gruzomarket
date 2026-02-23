@@ -21,6 +21,7 @@ public class ProductDTO {
     private BigDecimal price;
     private Integer quantity;
     private Long categoryId;
+    private String categoryName;
     private String originalAuto;
     private Boolean isVisible;
     private String imageUrl;

@@ -1,8 +1,8 @@
 // Search functionality
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const searchInput = document.getElementById('searchInput');
     if (searchInput) {
-        searchInput.addEventListener('keypress', function(e) {
+        searchInput.addEventListener('keypress', function (e) {
             if (e.key === 'Enter') {
                 performSearch();
             }
@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Filter functionality
     setupFilters();
-    
+
     // Cart functionality
     updateCartBadge();
 });
@@ -26,7 +26,7 @@ function performSearch() {
 function setupFilters() {
     const filterInputs = document.querySelectorAll('.filter-input, .checkbox-item input, .price-input');
     filterInputs.forEach(input => {
-        input.addEventListener('change', function() {
+        input.addEventListener('change', function () {
             applyFilters();
         });
     });
@@ -34,31 +34,31 @@ function setupFilters() {
 
 function applyFilters() {
     const params = new URLSearchParams();
-    
+
     // Category filter
     const selectedCategories = Array.from(document.querySelectorAll('.checkbox-item input[type="checkbox"]:checked'))
         .map(cb => cb.value);
     if (selectedCategories.length > 0) {
         params.append('categories', selectedCategories.join(','));
     }
-    
+
     // Price range
     const minPrice = document.getElementById('minPrice')?.value;
     const maxPrice = document.getElementById('maxPrice')?.value;
     if (minPrice) params.append('minPrice', minPrice);
     if (maxPrice) params.append('maxPrice', maxPrice);
-    
+
     // Brand filter
     const selectedBrands = Array.from(document.querySelectorAll('#brandFilter input[type="checkbox"]:checked'))
         .map(cb => cb.value);
     if (selectedBrands.length > 0) {
         params.append('brands', selectedBrands.join(','));
     }
-    
+
     // Sort
     const sortBy = document.getElementById('sortSelect')?.value;
     if (sortBy) params.append('sort', sortBy);
-    
+
     const currentUrl = new URL(window.location.href);
     const baseUrl = currentUrl.pathname;
     window.location.href = `${baseUrl}?${params.toString()}`;
@@ -75,14 +75,14 @@ function addToCart(productId, quantity = 1) {
             quantity: quantity
         })
     })
-    .then(response => response.json())
-    .then(data => {
-        updateCartBadge();
-        showNotification('Товар добавлен в корзину!', 'success');
-    })
-    .catch(error => {
-        showNotification('Ошибка при добавлении товара', 'error');
-    });
+        .then(response => response.json())
+        .then(data => {
+            updateCartBadge();
+            showNotification('Товар добавлен в корзину!', 'success');
+        })
+        .catch(error => {
+            showNotification('Ошибка при добавлении товара', 'error');
+        });
 }
 
 function updateCartBadge() {
@@ -106,19 +106,19 @@ function showNotification(message, type = 'info') {
     notification.textContent = message;
     notification.style.cssText = `
         position: fixed;
-        top: 20px;
-        right: 20px;
+        top: 90px;
+        right: 30px;
         padding: 1rem 1.5rem;
         background-color: ${type === 'success' ? '#10b981' : '#ef4444'};
-        color: white;
+        color: #000;
         border-radius: 8px;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
         z-index: 10000;
         animation: slideIn 0.3s ease;
     `;
-    
+
     document.body.appendChild(notification);
-    
+
     setTimeout(() => {
         notification.style.animation = 'slideOut 0.3s ease';
         setTimeout(() => notification.remove(), 300);
@@ -150,6 +150,7 @@ style.textContent = `
     }
 `;
 document.head.appendChild(style);
+
 
 
 

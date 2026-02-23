@@ -48,7 +48,8 @@ public class CartService {
     }
 
     public void add(HttpSession session, Long productId, int qty) {
-        if (qty <= 0) qty = 1;
+        if (qty <= 0)
+            qty = 1;
         Map<Long, Integer> cart = getOrCreateCart(session);
         cart.merge(productId, qty, Integer::sum);
     }
@@ -81,7 +82,8 @@ public class CartService {
         for (Map.Entry<Long, Integer> e : cart.entrySet()) {
             Long productId = e.getKey();
             int qty = e.getValue() == null ? 0 : e.getValue();
-            if (qty <= 0) continue;
+            if (qty <= 0)
+                continue;
 
             Product p = productRepository.findById(productId)
                     .orElseThrow(() -> new NotFoundException("Product not found with id: " + productId));
@@ -101,14 +103,14 @@ public class CartService {
                     p.getQuantity(),
                     qty,
                     line,
-                    categoryId
-            ));
+                    categoryId));
         }
 
         return new CartSummaryDTO(items, totalItems, total);
     }
 
-    public Order checkout(HttpSession session, String customerName, String phone, String email, String notes) {
+    public Order checkout(HttpSession session, String customerName, String phone, String email, String notes,
+            String socialLink) {
         CartSummaryDTO summary = summary(session);
         if (summary.getItems() == null || summary.getItems().isEmpty()) {
             throw new IllegalArgumentException("Cart is empty");
@@ -130,6 +132,7 @@ public class CartService {
         order.setStatus("НОВЫЙ");
         order.setTotalAmount(summary.getTotalAmount());
         order.setNotes(notes);
+        order.setSocialLink(socialLink);
         order = orderRepository.save(order);
 
         for (CartItemDTO item : summary.getItems()) {
@@ -145,10 +148,4 @@ public class CartService {
         return order;
     }
 }
-
-
-
-
-
-
 

@@ -51,6 +51,9 @@ public class Customer {
     @Column
     private String city;
 
+    @Column
+    private String socialLink;
+
     @CreationTimestamp
     private OffsetDateTime createdAt;
 

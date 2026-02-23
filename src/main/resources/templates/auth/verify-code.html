@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layouts/auth}" lang="ru">
+
+<head>
+    <title>Подтверждение кода | GruzoMarket</title>
+</head>
+
+<body>
+    <div layout:fragment="content">
+        <div class="auth-container">
+            <div class="auth-wrapper">
+                <div class="auth-left">
+                    <a href="/" class="auth-logo">
+                        <div class="auth-logo-text">
+                            <span class="gruzo">Gruzo</span><span class="market">Market</span>
+                        </div>
+                    </a>
+                    <h1>Подтверждение кода</h1>
+                    <p>Мы отправили 6-значный код на вашу почту. Пожалуйста, введите его в поле справа, чтобы продолжить
+                        смену пароля.</p>
+                </div>
+
+                <div class="auth-card">
+                    <div class="auth-header">
+                        <h2>Введите код</h2>
+                        <p th:text="'Код отправлен на ' + ${email}"></p>
+                    </div>
+
+                    <div th:if="${errorMessage}" class="auth-message error" th:text="${errorMessage}"></div>
+
+                    <form th:action="@{/auth/password-reset/verify}" method="post" class="auth-form active">
+                        <input type="hidden" name="email" th:value="${email}">
+                        <div class="form-group">
+                            <label class="form-label" for="code">Код подтверждения (6 цифр)</label>
+                            <input type="text" id="code" name="code" class="form-control" placeholder="000000"
+                                pattern="\d{6}" maxlength="6" required autofocus>
+                        </div>
+
+                        <button type="submit" class="btn-auth">
+                            <span>Подтвердить код</span>
+                        </button>
+                    </form>
+
+                    <div class="auth-footer">
+                        <div id="countdown-container" class="mb-3 text-center small fw-bold" style="color: #f17228;">
+                            Отправить повторно через <span id="timer" style="font-size: 1.1em;">60</span> сек.
+                        </div>
+                        <form id="resendForm" th:action="@{/auth/password-reset/forgot}" method="post"
+                            style="display: none; animation: fadeIn 0.5s;">
+                            <input type="hidden" name="email" th:value="${email}">
+                            <button type="submit" class="form-link"
+                                style="background: none; border: none; padding: 0; font: inherit; cursor: pointer;">
+                                Отправить повторно
+                            </button>
+                        </form>
+                        <p class="mt-3">Не получили код? <a th:href="@{/auth/password-reset/forgot}"
+                                class="form-link">Изменить почту</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <th:block layout:fragment="scripts">
+        <script>
+            // Индикация отправки основного кода
+            document.querySelector('form:not(#resendForm)').addEventListener('submit', function (e) {
+                const btn = this.querySelector('.btn-auth');
+                const span = btn.querySelector('span');
+                btn.disabled = true;
+                btn.style.opacity = '0.7';
+                btn.style.cursor = 'not-allowed';
+                span.textContent = 'Проверка...';
+            });
+
+            // Таймер обратного отсчета
+            let timeLeft = 60;
+            const timerSpan = document.getElementById('timer');
+            const countdownContainer = document.getElementById('countdown-container');
+            const resendForm = document.getElementById('resendForm');
+
+            const timerId = setInterval(() => {
+                timeLeft--;
+                timerSpan.textContent = timeLeft;
+                if (timeLeft <= 0) {
+                    clearInterval(timerId);
+                    countdownContainer.style.display = 'none';
+                    resendForm.style.display = 'block';
+                }
+            }, 1000);
+
+            // Индикация при повторной отправке
+            resendForm.addEventListener('submit', function (e) {
+                const btn = this.querySelector('button');
+                btn.disabled = true;
+                btn.textContent = 'Отправка...';
+                btn.style.opacity = '0.5';
+            });
+        </script>
+    </th:block>
+</body>
+
+</html>

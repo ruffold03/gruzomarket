@@ -1,748 +1,879 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layouts/base}"
-      lang="ru">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layouts/base}" lang="ru">
+
 <head>
     <title>Каталог</title>
     <!-- Дополнительный CSS для range slider с двумя точками -->
 </head>
+
 <body>
-<div layout:fragment="content">
+    <div layout:fragment="content">
 
-    <section class="categories-section">
-        <div class="container page-container">
-            <div class="section-title">
-                <h2>Каталог</h2>
-                <p class="text-muted mt-3">Подберите запчасти по фильтрам и добавьте в корзину</p>
-            </div>
+        <section class="categories-section">
+            <div class="container page-container">
+                <div class="section-title">
+                    <h2>Каталог</h2>
+                    <p class="text-muted mt-3">Подберите запчасти по фильтрам и добавьте в корзину</p>
+                </div>
 
-            <div class="row">
-                <!-- Фильтры -->
-                <div class="col-lg-3">
-                    <div class="filters-sidebar">
-                        <h4 class="filter-title"><i class="fas fa-filter me-2"></i>Фильтры</h4>
+                <div class="row">
+                    <!-- Фильтры -->
+                    <div class="col-lg-3">
+                        <div class="filters-sidebar">
+                            <h4 class="filter-title"><i class="fas fa-filter me-2"></i>Фильтры</h4>
 
-                        <!-- Категории -->
-                        <!-- Категории с группами -->
-                        <div class="filter-group">
-                            <h6>Категория</h6>
+                            <!-- Категории -->
+                            <!-- Категории с группами -->
+                            <div class="filter-group">
+                                <h6>Категория</h6>
 
-                            <!-- Двигатель и силовая установка -->
-                            <div class="category-group">
-                                <div class="accordion" id="accordionEngine">
-                                    <div class="accordion-item">
-                                        <h2 class="accordion-header">
-                                            <button class="accordion-button collapsed" type="button"
-                                                    data-bs-toggle="collapse"
-                                                    data-bs-target="#collapseEngine">
-                                                Двигатель и силовая установка
-                                            </button>
-                                        </h2>
-                                        <div id="collapseEngine" class="accordion-collapse collapse"
-                                             data-bs-parent="#accordionEngine">
-                                            <div class="accordion-body accordion-checkboxes">
-                                                <!-- Категории этой группы -->
-                                                <label class="custom-checkbox">
-                                                    <input type="checkbox" class="category-filter" value="22">
-                                                    <span class="checkBox"><div class="transition"></div></span>
-                                                    <span class="check-label">Поршневая группа</span>
-                                                </label>
-                                                <label class="custom-checkbox">
-                                                    <input type="checkbox" class="category-filter" value="8">
-                                                    <span class="checkBox"><div class="transition"></div></span>
-                                                    <span class="check-label">Клапаны</span>
-                                                </label>
-                                                <label class="custom-checkbox">
-                                                    <input type="checkbox" class="category-filter" value="41">
-                                                    <span class="checkBox"><div class="transition"></div></span>
-                                                    <span class="check-label">Шестерни</span>
-                                                </label>
-                                                <label class="custom-checkbox">
-                                                    <input type="checkbox" class="category-filter" value="13">
-                                                    <span class="checkBox"><div class="transition"></div></span>
-                                                    <span class="check-label">Крышки</span>
-                                                </label>
-                                                <label class="custom-checkbox">
-                                                    <input type="checkbox" class="category-filter" value="23">
-                                                    <span class="checkBox"><div class="transition"></div></span>
-                                                    <span class="check-label">Прокладки</span>
-                                                </label>
-                                                <label class="custom-checkbox">
-                                                    <input type="checkbox" class="category-filter" value="2">
-                                                    <span class="checkBox"><div class="transition"></div></span>
-                                                    <span class="check-label">Валы</span>
-                                                </label>
-                                                <label class="custom-checkbox">
-                                                    <input type="checkbox" class="category-filter" value="34">
-                                                    <span class="checkBox"><div class="transition"></div></span>
-                                                    <span class="check-label">Топливная система</span>
-                                                </label>
-                                                <label class="custom-checkbox">
-                                                    <input type="checkbox" class="category-filter" value="32">
-                                                    <span class="checkBox"><div class="transition"></div></span>
-                                                    <span class="check-label">Система охлаждения</span>
-                                                </label>
-                                                <label class="custom-checkbox">
-                                                    <input type="checkbox" class="category-filter" value="38">
-                                                    <span class="checkBox"><div class="transition"></div></span>
-                                                    <span class="check-label">Фильтры</span>
-                                                </label>
+                                <!-- Двигатель и силовая установка -->
+                                <div class="category-group">
+                                    <div class="accordion" id="accordionEngine">
+                                        <div class="accordion-item">
+                                            <h2 class="accordion-header">
+                                                <button class="accordion-button collapsed" type="button"
+                                                    data-bs-toggle="collapse" data-bs-target="#collapseEngine">
+                                                    Двигатель и силовая установка
+                                                </button>
+                                            </h2>
+                                            <div id="collapseEngine" class="accordion-collapse collapse"
+                                                data-bs-parent="#accordionEngine">
+                                                <div class="accordion-body accordion-checkboxes">
+                                                    <!-- Категории этой группы -->
+                                                    <label class="custom-checkbox">
+                                                        <input type="checkbox" class="category-filter" value="22">
+                                                        <span class="checkBox">
+                                                            <div class="transition"></div>
+                                                        </span>
+                                                        <span class="check-label">Поршневая группа</span>
+                                                    </label>
+                                                    <label class="custom-checkbox">
+                                                        <input type="checkbox" class="category-filter" value="8">
+                                                        <span class="checkBox">
+                                                            <div class="transition"></div>
+                                                        </span>
+                                                        <span class="check-label">Клапаны</span>
+                                                    </label>
+                                                    <label class="custom-checkbox">
+                                                        <input type="checkbox" class="category-filter" value="41">
+                                                        <span class="checkBox">
+                                                            <div class="transition"></div>
+                                                        </span>
+                                                        <span class="check-label">Шестерни</span>
+                                                    </label>
+                                                    <label class="custom-checkbox">
+                                                        <input type="checkbox" class="category-filter" value="13">
+                                                        <span class="checkBox">
+                                                            <div class="transition"></div>
+                                                        </span>
+                                                        <span class="check-label">Крышки</span>
+                                                    </label>
+                                                    <label class="custom-checkbox">
+                                                        <input type="checkbox" class="category-filter" value="23">
+                                                        <span class="checkBox">
+                                                            <div class="transition"></div>
+                                                        </span>
+                                                        <span class="check-label">Прокладки</span>
+                                                    </label>
+                                                    <label class="custom-checkbox">
+                                                        <input type="checkbox" class="category-filter" value="2">
+                                                        <span class="checkBox">
+                                                            <div class="transition"></div>
+                                                        </span>
+                                                        <span class="check-label">Валы</span>
+                                                    </label>
+                                                    <label class="custom-checkbox">
+                                                        <input type="checkbox" class="category-filter" value="34">
+                                                        <span class="checkBox">
+                                                            <div class="transition"></div>
+                                                        </span>
+                                                        <span class="check-label">Топливная система</span>
+                                                    </label>
+                                                    <label class="custom-checkbox">
+                                                        <input type="checkbox" class="category-filter" value="32">
+                                                        <span class="checkBox">
+                                                            <div class="transition"></div>
+                                                        </span>
+                                                        <span class="check-label">Система охлаждения</span>
+                                                    </label>
+                                                    <label class="custom-checkbox">
+                                                        <input type="checkbox" class="category-filter" value="38">
+                                                        <span class="checkBox">
+                                                            <div class="transition"></div>
+                                                        </span>
+                                                        <span class="check-label">Фильтры</span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Трансмиссия и привод -->
+                                <div class="category-group">
+                                    <div class="accordion" id="accordionTransmission">
+                                        <div class="accordion-item">
+                                            <h2 class="accordion-header">
+                                                <button class="accordion-button collapsed" type="button"
+                                                    data-bs-toggle="collapse" data-bs-target="#collapseTransmission">
+                                                    Трансмиссия и привод
+                                                </button>
+                                            </h2>
+                                            <div id="collapseTransmission" class="accordion-collapse collapse"
+                                                data-bs-parent="#accordionTransmission">
+                                                <div class="accordion-body accordion-checkboxes">
+                                                    <label class="custom-checkbox">
+                                                        <input type="checkbox" class="category-filter" value="33">
+                                                        <span class="checkBox">
+                                                            <div class="transition"></div>
+                                                        </span>
+                                                        <span class="check-label">Сцепление</span>
+                                                    </label>
+                                                    <label class="custom-checkbox">
+                                                        <input type="checkbox" class="category-filter" value="17">
+                                                        <span class="checkBox">
+                                                            <div class="transition"></div>
+                                                        </span>
+                                                        <span class="check-label">Муфты</span>
+                                                    </label>
+                                                    <label class="custom-checkbox">
+                                                        <input type="checkbox" class="category-filter" value="7">
+                                                        <span class="checkBox">
+                                                            <div class="transition"></div>
+                                                        </span>
+                                                        <span class="check-label">Карданные валы</span>
+                                                    </label>
+                                                    <label class="custom-checkbox">
+                                                        <input type="checkbox" class="category-filter" value="27">
+                                                        <span class="checkBox">
+                                                            <div class="transition"></div>
+                                                        </span>
+                                                        <span class="check-label">Редукторы</span>
+                                                    </label>
+                                                    <label class="custom-checkbox">
+                                                        <input type="checkbox" class="category-filter" value="6">
+                                                        <span class="checkBox">
+                                                            <div class="transition"></div>
+                                                        </span>
+                                                        <span class="check-label">Дифференциалы</span>
+                                                    </label>
+                                                    <label class="custom-checkbox">
+                                                        <input type="checkbox" class="category-filter" value="16">
+                                                        <span class="checkBox">
+                                                            <div class="transition"></div>
+                                                        </span>
+                                                        <span class="check-label">Мосты</span>
+                                                    </label>
+                                                    <label class="custom-checkbox">
+                                                        <input type="checkbox" class="category-filter" value="40">
+                                                        <span class="checkBox">
+                                                            <div class="transition"></div>
+                                                        </span>
+                                                        <span class="check-label">Шарниры</span>
+                                                    </label>
+                                                    <label class="custom-checkbox">
+                                                        <input type="checkbox" class="category-filter" value="42">
+                                                        <span class="checkBox">
+                                                            <div class="transition"></div>
+                                                        </span>
+                                                        <span class="check-label">Шкивы</span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Ходовая часть и подвеска -->
+                                <div class="category-group">
+                                    <div class="accordion" id="accordionChassis">
+                                        <div class="accordion-item">
+                                            <h2 class="accordion-header">
+                                                <button class="accordion-button collapsed" type="button"
+                                                    data-bs-toggle="collapse" data-bs-target="#collapseChassis">
+                                                    Ходовая часть и подвеска
+                                                </button>
+                                            </h2>
+                                            <div id="collapseChassis" class="accordion-collapse collapse"
+                                                data-bs-parent="#accordionChassis">
+                                                <div class="accordion-body accordion-checkboxes">
+                                                    <label class="custom-checkbox">
+                                                        <input type="checkbox" class="category-filter" value="1">
+                                                        <span class="checkBox">
+                                                            <div class="transition"></div>
+                                                        </span>
+                                                        <span class="check-label">Амортизаторы</span>
+                                                    </label>
+                                                    <label class="custom-checkbox">
+                                                        <input type="checkbox" class="category-filter" value="25">
+                                                        <span class="checkBox">
+                                                            <div class="transition"></div>
+                                                        </span>
+                                                        <span class="check-label">Пружины</span>
+                                                    </label>
+                                                    <label class="custom-checkbox">
+                                                        <input type="checkbox" class="category-filter" value="30">
+                                                        <span class="checkBox">
+                                                            <div class="transition"></div>
+                                                        </span>
+                                                        <span class="check-label">Рычаги</span>
+                                                    </label>
+                                                    <label class="custom-checkbox">
+                                                        <input type="checkbox" class="category-filter" value="37">
+                                                        <span class="checkBox">
+                                                            <div class="transition"></div>
+                                                        </span>
+                                                        <span class="check-label">Тяги</span>
+                                                    </label>
+                                                    <label class="custom-checkbox">
+                                                        <input type="checkbox" class="category-filter" value="3">
+                                                        <span class="checkBox">
+                                                            <div class="transition"></div>
+                                                        </span>
+                                                        <span class="check-label">Втулки</span>
+                                                    </label>
+                                                    <label class="custom-checkbox">
+                                                        <input type="checkbox" class="category-filter" value="21">
+                                                        <span class="checkBox">
+                                                            <div class="transition"></div>
+                                                        </span>
+                                                        <span class="check-label">Подшипники</span>
+                                                    </label>
+                                                    <label class="custom-checkbox">
+                                                        <input type="checkbox" class="category-filter" value="12">
+                                                        <span class="checkBox">
+                                                            <div class="transition"></div>
+                                                        </span>
+                                                        <span class="check-label">Кронштейны</span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Рулевое управление -->
+                                <div class="category-group">
+                                    <div class="accordion" id="accordionSteering">
+                                        <div class="accordion-item">
+                                            <h2 class="accordion-header">
+                                                <button class="accordion-button collapsed" type="button"
+                                                    data-bs-toggle="collapse" data-bs-target="#collapseSteering">
+                                                    Рулевое управление
+                                                </button>
+                                            </h2>
+                                            <div id="collapseSteering" class="accordion-collapse collapse"
+                                                data-bs-parent="#accordionSteering">
+                                                <div class="accordion-body accordion-checkboxes">
+                                                    <label class="custom-checkbox">
+                                                        <input type="checkbox" class="category-filter" value="29">
+                                                        <span class="checkBox">
+                                                            <div class="transition"></div>
+                                                        </span>
+                                                        <span class="check-label">Рулевое управление</span>
+                                                    </label>
+                                                    <label class="custom-checkbox">
+                                                        <input type="checkbox" class="category-filter" value="19">
+                                                        <span class="checkBox">
+                                                            <div class="transition"></div>
+                                                        </span>
+                                                        <span class="check-label">Пальцы</span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Тормозная система -->
+                                <div class="category-group">
+                                    <div class="accordion" id="accordionBrakes">
+                                        <div class="accordion-item">
+                                            <h2 class="accordion-header">
+                                                <button class="accordion-button collapsed" type="button"
+                                                    data-bs-toggle="collapse" data-bs-target="#collapseBrakes">
+                                                    Тормозная система
+                                                </button>
+                                            </h2>
+                                            <div id="collapseBrakes" class="accordion-collapse collapse"
+                                                data-bs-parent="#accordionBrakes">
+                                                <div class="accordion-body accordion-checkboxes">
+                                                    <label class="custom-checkbox">
+                                                        <input type="checkbox" class="category-filter" value="35">
+                                                        <span class="checkBox">
+                                                            <div class="transition"></div>
+                                                        </span>
+                                                        <span class="check-label">Тормозная система</span>
+                                                    </label>
+                                                    <label class="custom-checkbox">
+                                                        <input type="checkbox" class="category-filter" value="5">
+                                                        <span class="checkBox">
+                                                            <div class="transition"></div>
+                                                        </span>
+                                                        <span class="check-label">Диски</span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Кузов и электроника -->
+                                <div class="category-group">
+                                    <div class="accordion" id="accordionBody">
+                                        <div class="accordion-item">
+                                            <h2 class="accordion-header">
+                                                <button class="accordion-button collapsed" type="button"
+                                                    data-bs-toggle="collapse" data-bs-target="#collapseBody">
+                                                    Кузов и электроника
+                                                </button>
+                                            </h2>
+                                            <div id="collapseBody" class="accordion-collapse collapse"
+                                                data-bs-parent="#accordionBody">
+                                                <div class="accordion-body accordion-checkboxes">
+                                                    <label class="custom-checkbox">
+                                                        <input type="checkbox" class="category-filter" value="14">
+                                                        <span class="checkBox">
+                                                            <div class="transition"></div>
+                                                        </span>
+                                                        <span class="check-label">Кузовные детали</span>
+                                                    </label>
+                                                    <label class="custom-checkbox">
+                                                        <input type="checkbox" class="category-filter" value="18">
+                                                        <span class="checkBox">
+                                                            <div class="transition"></div>
+                                                        </span>
+                                                        <span class="check-label">Оптика</span>
+                                                    </label>
+                                                    <label class="custom-checkbox">
+                                                        <input type="checkbox" class="category-filter" value="44">
+                                                        <span class="checkBox">
+                                                            <div class="transition"></div>
+                                                        </span>
+                                                        <span class="check-label">Электрооборудование</span>
+                                                    </label>
+                                                    <label class="custom-checkbox">
+                                                        <input type="checkbox" class="category-filter" value="4">
+                                                        <span class="checkBox">
+                                                            <div class="transition"></div>
+                                                        </span>
+                                                        <span class="check-label">Датчики</span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Вспомогательные системы -->
+                                <div class="category-group">
+                                    <div class="accordion" id="accordionAuxiliary">
+                                        <div class="accordion-item">
+                                            <h2 class="accordion-header">
+                                                <button class="accordion-button collapsed" type="button"
+                                                    data-bs-toggle="collapse" data-bs-target="#collapseAuxiliary">
+                                                    Вспомогательные системы
+                                                </button>
+                                            </h2>
+                                            <div id="collapseAuxiliary" class="accordion-collapse collapse"
+                                                data-bs-parent="#accordionAuxiliary">
+                                                <div class="accordion-body accordion-checkboxes">
+                                                    <label class="custom-checkbox">
+                                                        <input type="checkbox" class="category-filter" value="36">
+                                                        <span class="checkBox">
+                                                            <div class="transition"></div>
+                                                        </span>
+                                                        <span class="check-label">Трубы</span>
+                                                    </label>
+                                                    <label class="custom-checkbox">
+                                                        <input type="checkbox" class="category-filter" value="20">
+                                                        <span class="checkBox">
+                                                            <div class="transition"></div>
+                                                        </span>
+                                                        <span class="check-label">Патрубки</span>
+                                                    </label>
+                                                    <label class="custom-checkbox">
+                                                        <input type="checkbox" class="category-filter" value="43">
+                                                        <span class="checkBox">
+                                                            <div class="transition"></div>
+                                                        </span>
+                                                        <span class="check-label">Шланги</span>
+                                                    </label>
+                                                    <label class="custom-checkbox">
+                                                        <input type="checkbox" class="category-filter" value="39">
+                                                        <span class="checkBox">
+                                                            <div class="transition"></div>
+                                                        </span>
+                                                        <span class="check-label">Хомуты</span>
+                                                    </label>
+                                                    <label class="custom-checkbox">
+                                                        <input type="checkbox" class="category-filter" value="10">
+                                                        <span class="checkBox">
+                                                            <div class="transition"></div>
+                                                        </span>
+                                                        <span class="check-label">Крепеж</span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Ремонт и прочее -->
+                                <div class="category-group">
+                                    <div class="accordion" id="accordionRepair">
+                                        <div class="accordion-item">
+                                            <h2 class="accordion-header">
+                                                <button class="accordion-button collapsed" type="button"
+                                                    data-bs-toggle="collapse" data-bs-target="#collapseRepair">
+                                                    Ремонт и прочее
+                                                </button>
+                                            </h2>
+                                            <div id="collapseRepair" class="accordion-collapse collapse"
+                                                data-bs-parent="#accordionRepair">
+                                                <div class="accordion-body accordion-checkboxes">
+                                                    <label class="custom-checkbox">
+                                                        <input type="checkbox" class="category-filter" value="28">
+                                                        <span class="checkBox">
+                                                            <div class="transition"></div>
+                                                        </span>
+                                                        <span class="check-label">Ремкомплекты</span>
+                                                    </label>
+                                                    <label class="custom-checkbox">
+                                                        <input type="checkbox" class="category-filter" value="24">
+                                                        <span class="checkBox">
+                                                            <div class="transition"></div>
+                                                        </span>
+                                                        <span class="check-label">Прочее</span>
+                                                    </label>
+                                                    <label class="custom-checkbox">
+                                                        <input type="checkbox" class="category-filter" value="31">
+                                                        <span class="checkBox">
+                                                            <div class="transition"></div>
+                                                        </span>
+                                                        <span class="check-label">Сальники</span>
+                                                    </label>
+                                                    <label class="custom-checkbox">
+                                                        <input type="checkbox" class="category-filter" value="15">
+                                                        <span class="checkBox">
+                                                            <div class="transition"></div>
+                                                        </span>
+                                                        <span class="check-label">Манжеты</span>
+                                                    </label>
+                                                    <label class="custom-checkbox">
+                                                        <input type="checkbox" class="category-filter" value="11">
+                                                        <span class="checkBox">
+                                                            <div class="transition"></div>
+                                                        </span>
+                                                        <span class="check-label">Крестовины</span>
+                                                    </label>
+                                                    <label class="custom-checkbox">
+                                                        <input type="checkbox" class="category-filter" value="9">
+                                                        <span class="checkBox">
+                                                            <div class="transition"></div>
+                                                        </span>
+                                                        <span class="check-label">Кольца</span>
+                                                    </label>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
-                            <!-- Трансмиссия и привод -->
-                            <div class="category-group">
-                                <div class="accordion" id="accordionTransmission">
-                                    <div class="accordion-item">
-                                        <h2 class="accordion-header">
-                                            <button class="accordion-button collapsed" type="button"
-                                                    data-bs-toggle="collapse"
-                                                    data-bs-target="#collapseTransmission">
-                                                Трансмиссия и привод
-                                            </button>
-                                        </h2>
-                                        <div id="collapseTransmission" class="accordion-collapse collapse"
-                                             data-bs-parent="#accordionTransmission">
-                                            <div class="accordion-body accordion-checkboxes">
-                                                <label class="custom-checkbox">
-                                                    <input type="checkbox" class="category-filter" value="33">
-                                                    <span class="checkBox"><div class="transition"></div></span>
-                                                    <span class="check-label">Сцепление</span>
-                                                </label>
-                                                <label class="custom-checkbox">
-                                                    <input type="checkbox" class="category-filter" value="17">
-                                                    <span class="checkBox"><div class="transition"></div></span>
-                                                    <span class="check-label">Муфты</span>
-                                                </label>
-                                                <label class="custom-checkbox">
-                                                    <input type="checkbox" class="category-filter" value="7">
-                                                    <span class="checkBox"><div class="transition"></div></span>
-                                                    <span class="check-label">Карданные валы</span>
-                                                </label>
-                                                <label class="custom-checkbox">
-                                                    <input type="checkbox" class="category-filter" value="27">
-                                                    <span class="checkBox"><div class="transition"></div></span>
-                                                    <span class="check-label">Редукторы</span>
-                                                </label>
-                                                <label class="custom-checkbox">
-                                                    <input type="checkbox" class="category-filter" value="6">
-                                                    <span class="checkBox"><div class="transition"></div></span>
-                                                    <span class="check-label">Дифференциалы</span>
-                                                </label>
-                                                <label class="custom-checkbox">
-                                                    <input type="checkbox" class="category-filter" value="16">
-                                                    <span class="checkBox"><div class="transition"></div></span>
-                                                    <span class="check-label">Мосты</span>
-                                                </label>
-                                                <label class="custom-checkbox">
-                                                    <input type="checkbox" class="category-filter" value="40">
-                                                    <span class="checkBox"><div class="transition"></div></span>
-                                                    <span class="check-label">Шарниры</span>
-                                                </label>
-                                                <label class="custom-checkbox">
-                                                    <input type="checkbox" class="category-filter" value="42">
-                                                    <span class="checkBox"><div class="transition"></div></span>
-                                                    <span class="check-label">Шкивы</span>
-                                                </label>
+                            <!-- Бренды с группами -->
+                            <div class="filter-group">
+                                <h6>Производители</h6>
+
+                                <!-- Китайские производители -->
+                                <div class="brand-group">
+                                    <div class="accordion" id="accordionChinese">
+                                        <div class="accordion-item">
+                                            <h2 class="accordion-header">
+                                                <button class="accordion-button collapsed" type="button"
+                                                    data-bs-toggle="collapse" data-bs-target="#collapseChinese">
+                                                    Китайские производители
+                                                </button>
+                                            </h2>
+                                            <div id="collapseChinese" class="accordion-collapse collapse"
+                                                data-bs-parent="#accordionChinese">
+                                                <div class="accordion-body accordion-checkboxes">
+                                                    <label class="custom-checkbox">
+                                                        <input type="checkbox" class="brand-filter" value="1">
+                                                        <span class="checkBox">
+                                                            <div class="transition"></div>
+                                                        </span>
+                                                        <span class="check-label">HOWO</span>
+                                                    </label>
+                                                    <label class="custom-checkbox">
+                                                        <input type="checkbox" class="brand-filter" value="2">
+                                                        <span class="checkBox">
+                                                            <div class="transition"></div>
+                                                        </span>
+                                                        <span class="check-label">Shaanxi</span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Российские производители -->
+                                <div class="brand-group">
+                                    <div class="accordion" id="accordionRussian">
+                                        <div class="accordion-item">
+                                            <h2 class="accordion-header">
+                                                <button class="accordion-button collapsed" type="button"
+                                                    data-bs-toggle="collapse" data-bs-target="#collapseRussian">
+                                                    Российские производители
+                                                </button>
+                                            </h2>
+                                            <div id="collapseRussian" class="accordion-collapse collapse"
+                                                data-bs-parent="#accordionRussian">
+                                                <div class="accordion-body accordion-checkboxes">
+                                                    <label class="custom-checkbox">
+                                                        <input type="checkbox" class="brand-filter" value="12">
+                                                        <span class="checkBox">
+                                                            <div class="transition"></div>
+                                                        </span>
+                                                        <span class="check-label">КАМАЗ</span>
+                                                    </label>
+                                                    <label class="custom-checkbox">
+                                                        <input type="checkbox" class="brand-filter" value="26">
+                                                        <span class="checkBox">
+                                                            <div class="transition"></div>
+                                                        </span>
+                                                        <span class="check-label">Урал</span>
+                                                    </label>
+                                                    <label class="custom-checkbox">
+                                                        <input type="checkbox" class="brand-filter" value="28">
+                                                        <span class="checkBox">
+                                                            <div class="transition"></div>
+                                                        </span>
+                                                        <span class="check-label">ЯМЗ</span>
+                                                    </label>
+                                                    <label class="custom-checkbox">
+                                                        <input type="checkbox" class="brand-filter" value="27">
+                                                        <span class="checkBox">
+                                                            <div class="transition"></div>
+                                                        </span>
+                                                        <span class="check-label">ЧТЗ</span>
+                                                    </label>
+                                                    <label class="custom-checkbox">
+                                                        <input type="checkbox" class="brand-filter" value="11">
+                                                        <span class="checkBox">
+                                                            <div class="transition"></div>
+                                                        </span>
+                                                        <span class="check-label">ЗИЛ</span>
+                                                    </label>
+                                                    <label class="custom-checkbox">
+                                                        <input type="checkbox" class="brand-filter" value="3">
+                                                        <span class="checkBox">
+                                                            <div class="transition"></div>
+                                                        </span>
+                                                        <span class="check-label">АМЗ</span>
+                                                    </label>
+                                                    <label class="custom-checkbox">
+                                                        <input type="checkbox" class="brand-filter" value="4">
+                                                        <span class="checkBox">
+                                                            <div class="transition"></div>
+                                                        </span>
+                                                        <span class="check-label">АТЗ</span>
+                                                    </label>
+                                                    <label class="custom-checkbox">
+                                                        <input type="checkbox" class="brand-filter" value="19">
+                                                        <span class="checkBox">
+                                                            <div class="transition"></div>
+                                                        </span>
+                                                        <span class="check-label">ОТЗ</span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Белорусские производители -->
+                                <div class="brand-group">
+                                    <div class="accordion" id="accordionBelarus">
+                                        <div class="accordion-item">
+                                            <h2 class="accordion-header">
+                                                <button class="accordion-button collapsed" type="button"
+                                                    data-bs-toggle="collapse" data-bs-target="#collapseBelarus">
+                                                    Белорусские производители
+                                                </button>
+                                            </h2>
+                                            <div id="collapseBelarus" class="accordion-collapse collapse"
+                                                data-bs-parent="#accordionBelarus">
+                                                <div class="accordion-body accordion-checkboxes">
+                                                    <label class="custom-checkbox">
+                                                        <input type="checkbox" class="brand-filter" value="16">
+                                                        <span class="checkBox">
+                                                            <div class="transition"></div>
+                                                        </span>
+                                                        <span class="check-label">МАЗ</span>
+                                                    </label>
+                                                    <label class="custom-checkbox">
+                                                        <input type="checkbox" class="brand-filter" value="18">
+                                                        <span class="checkBox">
+                                                            <div class="transition"></div>
+                                                        </span>
+                                                        <span class="check-label">МТЗ</span>
+                                                    </label>
+                                                    <label class="custom-checkbox">
+                                                        <input type="checkbox" class="brand-filter" value="17">
+                                                        <span class="checkBox">
+                                                            <div class="transition"></div>
+                                                        </span>
+                                                        <span class="check-label">ММЗ</span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Украинские производители -->
+                                <div class="brand-group">
+                                    <div class="accordion" id="accordionUkrainian">
+                                        <div class="accordion-item">
+                                            <h2 class="accordion-header">
+                                                <button class="accordion-button collapsed" type="button"
+                                                    data-bs-toggle="collapse" data-bs-target="#collapseUkrainian">
+                                                    Украинские производители
+                                                </button>
+                                            </h2>
+                                            <div id="collapseUkrainian" class="accordion-collapse collapse"
+                                                data-bs-parent="#accordionUkrainian">
+                                                <div class="accordion-body accordion-checkboxes">
+                                                    <label class="custom-checkbox">
+                                                        <input type="checkbox" class="brand-filter" value="14">
+                                                        <span class="checkBox">
+                                                            <div class="transition"></div>
+                                                        </span>
+                                                        <span class="check-label">КРАЗ</span>
+                                                    </label>
+                                                    <label class="custom-checkbox">
+                                                        <input type="checkbox" class="brand-filter" value="13">
+                                                        <span class="checkBox">
+                                                            <div class="transition"></div>
+                                                        </span>
+                                                        <span class="check-label">КНБ-255</span>
+                                                    </label>
+                                                    <label class="custom-checkbox">
+                                                        <input type="checkbox" class="brand-filter" value="8">
+                                                        <span class="checkBox">
+                                                            <div class="transition"></div>
+                                                        </span>
+                                                        <span class="check-label">ДЗ-98</span>
+                                                    </label>
+                                                    <label class="custom-checkbox">
+                                                        <input type="checkbox" class="brand-filter" value="15">
+                                                        <span class="checkBox">
+                                                            <div class="transition"></div>
+                                                        </span>
+                                                        <span class="check-label">КСФ</span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Тракторная техника -->
+                                <div class="brand-group">
+                                    <div class="accordion" id="accordionTractor">
+                                        <div class="accordion-item">
+                                            <h2 class="accordion-header">
+                                                <button class="accordion-button collapsed" type="button"
+                                                    data-bs-toggle="collapse" data-bs-target="#collapseTractor">
+                                                    Тракторная техника
+                                                </button>
+                                            </h2>
+                                            <div id="collapseTractor" class="accordion-collapse collapse"
+                                                data-bs-parent="#accordionTractor">
+                                                <div class="accordion-body accordion-checkboxes">
+                                                    <label class="custom-checkbox">
+                                                        <input type="checkbox" class="brand-filter" value="10">
+                                                        <span class="checkBox">
+                                                            <div class="transition"></div>
+                                                        </span>
+                                                        <span class="check-label">ДТ-75 (трактор)</span>
+                                                    </label>
+                                                    <label class="custom-checkbox">
+                                                        <input type="checkbox" class="brand-filter" value="9">
+                                                        <span class="checkBox">
+                                                            <div class="transition"></div>
+                                                        </span>
+                                                        <span class="check-label">ДТ-55 (трактор)</span>
+                                                    </label>
+                                                    <label class="custom-checkbox">
+                                                        <input type="checkbox" class="brand-filter" value="21">
+                                                        <span class="checkBox">
+                                                            <div class="transition"></div>
+                                                        </span>
+                                                        <span class="check-label">ТТ-4М (трактор)</span>
+                                                    </label>
+                                                    <label class="custom-checkbox">
+                                                        <input type="checkbox" class="brand-filter" value="22">
+                                                        <span class="checkBox">
+                                                            <div class="transition"></div>
+                                                        </span>
+                                                        <span class="check-label">ТТ-4М-01 (трактор)</span>
+                                                    </label>
+                                                    <label class="custom-checkbox">
+                                                        <input type="checkbox" class="brand-filter" value="6">
+                                                        <span class="checkBox">
+                                                            <div class="transition"></div>
+                                                        </span>
+                                                        <span class="check-label">Д-160</span>
+                                                    </label>
+                                                    <label class="custom-checkbox">
+                                                        <input type="checkbox" class="brand-filter" value="7">
+                                                        <span class="checkBox">
+                                                            <div class="transition"></div>
+                                                        </span>
+                                                        <span class="check-label">Д-461</span>
+                                                    </label>
+                                                    <label class="custom-checkbox">
+                                                        <input type="checkbox" class="brand-filter" value="23">
+                                                        <span class="checkBox">
+                                                            <div class="transition"></div>
+                                                        </span>
+                                                        <span class="check-label">Тракторы</span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Универсальные/Общие -->
+                                <div class="brand-group">
+                                    <div class="accordion" id="accordionUniversal">
+                                        <div class="accordion-item">
+                                            <h2 class="accordion-header">
+                                                <button class="accordion-button collapsed" type="button"
+                                                    data-bs-toggle="collapse" data-bs-target="#collapseUniversal">
+                                                    Универсальные/Общие
+                                                </button>
+                                            </h2>
+                                            <div id="collapseUniversal" class="accordion-collapse collapse"
+                                                data-bs-parent="#accordionUniversal">
+                                                <div class="accordion-body accordion-checkboxes">
+                                                    <label class="custom-checkbox">
+                                                        <input type="checkbox" class="brand-filter" value="25">
+                                                        <span class="checkBox">
+                                                            <div class="transition"></div>
+                                                        </span>
+                                                        <span class="check-label">Универсальные</span>
+                                                    </label>
+                                                    <label class="custom-checkbox">
+                                                        <input type="checkbox" class="brand-filter" value="20">
+                                                        <span class="checkBox">
+                                                            <div class="transition"></div>
+                                                        </span>
+                                                        <span class="check-label">Прочие</span>
+                                                    </label>
+                                                    <label class="custom-checkbox">
+                                                        <input type="checkbox" class="brand-filter" value="5">
+                                                        <span class="checkBox">
+                                                            <div class="transition"></div>
+                                                        </span>
+                                                        <span class="check-label">Грузовые автомобили</span>
+                                                    </label>
+                                                    <label class="custom-checkbox">
+                                                        <input type="checkbox" class="brand-filter" value="24">
+                                                        <span class="checkBox">
+                                                            <div class="transition"></div>
+                                                        </span>
+                                                        <span class="check-label">Труд</span>
+                                                    </label>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
-                            <!-- Ходовая часть и подвеска -->
-                            <div class="category-group">
-                                <div class="accordion" id="accordionChassis">
-                                    <div class="accordion-item">
-                                        <h2 class="accordion-header">
-                                            <button class="accordion-button collapsed" type="button"
-                                                    data-bs-toggle="collapse"
-                                                    data-bs-target="#collapseChassis">
-                                                Ходовая часть и подвеска
-                                            </button>
-                                        </h2>
-                                        <div id="collapseChassis" class="accordion-collapse collapse"
-                                             data-bs-parent="#accordionChassis">
-                                            <div class="accordion-body accordion-checkboxes">
-                                                <label class="custom-checkbox">
-                                                    <input type="checkbox" class="category-filter" value="1">
-                                                    <span class="checkBox"><div class="transition"></div></span>
-                                                    <span class="check-label">Амортизаторы</span>
-                                                </label>
-                                                <label class="custom-checkbox">
-                                                    <input type="checkbox" class="category-filter" value="25">
-                                                    <span class="checkBox"><div class="transition"></div></span>
-                                                    <span class="check-label">Пружины</span>
-                                                </label>
-                                                <label class="custom-checkbox">
-                                                    <input type="checkbox" class="category-filter" value="30">
-                                                    <span class="checkBox"><div class="transition"></div></span>
-                                                    <span class="check-label">Рычаги</span>
-                                                </label>
-                                                <label class="custom-checkbox">
-                                                    <input type="checkbox" class="category-filter" value="37">
-                                                    <span class="checkBox"><div class="transition"></div></span>
-                                                    <span class="check-label">Тяги</span>
-                                                </label>
-                                                <label class="custom-checkbox">
-                                                    <input type="checkbox" class="category-filter" value="3">
-                                                    <span class="checkBox"><div class="transition"></div></span>
-                                                    <span class="check-label">Втулки</span>
-                                                </label>
-                                                <label class="custom-checkbox">
-                                                    <input type="checkbox" class="category-filter" value="21">
-                                                    <span class="checkBox"><div class="transition"></div></span>
-                                                    <span class="check-label">Подшипники</span>
-                                                </label>
-                                                <label class="custom-checkbox">
-                                                    <input type="checkbox" class="category-filter" value="12">
-                                                    <span class="checkBox"><div class="transition"></div></span>
-                                                    <span class="check-label">Кронштейны</span>
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
+                            <!-- Цена с двумя точками -->
+                            <div class="filter-group">
+                                <h6>Цена, ₽</h6>
+                                <div class="price-range-container">
+                                    <div class="slider-track"></div>
+                                    <div class="slider-filled" id="sliderFilled"></div>
+                                    <input type="range" min="0" max="60000" step="100" value="0" class="min-slider"
+                                        id="minSlider">
+                                    <input type="range" min="0" max="60000" step="100" value="60000" class="max-slider"
+                                        id="maxSlider">
+                                </div>
+                                <div class="price-inputs">
+                                    <input type="number" id="minPriceInput" class="form-control form-control-sm"
+                                        placeholder="от" min="0" max="60000" value="0">
+                                    <span class="text-muted align-self-center">-</span>
+                                    <input type="number" id="maxPriceInput" class="form-control form-control-sm"
+                                        placeholder="до" min="0" max="60000" value="60000">
                                 </div>
                             </div>
 
-                            <!-- Рулевое управление -->
-                            <div class="category-group">
-                                <div class="accordion" id="accordionSteering">
-                                    <div class="accordion-item">
-                                        <h2 class="accordion-header">
-                                            <button class="accordion-button collapsed" type="button"
-                                                    data-bs-toggle="collapse"
-                                                    data-bs-target="#collapseSteering">
-                                                Рулевое управление
-                                            </button>
-                                        </h2>
-                                        <div id="collapseSteering" class="accordion-collapse collapse"
-                                             data-bs-parent="#accordionSteering">
-                                            <div class="accordion-body accordion-checkboxes">
-                                                <label class="custom-checkbox">
-                                                    <input type="checkbox" class="category-filter" value="29">
-                                                    <span class="checkBox"><div class="transition"></div></span>
-                                                    <span class="check-label">Рулевое управление</span>
-                                                </label>
-                                                <label class="custom-checkbox">
-                                                    <input type="checkbox" class="category-filter" value="19">
-                                                    <span class="checkBox"><div class="transition"></div></span>
-                                                    <span class="check-label">Пальцы</span>
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                            <!-- Кнопки фильтров -->
+                            <div class="filter-group mt-4">
+                                <button id="applyFiltersBtn" class="filter-btn">Применить фильтры</button>
+                                <button id="resetFiltersBtn" class="reset-btn">Сбросить все</button>
                             </div>
+                        </div>
+                    </div>
 
-                            <!-- Тормозная система -->
-                            <div class="category-group">
-                                <div class="accordion" id="accordionBrakes">
-                                    <div class="accordion-item">
-                                        <h2 class="accordion-header">
-                                            <button class="accordion-button collapsed" type="button"
-                                                    data-bs-toggle="collapse"
-                                                    data-bs-target="#collapseBrakes">
-                                                Тормозная система
-                                            </button>
-                                        </h2>
-                                        <div id="collapseBrakes" class="accordion-collapse collapse"
-                                             data-bs-parent="#accordionBrakes">
-                                            <div class="accordion-body accordion-checkboxes">
-                                                <label class="custom-checkbox">
-                                                    <input type="checkbox" class="category-filter" value="35">
-                                                    <span class="checkBox"><div class="transition"></div></span>
-                                                    <span class="check-label">Тормозная система</span>
-                                                </label>
-                                                <label class="custom-checkbox">
-                                                    <input type="checkbox" class="category-filter" value="5">
-                                                    <span class="checkBox"><div class="transition"></div></span>
-                                                    <span class="check-label">Диски</span>
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                    <!-- Товары -->
+                    <div class="col-lg-9">
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <div class="section-title mb-0">
+                                <h2>Товары</h2>
                             </div>
-
-                            <!-- Кузов и электроника -->
-                            <div class="category-group">
-                                <div class="accordion" id="accordionBody">
-                                    <div class="accordion-item">
-                                        <h2 class="accordion-header">
-                                            <button class="accordion-button collapsed" type="button"
-                                                    data-bs-toggle="collapse"
-                                                    data-bs-target="#collapseBody">
-                                                Кузов и электроника
-                                            </button>
-                                        </h2>
-                                        <div id="collapseBody" class="accordion-collapse collapse"
-                                             data-bs-parent="#accordionBody">
-                                            <div class="accordion-body accordion-checkboxes">
-                                                <label class="custom-checkbox">
-                                                    <input type="checkbox" class="category-filter" value="14">
-                                                    <span class="checkBox"><div class="transition"></div></span>
-                                                    <span class="check-label">Кузовные детали</span>
-                                                </label>
-                                                <label class="custom-checkbox">
-                                                    <input type="checkbox" class="category-filter" value="18">
-                                                    <span class="checkBox"><div class="transition"></div></span>
-                                                    <span class="check-label">Оптика</span>
-                                                </label>
-                                                <label class="custom-checkbox">
-                                                    <input type="checkbox" class="category-filter" value="44">
-                                                    <span class="checkBox"><div class="transition"></div></span>
-                                                    <span class="check-label">Электрооборудование</span>
-                                                </label>
-                                                <label class="custom-checkbox">
-                                                    <input type="checkbox" class="category-filter" value="4">
-                                                    <span class="checkBox"><div class="transition"></div></span>
-                                                    <span class="check-label">Датчики</span>
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
+                            <div class="d-flex align-items-center gap-3">
+                                <!-- Поиск -->
+                                <div class="search-box">
+                                    <i class="fas fa-search"></i>
+                                    <input type="text" id="searchInput" class="form-control search-input"
+                                        placeholder="Поиск по каталогу...">
                                 </div>
-                            </div>
-
-                            <!-- Вспомогательные системы -->
-                            <div class="category-group">
-                                <div class="accordion" id="accordionAuxiliary">
-                                    <div class="accordion-item">
-                                        <h2 class="accordion-header">
-                                            <button class="accordion-button collapsed" type="button"
-                                                    data-bs-toggle="collapse"
-                                                    data-bs-target="#collapseAuxiliary">
-                                                Вспомогательные системы
-                                            </button>
-                                        </h2>
-                                        <div id="collapseAuxiliary" class="accordion-collapse collapse"
-                                             data-bs-parent="#accordionAuxiliary">
-                                            <div class="accordion-body accordion-checkboxes">
-                                                <label class="custom-checkbox">
-                                                    <input type="checkbox" class="category-filter" value="36">
-                                                    <span class="checkBox"><div class="transition"></div></span>
-                                                    <span class="check-label">Трубы</span>
-                                                </label>
-                                                <label class="custom-checkbox">
-                                                    <input type="checkbox" class="category-filter" value="20">
-                                                    <span class="checkBox"><div class="transition"></div></span>
-                                                    <span class="check-label">Патрубки</span>
-                                                </label>
-                                                <label class="custom-checkbox">
-                                                    <input type="checkbox" class="category-filter" value="43">
-                                                    <span class="checkBox"><div class="transition"></div></span>
-                                                    <span class="check-label">Шланги</span>
-                                                </label>
-                                                <label class="custom-checkbox">
-                                                    <input type="checkbox" class="category-filter" value="39">
-                                                    <span class="checkBox"><div class="transition"></div></span>
-                                                    <span class="check-label">Хомуты</span>
-                                                </label>
-                                                <label class="custom-checkbox">
-                                                    <input type="checkbox" class="category-filter" value="10">
-                                                    <span class="checkBox"><div class="transition"></div></span>
-                                                    <span class="check-label">Крепеж</span>
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Ремонт и прочее -->
-                            <div class="category-group">
-                                <div class="accordion" id="accordionRepair">
-                                    <div class="accordion-item">
-                                        <h2 class="accordion-header">
-                                            <button class="accordion-button collapsed" type="button"
-                                                    data-bs-toggle="collapse"
-                                                    data-bs-target="#collapseRepair">
-                                                Ремонт и прочее
-                                            </button>
-                                        </h2>
-                                        <div id="collapseRepair" class="accordion-collapse collapse"
-                                             data-bs-parent="#accordionRepair">
-                                            <div class="accordion-body accordion-checkboxes">
-                                                <label class="custom-checkbox">
-                                                    <input type="checkbox" class="category-filter" value="28">
-                                                    <span class="checkBox"><div class="transition"></div></span>
-                                                    <span class="check-label">Ремкомплекты</span>
-                                                </label>
-                                                <label class="custom-checkbox">
-                                                    <input type="checkbox" class="category-filter" value="24">
-                                                    <span class="checkBox"><div class="transition"></div></span>
-                                                    <span class="check-label">Прочее</span>
-                                                </label>
-                                                <label class="custom-checkbox">
-                                                    <input type="checkbox" class="category-filter" value="31">
-                                                    <span class="checkBox"><div class="transition"></div></span>
-                                                    <span class="check-label">Сальники</span>
-                                                </label>
-                                                <label class="custom-checkbox">
-                                                    <input type="checkbox" class="category-filter" value="15">
-                                                    <span class="checkBox"><div class="transition"></div></span>
-                                                    <span class="check-label">Манжеты</span>
-                                                </label>
-                                                <label class="custom-checkbox">
-                                                    <input type="checkbox" class="category-filter" value="11">
-                                                    <span class="checkBox"><div class="transition"></div></span>
-                                                    <span class="check-label">Крестовины</span>
-                                                </label>
-                                                <label class="custom-checkbox">
-                                                    <input type="checkbox" class="category-filter" value="9">
-                                                    <span class="checkBox"><div class="transition"></div></span>
-                                                    <span class="check-label">Кольца</span>
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                <!-- Сортировка -->
+                                <select id="sortSelect" class="sort-select">
+                                    <option value="name,asc">По названию (А-Я)</option>
+                                    <option value="name,desc">По названию (Я-А)</option>
+                                    <option value="price,asc">По цене (возрастание)</option>
+                                    <option value="price,desc">По цене (убывание)</option>
+                                    <option value="createdDate,desc">Новинки</option>
+                                </select>
                             </div>
                         </div>
 
-                        <!-- Бренды с группами -->
-                        <div class="filter-group">
-                            <h6>Производители</h6>
-
-                            <!-- Китайские производители -->
-                            <div class="brand-group">
-                                <div class="accordion" id="accordionChinese">
-                                    <div class="accordion-item">
-                                        <h2 class="accordion-header">
-                                            <button class="accordion-button collapsed" type="button"
-                                                    data-bs-toggle="collapse"
-                                                    data-bs-target="#collapseChinese">
-                                                Китайские производители
-                                            </button>
-                                        </h2>
-                                        <div id="collapseChinese" class="accordion-collapse collapse"
-                                             data-bs-parent="#accordionChinese">
-                                            <div class="accordion-body accordion-checkboxes">
-                                                <label class="custom-checkbox">
-                                                    <input type="checkbox" class="brand-filter" value="1">
-                                                    <span class="checkBox"><div class="transition"></div></span>
-                                                    <span class="check-label">HOWO</span>
-                                                </label>
-                                                <label class="custom-checkbox">
-                                                    <input type="checkbox" class="brand-filter" value="2">
-                                                    <span class="checkBox"><div class="transition"></div></span>
-                                                    <span class="check-label">Shaanxi</span>
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                        <!-- Сетка товаров -->
+                        <div id="productsGrid" class="row g-4">
+                            <div class="spinner-border text-primary" role="status">
+                                <span class="visually-hidden">Загрузка...</span>
                             </div>
-
-                            <!-- Российские производители -->
-                            <div class="brand-group">
-                                <div class="accordion" id="accordionRussian">
-                                    <div class="accordion-item">
-                                        <h2 class="accordion-header">
-                                            <button class="accordion-button collapsed" type="button"
-                                                    data-bs-toggle="collapse"
-                                                    data-bs-target="#collapseRussian">
-                                                Российские производители
-                                            </button>
-                                        </h2>
-                                        <div id="collapseRussian" class="accordion-collapse collapse"
-                                             data-bs-parent="#accordionRussian">
-                                            <div class="accordion-body accordion-checkboxes">
-                                                <label class="custom-checkbox">
-                                                    <input type="checkbox" class="brand-filter" value="12">
-                                                    <span class="checkBox"><div class="transition"></div></span>
-                                                    <span class="check-label">КАМАЗ</span>
-                                                </label>
-                                                <label class="custom-checkbox">
-                                                    <input type="checkbox" class="brand-filter" value="26">
-                                                    <span class="checkBox"><div class="transition"></div></span>
-                                                    <span class="check-label">Урал</span>
-                                                </label>
-                                                <label class="custom-checkbox">
-                                                    <input type="checkbox" class="brand-filter" value="28">
-                                                    <span class="checkBox"><div class="transition"></div></span>
-                                                    <span class="check-label">ЯМЗ</span>
-                                                </label>
-                                                <label class="custom-checkbox">
-                                                    <input type="checkbox" class="brand-filter" value="27">
-                                                    <span class="checkBox"><div class="transition"></div></span>
-                                                    <span class="check-label">ЧТЗ</span>
-                                                </label>
-                                                <label class="custom-checkbox">
-                                                    <input type="checkbox" class="brand-filter" value="11">
-                                                    <span class="checkBox"><div class="transition"></div></span>
-                                                    <span class="check-label">ЗИЛ</span>
-                                                </label>
-                                                <label class="custom-checkbox">
-                                                    <input type="checkbox" class="brand-filter" value="3">
-                                                    <span class="checkBox"><div class="transition"></div></span>
-                                                    <span class="check-label">АМЗ</span>
-                                                </label>
-                                                <label class="custom-checkbox">
-                                                    <input type="checkbox" class="brand-filter" value="4">
-                                                    <span class="checkBox"><div class="transition"></div></span>
-                                                    <span class="check-label">АТЗ</span>
-                                                </label>
-                                                <label class="custom-checkbox">
-                                                    <input type="checkbox" class="brand-filter" value="19">
-                                                    <span class="checkBox"><div class="transition"></div></span>
-                                                    <span class="check-label">ОТЗ</span>
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Белорусские производители -->
-                            <div class="brand-group">
-                                <div class="accordion" id="accordionBelarus">
-                                    <div class="accordion-item">
-                                        <h2 class="accordion-header">
-                                            <button class="accordion-button collapsed" type="button"
-                                                    data-bs-toggle="collapse"
-                                                    data-bs-target="#collapseBelarus">
-                                                Белорусские производители
-                                            </button>
-                                        </h2>
-                                        <div id="collapseBelarus" class="accordion-collapse collapse"
-                                             data-bs-parent="#accordionBelarus">
-                                            <div class="accordion-body accordion-checkboxes">
-                                                <label class="custom-checkbox">
-                                                    <input type="checkbox" class="brand-filter" value="16">
-                                                    <span class="checkBox"><div class="transition"></div></span>
-                                                    <span class="check-label">МАЗ</span>
-                                                </label>
-                                                <label class="custom-checkbox">
-                                                    <input type="checkbox" class="brand-filter" value="18">
-                                                    <span class="checkBox"><div class="transition"></div></span>
-                                                    <span class="check-label">МТЗ</span>
-                                                </label>
-                                                <label class="custom-checkbox">
-                                                    <input type="checkbox" class="brand-filter" value="17">
-                                                    <span class="checkBox"><div class="transition"></div></span>
-                                                    <span class="check-label">ММЗ</span>
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Украинские производители -->
-                            <div class="brand-group">
-                                <div class="accordion" id="accordionUkrainian">
-                                    <div class="accordion-item">
-                                        <h2 class="accordion-header">
-                                            <button class="accordion-button collapsed" type="button"
-                                                    data-bs-toggle="collapse"
-                                                    data-bs-target="#collapseUkrainian">
-                                                Украинские производители
-                                            </button>
-                                        </h2>
-                                        <div id="collapseUkrainian" class="accordion-collapse collapse"
-                                             data-bs-parent="#accordionUkrainian">
-                                            <div class="accordion-body accordion-checkboxes">
-                                                <label class="custom-checkbox">
-                                                    <input type="checkbox" class="brand-filter" value="14">
-                                                    <span class="checkBox"><div class="transition"></div></span>
-                                                    <span class="check-label">КРАЗ</span>
-                                                </label>
-                                                <label class="custom-checkbox">
-                                                    <input type="checkbox" class="brand-filter" value="13">
-                                                    <span class="checkBox"><div class="transition"></div></span>
-                                                    <span class="check-label">КНБ-255</span>
-                                                </label>
-                                                <label class="custom-checkbox">
-                                                    <input type="checkbox" class="brand-filter" value="8">
-                                                    <span class="checkBox"><div class="transition"></div></span>
-                                                    <span class="check-label">ДЗ-98</span>
-                                                </label>
-                                                <label class="custom-checkbox">
-                                                    <input type="checkbox" class="brand-filter" value="15">
-                                                    <span class="checkBox"><div class="transition"></div></span>
-                                                    <span class="check-label">КСФ</span>
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Тракторная техника -->
-                            <div class="brand-group">
-                                <div class="accordion" id="accordionTractor">
-                                    <div class="accordion-item">
-                                        <h2 class="accordion-header">
-                                            <button class="accordion-button collapsed" type="button"
-                                                    data-bs-toggle="collapse"
-                                                    data-bs-target="#collapseTractor">
-                                                Тракторная техника
-                                            </button>
-                                        </h2>
-                                        <div id="collapseTractor" class="accordion-collapse collapse"
-                                             data-bs-parent="#accordionTractor">
-                                            <div class="accordion-body accordion-checkboxes">
-                                                <label class="custom-checkbox">
-                                                    <input type="checkbox" class="brand-filter" value="10">
-                                                    <span class="checkBox"><div class="transition"></div></span>
-                                                    <span class="check-label">ДТ-75 (трактор)</span>
-                                                </label>
-                                                <label class="custom-checkbox">
-                                                    <input type="checkbox" class="brand-filter" value="9">
-                                                    <span class="checkBox"><div class="transition"></div></span>
-                                                    <span class="check-label">ДТ-55 (трактор)</span>
-                                                </label>
-                                                <label class="custom-checkbox">
-                                                    <input type="checkbox" class="brand-filter" value="21">
-                                                    <span class="checkBox"><div class="transition"></div></span>
-                                                    <span class="check-label">ТТ-4М (трактор)</span>
-                                                </label>
-                                                <label class="custom-checkbox">
-                                                    <input type="checkbox" class="brand-filter" value="22">
-                                                    <span class="checkBox"><div class="transition"></div></span>
-                                                    <span class="check-label">ТТ-4М-01 (трактор)</span>
-                                                </label>
-                                                <label class="custom-checkbox">
-                                                    <input type="checkbox" class="brand-filter" value="6">
-                                                    <span class="checkBox"><div class="transition"></div></span>
-                                                    <span class="check-label">Д-160</span>
-                                                </label>
-                                                <label class="custom-checkbox">
-                                                    <input type="checkbox" class="brand-filter" value="7">
-                                                    <span class="checkBox"><div class="transition"></div></span>
-                                                    <span class="check-label">Д-461</span>
-                                                </label>
-                                                <label class="custom-checkbox">
-                                                    <input type="checkbox" class="brand-filter" value="23">
-                                                    <span class="checkBox"><div class="transition"></div></span>
-                                                    <span class="check-label">Тракторы</span>
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Универсальные/Общие -->
-                            <div class="brand-group">
-                                <div class="accordion" id="accordionUniversal">
-                                    <div class="accordion-item">
-                                        <h2 class="accordion-header">
-                                            <button class="accordion-button collapsed" type="button"
-                                                    data-bs-toggle="collapse"
-                                                    data-bs-target="#collapseUniversal">
-                                                Универсальные/Общие
-                                            </button>
-                                        </h2>
-                                        <div id="collapseUniversal" class="accordion-collapse collapse"
-                                             data-bs-parent="#accordionUniversal">
-                                            <div class="accordion-body accordion-checkboxes">
-                                                <label class="custom-checkbox">
-                                                    <input type="checkbox" class="brand-filter" value="25">
-                                                    <span class="checkBox"><div class="transition"></div></span>
-                                                    <span class="check-label">Универсальные</span>
-                                                </label>
-                                                <label class="custom-checkbox">
-                                                    <input type="checkbox" class="brand-filter" value="20">
-                                                    <span class="checkBox"><div class="transition"></div></span>
-                                                    <span class="check-label">Прочие</span>
-                                                </label>
-                                                <label class="custom-checkbox">
-                                                    <input type="checkbox" class="brand-filter" value="5">
-                                                    <span class="checkBox"><div class="transition"></div></span>
-                                                    <span class="check-label">Грузовые автомобили</span>
-                                                </label>
-                                                <label class="custom-checkbox">
-                                                    <input type="checkbox" class="brand-filter" value="24">
-                                                    <span class="checkBox"><div class="transition"></div></span>
-                                                    <span class="check-label">Труд</span>
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            <p class="mt-2 text-muted">Загрузка товаров...</p>
                         </div>
 
-                        <!-- Цена с двумя точками -->
-                        <div class="filter-group">
-                            <h6>Цена, ₽</h6>
-                            <div class="price-range-container">
-                                <div class="slider-track"></div>
-                                <div class="slider-filled" id="sliderFilled"></div>
-                                <input type="range" min="0" max="60000" step="100" value="0" class="min-slider" id="minSlider">
-                                <input type="range" min="0" max="60000" step="100" value="60000" class="max-slider" id="maxSlider">
-                            </div>
-                            <div class="price-inputs">
-                                <input type="number" id="minPriceInput" class="form-control form-control-sm"
-                                       placeholder="от" min="0" max="60000" value="0">
-                                <span class="text-muted align-self-center">-</span>
-                                <input type="number" id="maxPriceInput" class="form-control form-control-sm"
-                                       placeholder="до" min="0" max="60000" value="60000">
-                            </div>
-                        </div>
-
-                        <!-- Кнопки фильтров -->
-                        <div class="filter-group mt-4">
-                            <button id="applyFiltersBtn" class="filter-btn">Применить фильтры</button>
-                            <button id="resetFiltersBtn" class="reset-btn">Сбросить все</button>
+                        <!-- Пагинация -->
+                        <div class="d-flex justify-content-center mt-4">
+                            <nav>
+                                <ul class="pagination" id="pagination">
+                                    <!-- Пагинация через JS -->
+                                </ul>
+                            </nav>
                         </div>
                     </div>
                 </div>
-
-                <!-- Товары -->
-                <div class="col-lg-9">
-                    <div class="d-flex justify-content-between align-items-center mb-4">
-                        <div class="section-title mb-0">
-                            <h2>Товары</h2>
-                        </div>
-                        <div class="d-flex align-items-center gap-3">
-                            <!-- Поиск -->
-                            <div class="search-box">
-                                <i class="fas fa-search"></i>
-                                <input type="text" id="searchInput" class="form-control search-input"
-                                       placeholder="Поиск по каталогу...">
-                            </div>
-                            <!-- Сортировка -->
-                            <select id="sortSelect" class="sort-select">
-                                <option value="name,asc">По названию (А-Я)</option>
-                                <option value="name,desc">По названию (Я-А)</option>
-                                <option value="price,asc">По цене (возрастание)</option>
-                                <option value="price,desc">По цене (убывание)</option>
-                                <option value="createdDate,desc">Новинки</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <!-- Сетка товаров -->
-                    <div id="productsGrid" class="row g-4">
-                        <div class="spinner-border text-primary" role="status">
-                            <span class="visually-hidden">Загрузка...</span>
-                        </div>
-                        <p class="mt-2 text-muted">Загрузка товаров...</p>
-                    </div>
-
-                    <!-- Пагинация -->
-                    <div class="d-flex justify-content-center mt-4">
-                        <nav>
-                            <ul class="pagination" id="pagination">
-                                <!-- Пагинация через JS -->
-                            </ul>
-                        </nav>
-                    </div>
-                </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Подключаем скрипты -->
-    <script th:src="@{/js/products.js}" defer></script>
-</div>
+        <!-- Подключаем скрипты -->
+        <script th:src="@{/js/products.js}" defer></script>
+    </div>
 </body>
+
 </html>

@@ -9,8 +9,6 @@ import org.telegram.telegrambots.bots.DefaultBotOptions;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
-import java.math.BigDecimal;
-
 @Service
 @Slf4j
 @RequiredArgsConstructor
@@ -47,23 +45,35 @@ public class TelegramService {
         }
     }
 
-    public void sendOrderNotification(String orderId, String customerName, String customerPhone,
-                                      BigDecimal totalAmount, String status) {
+    public void sendOrderNotification(gruzomarket.ru.tools.dto.OrderDTO order) {
+        StringBuilder productsList = new StringBuilder();
+        if (order.getItems() != null && !order.getItems().isEmpty()) {
+            productsList.append("🛒 <b>Товары в заказе:</b>\n");
+            for (gruzomarket.ru.tools.dto.OrderItemDTO item : order.getItems()) {
+                productsList.append(String.format("• %s | %s шт. x %s ₽\n",
+                        item.getProductName(),
+                        item.getQuantity(),
+                        item.getUnitPrice() != null ? item.getUnitPrice().toString() : "0"));
+            }
+            productsList.append("\n");
+        }
+
         String message = String.format(
                 "🚚 <b>Новая заявка на сайте!</b>\n\n" +
                         "📦 <b>Заказ:</b> #%s\n" +
                         "👤 <b>Клиент:</b> %s\n" +
                         "📞 <b>Телефон:</b> %s\n" +
+                        "%s" +
                         "💰 <b>Сумма:</b> %s руб.\n" +
                         "📊 <b>Статус:</b> %s\n\n" +
                         "⏰ <i>%s</i>",
-                orderId,
-                customerName,
-                customerPhone,
-                totalAmount != null ? totalAmount.toString() : "0",
-                status,
-                java.time.LocalDateTime.now().format(java.time.format.DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm"))
-        );
+                order.getId(),
+                order.getCustomerName(),
+                order.getPhone(),
+                productsList.toString(),
+                order.getTotalAmount() != null ? order.getTotalAmount().toString() : "0",
+                order.getStatus(),
+                java.time.LocalDateTime.now().format(java.time.format.DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm")));
 
         sendNotification(message);
     }
@@ -78,8 +88,7 @@ public class TelegramService {
                 orderId,
                 oldStatus,
                 newStatus,
-                java.time.LocalDateTime.now().format(java.time.format.DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm"))
-        );
+                java.time.LocalDateTime.now().format(java.time.format.DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm")));
 
         sendNotification(message);
     }

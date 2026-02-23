@@ -47,8 +47,8 @@ public class WebController {
         model.addAttribute("categories", categories);
 
         List<ProductDTO> products = productService.findAllVisible();
-        if (products.size() > 6)
-            products = products.subList(0, 6);
+        if (products.size() > 8)
+            products = products.subList(0, 8);
         model.addAttribute("products", products);
 
         List<BrandDTO> brands = brandService.findAll();

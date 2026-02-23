@@ -43,6 +43,9 @@ public class Order {
     @Column(columnDefinition = "TEXT")
     private String notes;
 
+    @Column
+    private String socialLink;
+
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
@@ -51,4 +54,3 @@ public class Order {
         createdAt = LocalDateTime.now();
     }
 }
-

@@ -25,10 +25,17 @@ spring:
       location: ${java.io.tmpdir}
   
   mail:
-    host: localhost
+    host: smtp.gmail.com
     port: 587
-    username: ${MAIL_USERNAME:}
-    password: ${MAIL_PASSWORD:}
+    username: gruzomarket.rus@gmail.com
+    password: ${MAIL_PASSWORD:awjnefajbojgrdst}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
 
   thymeleaf:
     cache: false                     # Отключить кэш для разработки

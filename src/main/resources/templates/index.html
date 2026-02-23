@@ -7,299 +7,327 @@
 </head>
 
 <body>
-    <div layout:fragment="content">
+    <div layout:fragment="content" class="home-page">
 
-        <!-- Hero Section -->
-        <section class="hero-section">
-            <div class="container">
-                <div class="row justify-content-start">
-                    <div class="col-lg-6 text-start hero-content animate-fadeInUp">
-                        <h1 class="hero-title">Ваш груз - наш маркет</h1>
-                        <p class="hero-subtitle">
-                            Запчасти от проверенных производителей. Быстрая доставка по всей России. Гарантия качества
-                            на все товары.
+        <!-- Hero Section Redesign -->
+        <section class="hero-section hero-modern d-flex align-items-center">
+            <div class="hero-bg-accent"></div>
+            <div class="container position-relative">
+                <div class="row justify-content-start text-start">
+                    <div class="col-lg-8 hero-content animate-fadeIn">
+                        <h1 class="hero-title display-1 fw-bold mb-4">
+                            Запчасти <span class="brand-highlight">нового</span> поколения
+                        </h1>
+                        <p class="hero-subtitle lead mb-5">
+                            Экспертный подбор, официальная гарантия и доставка по всей России от 1 дня.
+                            Ваш надежный партнер снабжения запчастями для грузового транспорта.
                         </p>
-                        <form th:action="@{/products}" method="get" class="hero-search mt-4 d-flex align-items-center">
-                            <input type="text" name="search" class="form-control hero-input"
-                                placeholder="Поиск по артикулу или названию...">
-                            <button class="btn btn-hero ms-3" type="submit">Найти запчасть</button>
-                        </form>
-                        <a class="btn btn-hero mt-4" th:href="@{/products}">
-                            <i class="fas fa-truck me-2"></i>Перейти в каталог
-                        </a>
-                    </div>
-                    <!-- Карусель категорий справа -->
-                    <div class="col-lg-6 mt-4 mt-lg-0">
-                        <div id="categoriesCarousel" class="carousel slide categories-carousel" data-bs-ride="carousel">
-                            <div class="carousel-inner">
-                                <!-- Категория 1 -->
-                                <div class="carousel-item active">
-                                    <div class="category-slide text-center">
-                                        <div class="category-image-wrapper">
-                                            <img src="/images/filter.png" alt="Фильтры" class="category-img">
-                                        </div>
-                                        <div class="category-text-wrapper">
-                                            <h4 class="category-name">Фильтры</h4>
-                                            <p class="category-desc">Топливные, масляные, воздушные</p>
-                                        </div>
-                                    </div>
-                                </div>
 
-                                <!-- Категория 2 -->
-                                <div class="carousel-item">
-                                    <div class="category-slide text-center">
-                                        <div class="category-image-wrapper">
-                                            <img src="/images/amortization.png" alt="Амортизаторы" class="category-img">
-                                        </div>
-                                        <div class="category-text-wrapper">
-                                            <h4 class="category-name">Амортизаторы</h4>
-                                            <p class="category-desc">Для всех типов подвесок</p>
-                                        </div>
-                                    </div>
+                        <div class="hero-search-wrapper">
+                            <form th:action="@{/products}" method="get" class="hero-glass-search">
+                                <div class="input-group">
+                                    <span class="input-group-text bg-transparent border-0"><i
+                                            class="fas fa-search text-accent"></i></span>
+                                    <input type="text" name="search" class="form-control border-0 text-white"
+                                        placeholder="Артикул или название запчасти...">
+                                    <button class="btn btn-hero-action" type="submit">Найти</button>
                                 </div>
-
-                                <!-- Категория 3 -->
-                                <div class="carousel-item">
-                                    <div class="category-slide text-center">
-                                        <div class="category-image-wrapper">
-                                            <img src="/images/optic.png" alt="Оптика" class="category-img">
-                                        </div>
-                                        <div class="category-text-wrapper">
-                                            <h4 class="category-name">Оптика</h4>
-                                            <p class="category-desc">Фары, фонари, поворотники</p>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- Категория 4 -->
-                                <div class="carousel-item">
-                                    <div class="category-slide text-center">
-                                        <div class="category-image-wrapper">
-                                            <img src="/images/trubs.png" alt="Трубы" class="category-img">
-                                        </div>
-                                        <div class="category-text-wrapper">
-                                            <h4 class="category-name">Трубы</h4>
-                                            <p class="category-desc">Выхлопные, гидравлические</p>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- Категория 5 -->
-                                <div class="carousel-item">
-                                    <div class="category-slide text-center">
-                                        <div class="category-image-wrapper">
-                                            <img src="/images/podshipnik.png" alt="Подшипники" class="category-img">
-                                        </div>
-                                        <div class="category-text-wrapper">
-                                            <h4 class="category-name">Подшипники</h4>
-                                            <p class="category-desc">Все размеры и типы</p>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- Категория 6 -->
-                                <div class="carousel-item">
-                                    <div class="category-slide text-center">
-                                        <div class="category-image-wrapper">
-                                            <img src="/images/klapan.png" alt="Клапаны" class="category-img">
-                                        </div>
-                                        <div class="category-text-wrapper">
-                                            <h4 class="category-name">Клапаны</h4>
-                                            <p class="category-desc">Топливные, гидравлические</p>
-                                        </div>
-                                    </div>
-                                </div>
+                            </form>
+                            <div class="hero-search-hints mt-3 d-flex justify-content-start gap-3">
+                                <span class="text-muted small">Популярно:</span>
+                                <a href="/products?search=фильтр" class="hint-tag">фильтры</a>
+                                <a href="/products?search=ремкомплект" class="hint-tag">ремкомплекты</a>
+                                <a href="/products?search=оптика" class="hint-tag">оптика</a>
                             </div>
-
-                            <!-- Простые стрелки без фона -->
-                            <button class="carousel-control-prev cat-control-prev" type="button"
-                                data-bs-target="#categoriesCarousel" data-bs-slide="prev">
-                                <i class="fas fa-chevron-left"></i>
-                                <span class="visually-hidden">Previous</span>
-                            </button>
-                            <button class="carousel-control-next cat-control-next" type="button"
-                                data-bs-target="#categoriesCarousel" data-bs-slide="next">
-                                <i class="fas fa-chevron-right"></i>
-                                <span class="visually-hidden">Next</span>
-                            </button>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
+
+        <!-- Stats Section (Moved from About for trust) -->
+        <section class="home-stats py-5 scroll-reveal">
+            <div class="container">
+                <div class="row g-4 text-center">
+                    <div class="col-6 col-md-3">
+                        <div class="stat-card">
+                            <div class="stat-number">10+</div>
+                            <div class="stat-label">Лет на рынке</div>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <div class="stat-card">
+                            <div class="stat-number">50k+</div>
+                            <div class="stat-label">Товаров</div>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <div class="stat-card">
+                            <div class="stat-number">15k+</div>
+                            <div class="stat-label">Клиентов</div>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <div class="stat-card">
+                            <div class="stat-number">24/7</div>
+                            <div class="stat-label">Поддержка</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Main Content Categories slider -->
+        <section class="featured-categories py-5 scroll-reveal">
+            <div class="container">
+                <div class="section-title text-center mb-5">
+                    <h2 class="display-5 fw-bold"><span class="brand-highlight">Быстрый</span> переход</h2>
+                    <div class="title-accent mx-auto"></div>
+                </div>
+
+                <div class="categories-carousel-modern">
+                    <div id="categoriesCarousel" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <div class="row g-4">
+                                    <div class="col-md-4">
+                                        <div class="category-slide-modern">
+                                            <div class="slide-image-bg"
+                                                style="background-image: url('/images/filter.png')"></div>
+                                            <div class="slide-content">
+                                                <h4>Фильтры</h4>
+                                                <p>Топливные, масляные, воздушные</p>
+                                                <a href="/products?categoryIds=38"
+                                                    class="btn btn-sm btn-outline-light">Смотреть выбор</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="category-slide-modern">
+                                            <div class="slide-image-bg"
+                                                style="background-image: url('/images/amortization.png')"></div>
+                                            <div class="slide-content">
+                                                <h4>Амортизаторы</h4>
+                                                <p>Для всех типов подвесок</p>
+                                                <a href="/products?categoryIds=1"
+                                                    class="btn btn-sm btn-outline-light">Смотреть выбор</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="category-slide-modern">
+                                            <div class="slide-image-bg"
+                                                style="background-image: url('/images/optic.png')"></div>
+                                            <div class="slide-content">
+                                                <h4>Оптика</h4>
+                                                <p>Фары, фонари, поворотники</p>
+                                                <a href="/products?categoryIds=18"
+                                                    class="btn btn-sm btn-outline-light">Смотреть выбор</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- More slides could be added here similar to categories-carousel if needed -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- Features Section -->
-        <section class="features-section">
+        <section class="features-section py-5 scroll-reveal">
             <div class="container">
                 <div class="row g-4">
                     <div class="col-md-3">
-                        <div class="feature-card">
-                            <div class="feature-icon"><i class="fas fa-shipping-fast"></i></div>
-                            <h3 class="feature-title">Быстрая доставка</h3>
-                            <p>Отправка в день заказа. Доставка по РФ от 1 до 5 дней.</p>
+                        <div class="delivery-card h-100">
+                            <div class="delivery-icon"><i class="fas fa-shipping-fast"></i></div>
+                            <div class="delivery-content">
+                                <h3 class="delivery-title">Быстрая доставка</h3>
+                                <p class="delivery-desc">Отправка в день заказа. Доставка по РФ от 1 до 5 дней.</p>
+                            </div>
                         </div>
                     </div>
                     <div class="col-md-3">
-                        <div class="feature-card">
-                            <div class="feature-icon"><i class="fas fa-check-circle"></i></div>
-                            <h3 class="feature-title">Гарантия качества</h3>
-                            <p>Оригинальные запчасти и сертифицированные аналоги.</p>
+                        <div class="delivery-card h-100">
+                            <div class="delivery-icon"><i class="fas fa-check-circle"></i></div>
+                            <div class="delivery-content">
+                                <h3 class="delivery-title">Гарантия качества</h3>
+                                <p class="delivery-desc">Оригинальные запчасти и сертифицированные аналоги.</p>
+                            </div>
                         </div>
                     </div>
                     <div class="col-md-3">
-                        <div class="feature-card">
-                            <div class="feature-icon"><i class="fas fa-headset"></i></div>
-                            <h3 class="feature-title">Поддержка</h3>
-                            <p>Поможем с подбором запчастей и оформлением заказа.</p>
+                        <div class="delivery-card h-100">
+                            <div class="delivery-icon"><i class="fas fa-headset"></i></div>
+                            <div class="delivery-content">
+                                <h3 class="delivery-title">Поддержка 24/7</h3>
+                                <p class="delivery-desc">Поможем с подбором запчастей и оформлением заказа.</p>
+                            </div>
                         </div>
                     </div>
                     <div class="col-md-3">
-                        <div class="feature-card">
-                            <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
-                            <h3 class="feature-title">Безопасная оплата</h3>
-                            <p>Разные способы оплаты и безопасные транзакции.</p>
+                        <div class="delivery-card h-100">
+                            <div class="delivery-icon"><i class="fas fa-shield-alt"></i></div>
+                            <div class="delivery-content">
+                                <h3 class="delivery-title">Безопасная оплата</h3>
+                                <p class="delivery-desc">Разные способы оплаты и безопасные транзакции через шлюзы.</p>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Categories + Featured products -->
-        <section class="categories-section">
+        <!-- Popular Categories Grid -->
+        <section class="popular-categories py-5 scroll-reveal">
             <div class="container">
-                <div class="section-title">
-                    <h2>Популярные категории</h2>
-                    <p class="text-muted mt-3">Перейдите в каталог и воспользуйтесь фильтрами для поиска</p>
+                <div class="section-title text-center mb-5">
+                    <h2 class="display-6 fw-bold">Популярные <span class="brand-highlight">категории</span></h2>
+                    <p class="text-muted">Большой выбор запчастей от ведущих производителей</p>
                 </div>
 
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="row g-4">
-                            <div class="col-md-4" th:each="c : ${categories}">
-                                <a class="text-decoration-none" th:href="@{/products(categoryIds=${c.id})}">
-                                    <div class="category-card">
-                                        <div class="category-image"
-                                            th:style="'background-image: url(' + (${c.imageUrl != null ? c.imageUrl : '/images/engine.jpg'}) + ');'">
-                                        </div>
-                                        <div class="category-content">
-                                            <h5 class="category-title" th:text="${c.name}">Категория</h5>
-                                            <p class="text-muted small"
-                                                th:text="${(c.productCount != null ? c.productCount : 0) + ' товаров'}">
-                                                0 товаров</p>
-                                            <div class="category-count">Перейти в каталог</div>
-                                            <span class="category-link"><i class="fas fa-arrow-right"></i></span>
-                                        </div>
+                <div class="row g-4">
+                    <div class="col-md-4 col-sm-6" th:each="c : ${categories}">
+                        <a class="text-decoration-none" th:href="@{/products(categoryIds=${c.id})}">
+                            <div class="category-card-premium">
+                                <div class="card-image-bg"
+                                    th:style="'background-image: url(' + (${c.imageUrl != null ? c.imageUrl : '/images/engine.jpg'}) + ');'">
+                                </div>
+                                <div class="card-overlay-modern">
+                                    <div class="card-info">
+                                        <h5 class="mb-1" th:text="${c.name}">Категория</h5>
+                                        <span class="count-badge"
+                                            th:text="${(c.productCount != null ? c.productCount : 0) + ' товаров'}">0
+                                            товаров</span>
                                     </div>
-                                </a>
+                                    <div class="card-arrow"><i class="fas fa-arrow-right"></i></div>
+                                </div>
                             </div>
-                        </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-                        <div class="section-title mt-5">
-                            <h2>Рекомендуемые товары</h2>
-                        </div>
+        <!-- Recommended Products -->
+        <section class="recommended-products py-5 scroll-reveal">
+            <div class="container">
+                <div class="section-title d-flex justify-content-between align-items-end mb-5">
+                    <div>
+                        <h2 class="display-6 fw-bold"><span class="brand-highlight">Рекомендуемые</span> товары</h2>
+                        <p class="text-muted mb-0">Лучшие предложения по цене и качеству</p>
+                    </div>
+                    <a th:href="@{/products}" class="btn btn-outline-accent">
+                        Все товары <i class="fas fa-chevron-right ms-2"></i>
+                    </a>
+                </div>
 
-                        <div class="row g-4">
-                            <div class="col-md-4" th:each="p : ${products}">
-                                <div class="product-card">
-                                    <span class="product-badge"
-                                        th:text="${p.quantity != null && p.quantity > 0 ? 'В наличии' : 'Под заказ'}">В
-                                        наличии</span>
-                                    <div class="product-image" th:if="${p.imageUrl != null}"
-                                        th:style="'background-image: url(' + ${p.imageUrl} + ');'">
-                                        <div class="product-overlay">
-                                            <a class="quick-view-btn" th:href="@{'/products/' + ${p.id}}">Подробнее</a>
-                                        </div>
+                <div class="row g-4">
+                    <div class="col-lg-3 col-md-4 col-sm-6" th:each="p : ${products}">
+                        <div class="product-card">
+                            <span class="product-badge"
+                                th:text="${p.quantity != null && p.quantity > 0 ? 'В наличии' : 'Под заказ'}">В
+                                наличии</span>
+                            <div class="product-image-container">
+                                <img th:if="${p.imageUrl != null}" th:src="${p.imageUrl}" th:alt="${p.name}"
+                                    class="product-img">
+                                <div class="no-img-fallback shadow-sm" th:if="${p.imageUrl == null}">
+                                    <i class="fas fa-image fa-3x text-muted opacity-25"></i>
+                                </div>
+                                <div class="product-quick-actions">
+                                    <a th:href="@{'/products/' + ${p.id}}" class="action-btn" title="Подробнее"><i
+                                            class="fas fa-eye"></i></a>
+                                    <button class="action-btn btn-favorite" type="button" title="В избранное"><i
+                                            class="far fa-heart"></i></button>
+                                </div>
+                            </div>
+                            <div class="product-content">
+                                <div class="product-meta d-flex justify-content-between align-items-center mb-2">
+                                    <span class="product-category small">Запчасти</span>
+                                    <span class="product-article small" th:text="${p.article}">АРТ: 0000</span>
+                                </div>
+                                <h5 class="product-title" th:text="${p.name}">Товар</h5>
+                                <div class="product-footer d-flex justify-content-between align-items-center mt-3">
+                                    <div class="product-price h5 mb-0"
+                                        th:text="${#numbers.formatDecimal(p.price,0,'COMMA',2,'POINT')} + ' ₽'">0.00 ₽
                                     </div>
-                                    <div class="product-image no-image-placeholder" th:if="${p.imageUrl == null}">
-                                        <i class="fas fa-image fa-3x mb-2 text-center d-block"></i>
-                                        <span>Нет фото</span>
-                                        <div class="product-overlay">
-                                            <a class="quick-view-btn" th:href="@{'/products/' + ${p.id}}">Подробнее</a>
-                                        </div>
-                                    </div>
-                                    <div class="product-content">
-                                        <div class="product-category">Запчасти</div>
-                                        <h5 class="product-title" th:text="${p.name}">Товар</h5>
-                                        <div class="product-article" th:text="'Артикул: ' + ${p.article}">Артикул</div>
-                                        <div class="product-price"
-                                            th:text="${#numbers.formatDecimal(p.price,0,'COMMA',2,'POINT')} + ' ₽'">0 ₽
-                                        </div>
-                                        <div class="product-actions">
-                                            <button class="btn-add-cart" type="button" th:attr="data-product-id=${p.id}"
-                                                th:disabled="${p.quantity == null || p.quantity == 0}">
-                                                <i class="fas fa-cart-plus me-2"></i>В корзину
-                                            </button>
-                                            <button class="btn-favorite" type="button"><i
-                                                    class="far fa-heart"></i></button>
-                                        </div>
-                                    </div>
+                                    <button class="btn-add-cart-circle" type="button" th:attr="data-product-id=${p.id}"
+                                        th:disabled="${p.quantity == null || p.quantity == 0}" title="В корзину">
+                                        <i class="fas fa-cart-plus"></i>
+                                    </button>
                                 </div>
                             </div>
                         </div>
-
-                        <div class="text-center mt-5">
-                            <a th:href="@{/products}" class="btn btn-primary btn-lg">
-                                <i class="fas fa-list me-2"></i>Показать все товары
-                            </a>
-                        </div>
-
                     </div>
                 </div>
             </div>
         </section>
 
-        <!--    &lt;!&ndash; Brands Section &ndash;&gt;-->
-        <!--    <section class="brands-section">-->
-        <!--        <div class="container">-->
-        <!--            <div class="section-title">-->
-        <!--                <h2>Популярные бренды</h2>-->
-        <!--                <p class="text-muted mt-3">Запчасти от ведущих производителей</p>-->
-        <!--            </div>-->
+        <div class="text-center mt-5">
+            <a th:href="@{/products}" class="btn btn-primary btn-lg">
+                <i class="fas fa-list me-2"></i>Показать все товары
+            </a>
+        </div>
 
-        <!--            <div class="row g-4">-->
-        <!--                <div class="col-6 col-md-3 col-lg-2" th:each="b : ${brands}">-->
-        <!--                    <a th:href="@{/brands}" class="text-decoration-none">-->
-        <!--                        <div class="brand-card">-->
-        <!--                            <span class="brand-logo" th:text="${b.name}">Brand</span>-->
-        <!--                        </div>-->
-        <!--                    </a>-->
-        <!--                </div>-->
-        <!--            </div>-->
-        <!--        </div>-->
-        <!--    </section>-->
-        <!-- Brands Section -->
-        <section class="brands-section">
-            <div class="container">
-                <div class="section-title">
-                    <h2>Популярные бренды</h2>
-                    <p class="text-muted mt-3">Запчасти от ведущих производителей</p>
-                </div>
+    </div>
+    </div>
+    </div>
+    </section>
 
-                <!-- Карусель с видимыми брендами -->
-                <div id="brandsCarousel" class="brands-carousel-wrapper">
-                    <div class="brands-carousel-track">
-                        <!-- Бренды будут добавляться через JavaScript -->
-                        <!-- Структура для каждого бренда: -->
-                        <!--
+    <!--    &lt;!&ndash; Brands Section &ndash;&gt;-->
+    <!--    <section class="brands-section">-->
+    <!--        <div class="container">-->
+    <!--            <div class="section-title">-->
+    <!--                <h2>Популярные бренды</h2>-->
+    <!--                <p class="text-muted mt-3">Запчасти от ведущих производителей</p>-->
+    <!--            </div>-->
+
+    <!--            <div class="row g-4">-->
+    <!--                <div class="col-6 col-md-3 col-lg-2" th:each="b : ${brands}">-->
+    <!--                    <a th:href="@{/brands}" class="text-decoration-none">-->
+    <!--                        <div class="brand-card">-->
+    <!--                            <span class="brand-logo" th:text="${b.name}">Brand</span>-->
+    <!--                        </div>-->
+    <!--                    </a>-->
+    <!--                </div>-->
+    <!--            </div>-->
+    <!--        </div>-->
+    <!--    </section>-->
+    <!-- Brands Section -->
+    <section class="brands-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Популярные бренды</h2>
+                <p class="text-muted mt-3">Запчасти от ведущих производителей</p>
+            </div>
+
+            <!-- Карусель с видимыми брендами -->
+            <div id="brandsCarousel" class="brands-carousel-wrapper">
+                <div class="brands-carousel-track">
+                    <!-- Бренды будут добавляться через JavaScript -->
+                    <!-- Структура для каждого бренда: -->
+                    <!--
                     <div class="brand-item" data-index="0">
                         <img src="/images/brands/kamaz.png" alt="КАМАЗ" class="brand-logo">
                         <div class="brand-name">КАМАЗ</div>
                     </div>
                     -->
-                    </div>
-
-                    <!-- Стрелки навигации -->
-                    <button class="brand-arrow brand-arrow-prev">
-                        <i class="fas fa-chevron-left"></i>
-                    </button>
-                    <button class="brand-arrow brand-arrow-next">
-                        <i class="fas fa-chevron-right"></i>
-                    </button>
-
-                    <!-- Индикаторы (опционально) -->
-                    <div class="brand-indicators"></div>
                 </div>
+
+                <!-- Стрелки навигации -->
+                <button class="brand-arrow brand-arrow-prev">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="brand-arrow brand-arrow-next">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+
+                <!-- Индикаторы (опционально) -->
+                <div class="brand-indicators"></div>
             </div>
-        </section>
+        </div>
+    </section>
 
     </div>
 </body>

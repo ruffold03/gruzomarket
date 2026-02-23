@@ -1,19 +1,19 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     // Переключение видимости пароля
     document.querySelectorAll('.password-toggle').forEach(button => {
-        button.addEventListener('click', function() {
+        button.addEventListener('click', function () {
             const targetId = this.getAttribute('data-target');
             const input = document.getElementById(targetId);
             const icon = this.querySelector('i');
 
             if (input.type === 'password') {
-              input.type = 'text';
-              icon.classList.remove('fa-eye');
-              icon.classList.add('fa-eye-slash');
+                input.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
             } else {
-              input.type = 'password';
-              icon.classList.remove('fa-eye-slash');
-              icon.classList.add('fa-eye');
+                input.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
             }
         });
     });
@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', function() {
             phoneInput.value = '+7 ';
         }
 
-        phoneInput.addEventListener('input', function(e) {
+        phoneInput.addEventListener('input', function (e) {
             // Получаем позицию курсора до изменений
             const cursorPos = this.selectionStart;
             const valueBefore = this.value;
@@ -85,7 +85,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
 
         // Обработка клавиш Backspace и Delete
-        phoneInput.addEventListener('keydown', function(e) {
+        phoneInput.addEventListener('keydown', function (e) {
             if (e.key === 'Backspace') {
                 // Получаем текущую позицию курсора
                 const cursorPos = this.selectionStart;
@@ -100,7 +100,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
 
         // При фокусе перемещаем курсор в нужное место
-        phoneInput.addEventListener('focus', function() {
+        phoneInput.addEventListener('focus', function () {
             const value = this.value;
             let cursorPos = value.length;
 
@@ -121,7 +121,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
 
         // Валидация при потере фокуса
-        phoneInput.addEventListener('blur', function() {
+        phoneInput.addEventListener('blur', function () {
             const numbers = this.value.replace(/\D/g, '');
             if (numbers.length < 11) {
                 // Можно добавить визуальную индикацию
@@ -135,15 +135,15 @@ document.addEventListener('DOMContentLoaded', function() {
     // Проверка паролей при регистрации
     const registerForm = document.getElementById('registerForm');
     if (registerForm) {
-        registerForm.addEventListener('submit', function(e) {
+        registerForm.addEventListener('submit', function (e) {
             const phoneInput = document.getElementById('registerPhone');
-                if (phoneInput) {
-                    phoneInput.value = phoneInput.value.replace(/\D/g, '');
-                    // Проверяем, что номер начинается с 7
-                    if (!phoneInput.value.startsWith('7')) {
-                      phoneInput.value = '7' + phoneInput.value;
-                    }
+            if (phoneInput) {
+                phoneInput.value = phoneInput.value.replace(/\D/g, '');
+                // Проверяем, что номер начинается с 7
+                if (!phoneInput.value.startsWith('7')) {
+                    phoneInput.value = '7' + phoneInput.value;
                 }
+            }
             const password = document.getElementById('registerPassword').value;
             const confirmPassword = document.getElementById('registerConfirmPassword').value;
             const message = document.getElementById('authMessage');
@@ -193,47 +193,44 @@ document.addEventListener('DOMContentLoaded', function() {
     // Индикатор загрузки для входа
     const loginForm = document.getElementById('loginForm');
     if (loginForm) {
-        loginForm.addEventListener('submit', function() {
+        loginForm.addEventListener('submit', function () {
             const btn = document.getElementById('loginBtn');
             const originalText = btn.innerHTML;
             btn.innerHTML = '<div class="loader"></div> Вход...';
             btn.disabled = true;
 
             setTimeout(() => {
-              btn.innerHTML = originalText;
-              btn.disabled = false;
+                btn.innerHTML = originalText;
+                btn.disabled = false;
             }, 5000);
         });
     }
 
     // Социальные кнопки
     document.querySelectorAll('.btn-social').forEach(btn => {
-        btn.addEventListener('click', function() {
-          const platform = this.querySelector('span').textContent;
-          alert(`Вход через ${platform} будет доступен в ближайшее время`);
+        btn.addEventListener('click', function () {
+            const platform = this.querySelector('span').textContent;
+            alert(`Вход через ${platform} будет доступен в ближайшее время`);
         });
     });
 
-    // Ссылка "Забыли пароль"
-    document.getElementById('forgotPassword')?.addEventListener('click', function(e) {
-        e.preventDefault();
-        const message = document.getElementById('authMessage');
-        message.className = 'auth-message info';
-        message.textContent = 'Функция восстановления пароля будет доступна в ближайшее время';
-        message.style.display = 'block';
-    });
+    // Ссылка "Забыли пароль" (Теперь работает через th:href)
+    // document.getElementById('forgotPassword')?.addEventListener('click', function(e) {
+    //     e.preventDefault();
+    //     ...
+    // });
 
     // Автоматический фокус на первое поле формы
     const activeForm = document.querySelector('.auth-form.active');
     if (activeForm) {
         const firstInput = activeForm.querySelector('input');
         if (firstInput) {
-          firstInput.focus();
+            firstInput.focus();
         }
     }
 });
 
-registerForm.addEventListener('submit', function(e) {
+registerForm.addEventListener('submit', function (e) {
     const phoneInput = document.getElementById('registerPhone');
     phoneInput.value = phoneInput.value.replace(/\D/g, '');
 });
@@ -271,7 +268,7 @@ function applyPhoneMask(inputId) {
 
     input.value = '+7 ';
 
-    input.addEventListener('input', function() {
+    input.addEventListener('input', function () {
         let numbers = this.value.replace(/\D/g, '');
 
         if (numbers.length > 0 && numbers[0] !== '7') {

@@ -1,49 +1,109 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layouts/base}"
-      lang="ru">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layouts/base}" lang="ru">
+
 <head>
     <title>Контакты</title>
 </head>
+
 <body>
-<div layout:fragment="content">
-    <section class="categories-section">
-        <div class="container page-container">
-            <div class="section-title">
-                <h2>Контакты</h2>
-                <p class="text-muted mt-3">Свяжитесь с нами любым удобным способом</p>
+    <div layout:fragment="content">
+        <!-- Hero Section -->
+        <section class="contact-hero py-5">
+            <div class="container text-center">
+                <h1 class="display-3 fw-bold mb-4">Наши <span class="brand-highlight">контакты</span></h1>
+                <p class="lead text-light mb-0 mx-auto" style="max-width: 700px; opacity: 0.9;">
+                    Мы всегда на связи, чтобы помочь вам с выбором запчастей или ответить на любые вопросы.
+                </p>
             </div>
+        </section>
 
-            <div class="row g-4">
-                <div class="col-md-6">
-                    <div class="feature-card">
-                        <div class="feature-icon"><i class="fas fa-phone"></i></div>
-                        <h3 class="feature-title">Телефон</h3>
-                        <p>8 (800) 555-35-35</p>
-                        <p class="text-muted mb-0">Пн–Пт 9:00–19:00</p>
+        <!-- Contact Cards -->
+        <section class="contact-methods pb-5">
+            <div class="container">
+                <div class="row g-4">
+                    <div class="col-md-3">
+                        <div class="stat-card h-100 text-center">
+                            <div class="delivery-icon mx-auto mb-3"><i class="fas fa-phone-alt"></i></div>
+                            <h3 class="h5 mb-2">Телефон</h3>
+                            <p class="mb-0 text-white fw-bold">8 (800) 555-35-35</p>
+                            <p class="small text-muted mt-2">Пн–Пт 9:00–18:00</p>
+                        </div>
                     </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="feature-card">
-                        <div class="feature-icon"><i class="fas fa-envelope"></i></div>
-                        <h3 class="feature-title">Почта</h3>
-                        <p>info@gruzomarket.ru</p>
-                        <p class="text-muted mb-0">Ответим в течение рабочего дня</p>
+                    <div class="col-md-3">
+                        <div class="stat-card h-100 text-center">
+                            <div class="delivery-icon mx-auto mb-3"><i class="fas fa-envelope"></i></div>
+                            <h3 class="h5 mb-2">Email</h3>
+                            <p class="mb-0 text-white fw-bold">info@gruzomarket.ru</p>
+                            <p class="small text-muted mt-2">Отвечаем в течение часа</p>
+                        </div>
                     </div>
-                </div>
-                <div class="col-md-12">
-                    <div class="feature-card">
-                        <div class="feature-icon"><i class="fas fa-map-marker-alt"></i></div>
-                        <h3 class="feature-title">Адрес</h3>
-                        <p>Москва, ул. Промышленная, 15</p>
-                        <p class="text-muted mb-0">Самовывоз по согласованию</p>
+                    <div class="col-md-3">
+                        <div class="stat-card h-100 text-center">
+                            <div class="delivery-icon mx-auto mb-3"><i class="fas fa-map-marker-alt"></i></div>
+                            <h3 class="h5 mb-2">Адрес</h3>
+                            <p class="mb-0 text-white fw-bold">г. Ярославль, Линия 13-я поселок Починки, д. 1</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="stat-card h-100 text-center">
+                            <div class="delivery-icon mx-auto mb-3"><i class="fas fa-share-alt"></i></div>
+                            <h3 class="h5 mb-2">Соцсети</h3>
+                            <div class="d-flex justify-content-center gap-3">
+                                <a href="#" class="text-accent fs-4"><i class="fab fa-telegram"></i></a>
+                                <a href="#" class="text-accent fs-4"><i class="fab fa-vk"></i></a>
+                                <a href="#" class="text-accent fs-4"><i class="fab fa-whatsapp"></i></a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
-</div>
+        </section>
+
+        <!-- Map and Form Section -->
+        <section class="contact-form-section py-5">
+            <div class="container">
+                <div class="row g-5">
+                    <!-- Map Column -->
+                    <div class="col-lg-6">
+                        <div class="map-container h-100 min-vh-400">
+                            <iframe
+                                src="https://yandex.ru/map-widget/v1/?um=constructor%3Af7d6d5d5d5d5d5d5d5d5d5d5d5d5d5d5d5d5d5d5d5d5d5d5d5d5d5d5d5d5d5d5&amp;source=constructor"
+                                width="100%" height="400" frameborder="0"
+                                style="border-radius: 20px; filter: grayscale(1) invert(0.9) contrast(1.2);">
+                            </iframe>
+                        </div>
+                    </div>
+                    <!-- Form Column -->
+                    <div class="col-lg-6">
+                        <div class="mission-card p-4 p-md-5">
+                            <h2 class="h3 mb-4">Напишите нам</h2>
+                            <form id="contactForm">
+                                <div class="mb-3">
+                                    <label class="form-label text-muted">Ваше имя</label>
+                                    <input type="text" class="form-control bg-dark border-secondary text-white"
+                                        placeholder="Иван Иванов" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label text-muted">Email для связи</label>
+                                    <input type="email" class="form-control bg-dark border-secondary text-white"
+                                        placeholder="example@mail.ru" required>
+                                </div>
+                                <div class="mb-4">
+                                    <label class="form-label text-muted">Ваше сообщение</label>
+                                    <textarea class="form-control bg-dark border-secondary text-white" rows="4"
+                                        placeholder="Введите ваш вопрос..." required></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-auth w-100">
+                                    <span>Отправить сообщение</span>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
 </body>
-</html>
 
+</html>

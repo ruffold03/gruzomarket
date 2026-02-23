@@ -1,45 +1,112 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layouts/base}"
-      lang="ru">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layouts/base}" lang="ru">
+
 <head>
     <title>О нас</title>
 </head>
-<body>
-<div layout:fragment="content">
-    <section class="categories-section">
-        <div class="container page-container">
-            <div class="section-title">
-                <h2>О компании</h2>
-                <p class="text-muted mt-3">GruzoMarket — магазин запчастей для грузовых автомобилей</p>
-            </div>
 
-            <div class="row g-4">
-                <div class="col-md-4">
-                    <div class="feature-card">
-                        <div class="feature-icon"><i class="fas fa-box"></i></div>
-                        <h3 class="feature-title">Ассортимент</h3>
-                        <p>Запчасти для популярных брендов: MAN, Volvo, Scania, Mercedes, KAMAZ и др.</p>
+<body>
+    <div layout:fragment="content">
+        <!-- Hero Section -->
+        <section class="about-hero py-5">
+            <div class="container text-center">
+                <h1 class="display-3 fw-bold mb-4">Gruzo<span class="brand-highlight">Market</span></h1>
+                <p class="lead text-light mb-5 mx-auto" style="max-width: 800px; opacity: 0.9;">
+                    Ваш надежный партнер в мире запчастей для коммерческого и грузового транспорта.
+                    Мы объединяем опыт, качество и современные технологии, чтобы ваш транспорт всегда был в строю.
+                </p>
+            </div>
+        </section>
+
+        <!-- Stats Section -->
+        <section class="stats-section pb-5">
+            <div class="container">
+                <div class="row g-4 text-center">
+                    <div class="col-6 col-md-3">
+                        <div class="stat-card">
+                            <div class="stat-number">10+</div>
+                            <div class="stat-label">Лет на рынке</div>
+                        </div>
                     </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="feature-card">
-                        <div class="feature-icon"><i class="fas fa-medal"></i></div>
-                        <h3 class="feature-title">Качество</h3>
-                        <p>Работаем с надёжными поставщиками. Проверка товара перед отправкой.</p>
+                    <div class="col-6 col-md-3">
+                        <div class="stat-card">
+                            <div class="stat-number">50k+</div>
+                            <div class="stat-label">Товаров</div>
+                        </div>
                     </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="feature-card">
-                        <div class="feature-icon"><i class="fas fa-user-tie"></i></div>
-                        <h3 class="feature-title">Подбор</h3>
-                        <p>Помогаем подобрать запчасти по VIN/модели/артикулу.</p>
+                    <div class="col-6 col-md-3">
+                        <div class="stat-card">
+                            <div class="stat-number">15k+</div>
+                            <div class="stat-label">Клиентов</div>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <div class="stat-card">
+                            <div class="stat-number">24/7</div>
+                            <div class="stat-label">Поддержка</div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
-</div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="about-features py-5">
+            <div class="container">
+                <div class="section-title text-center mb-5">
+                    <h2 class="h1">Наши преимущества</h2>
+                    <div class="title-accent mx-auto"></div>
+                </div>
+
+                <div class="row g-4">
+                    <div class="col-md-4">
+                        <div class="delivery-card">
+                            <div class="delivery-icon"><i class="fas fa-box-open"></i></div>
+                            <div class="delivery-content">
+                                <h3 class="delivery-title">Широкий ассортимент</h3>
+                                <p class="delivery-desc">Более 50 000 наименований в наличии и под заказ. Запчасти для
+                                    MAN, Volvo, Scania, Mercedes, KAMAZ, MAZ и других брендов.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="delivery-card">
+                            <div class="delivery-icon"><i class="fas fa-shield-alt"></i></div>
+                            <div class="delivery-content">
+                                <h3 class="delivery-title">Гарантия качества</h3>
+                                <p class="delivery-desc">Работаем только с проверенными заводами-изготовителями и
+                                    официальными дистрибьюторами. Строгий контроль перед отправкой.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="delivery-card">
+                            <div class="delivery-icon"><i class="fas fa-user-check"></i></div>
+                            <div class="delivery-content">
+                                <h3 class="delivery-title">Экспертный подбор</h3>
+                                <p class="delivery-desc">Наши менеджеры — профессионалы своего дела. Подберем нужную
+                                    деталь по VIN-коду или оригинальному артикулу за 5 минут.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Mission Section -->
+        <section class="mission-section py-5">
+            <div class="container">
+                <div class="mission-card p-5 text-center">
+                    <h2 class="mb-4">Наша миссия</h2>
+                    <p class="lead mb-0 text-muted">
+                        Обеспечивать бесперебойную работу грузового флота наших клиентов, предоставляя качественные
+                        запчасти по честным ценам и с максимально быстрой доставкой в любую точку страны.
+                    </p>
+                </div>
+            </div>
+        </section>
+    </div>
 </body>
+
 </html>

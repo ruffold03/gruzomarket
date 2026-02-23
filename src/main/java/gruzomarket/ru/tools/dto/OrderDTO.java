@@ -18,21 +18,8 @@ public class OrderDTO {
     private String status;
     private BigDecimal totalAmount;
     private String notes;
-    private LocalDateTime createdAt;
+    private String socialLink;
+    private java.time.LocalDateTime createdAt;
+    private java.util.List<OrderItemDTO> items;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

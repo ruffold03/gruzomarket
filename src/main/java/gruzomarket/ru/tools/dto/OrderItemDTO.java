@@ -13,22 +13,10 @@ public class OrderItemDTO {
     private Long id;
     private Long orderId;
     private Long productId;
+    private String productName;
+    private String productArticle;
     private Integer quantity;
     private BigDecimal unitPrice;
+    private BigDecimal lineTotal;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

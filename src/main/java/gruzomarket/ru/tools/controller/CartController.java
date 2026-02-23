@@ -3,12 +3,13 @@ package gruzomarket.ru.tools.controller;
 import gruzomarket.ru.tools.dto.*;
 import gruzomarket.ru.tools.entity.Order;
 import gruzomarket.ru.tools.service.CartService;
+import gruzomarket.ru.tools.service.OrderService;
+import gruzomarket.ru.tools.service.TelegramService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import gruzomarket.ru.tools.service.TelegramService;
-import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @RequestMapping("/api/cart")
@@ -18,6 +19,7 @@ public class CartController {
 
     private final CartService cartService;
     private final TelegramService telegramService;
+    private final OrderService orderService;
 
     @GetMapping
     public ResponseEntity<CartSummaryDTO> getCart(HttpSession session) {
@@ -57,25 +59,12 @@ public class CartController {
     public ResponseEntity<OrderDTO> checkout(@RequestBody CheckoutRequest req, HttpSession session) {
         log.info("Оформление заказа для клиента: {}, телефон: {}",
                 req.getCustomerName(), req.getPhone());
-        Order order = cartService.checkout(session, req.getCustomerName(), req.getPhone(), req.getEmail(), req.getNotes());
-        OrderDTO dto = new OrderDTO(
-                order.getId(),
-                order.getCustomerName(),
-                order.getPhone(),
-                order.getEmail(),
-                order.getStatus(),
-                order.getTotalAmount(),
-                order.getNotes(),
-                order.getCreatedAt()
-        );
+        Order order = cartService.checkout(session, req.getCustomerName(), req.getPhone(), req.getEmail(),
+                req.getNotes(), req.getSocialLink());
+
+        OrderDTO dto = orderService.findById(order.getId());
         try {
-            telegramService.sendOrderNotification(
-                    order.getId().toString(),
-                    order.getCustomerName(),
-                    order.getPhone(),
-                    order.getTotalAmount(),
-                    order.getStatus()
-            );
+            telegramService.sendOrderNotification(dto);
             log.info("Telegram уведомление отправлено для заказа #{}", order.getId());
         } catch (Exception e) {
             // Логируем ошибку, но не прерываем выполнение
@@ -84,10 +73,4 @@ public class CartController {
         return ResponseEntity.ok(dto);
     }
 }
-
-
-
-
-
-
 

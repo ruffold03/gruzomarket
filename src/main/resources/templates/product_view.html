@@ -80,14 +80,41 @@
             background: #fee2e2;
             color: #dc2626;
         }
+
+        .btn-back {
+            color: #cbd5e0;
+            font-size: 0.9rem;
+            font-weight: 500;
+            padding: 8px 16px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .btn-back:hover {
+            color: white;
+            background: rgba(255, 255, 255, 0.1);
+            border-color: var(--primary-color);
+            transform: translateX(-5px);
+        }
+
+        .hero-section {
+            padding-bottom: 3rem !important;
+        }
     </style>
 </head>
 
 <body>
     <div layout:fragment="content">
         <!-- Hero background effect -->
-        <div class="hero-section py-4" style="padding: 4rem 0 2rem !important; min-height: auto;">
-            <div class="container">
+        <div class="hero-section py-4"
+            style="padding: 8rem 0 3rem !important; min-height: auto; position: relative; z-index: 1;">
+            <div class="container text-start" style="position: relative; z-index: 10;">
+                <a href="javascript:history.back()"
+                    class="btn-back mb-3 d-inline-flex align-items-center text-decoration-none">
+                    <i class="fas fa-arrow-left me-2"></i> Назад
+                </a>
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb mb-0">
                         <li class="breadcrumb-item"><a th:href="@{/}">Главная</a></li>
@@ -179,7 +206,7 @@
                                 </button>
                                 <button class="btn-favorite" type="button"
                                     style="width: 60px; height: 60px; border-radius: 12px; font-size: 1.5rem;"
-                                    th:onclick="'toggleFavorite(' + ${product.id} + ')'">
+                                    th:onclick="'toggleFavorite(' + ${product.id} + ', this)'">
                                     <i class="far fa-heart"></i>
                                 </button>
                             </div>

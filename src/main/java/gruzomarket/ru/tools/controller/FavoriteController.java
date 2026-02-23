@@ -1,7 +1,9 @@
 package gruzomarket.ru.tools.controller;
 
 import gruzomarket.ru.tools.dto.FavoriteResponse;
+import gruzomarket.ru.tools.dto.ProductDTO;
 import gruzomarket.ru.tools.entity.Product;
+import gruzomarket.ru.tools.mapper.ProductMapper;
 import gruzomarket.ru.tools.service.FavoriteService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +22,7 @@ import java.util.Map;
 public class FavoriteController {
 
     private final FavoriteService favoriteService;
+    private final ProductMapper productMapper;
 
     // Получить текущего пользователя из контекста безопасности
     private String getCurrentUserEmail() {
@@ -32,10 +35,13 @@ public class FavoriteController {
      */
     @GetMapping("/my")
     @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<List<Product>> getUserFavorites() {
+    public ResponseEntity<List<ProductDTO>> getUserFavorites() {
         String userEmail = getCurrentUserEmail();
         List<Product> favorites = favoriteService.getFavoriteProducts(userEmail);
-        return ResponseEntity.ok(favorites);
+        List<ProductDTO> dtos = favorites.stream()
+                .map(productMapper::toDTO)
+                .collect(java.util.stream.Collectors.toList());
+        return ResponseEntity.ok(dtos);
     }
 
     /**

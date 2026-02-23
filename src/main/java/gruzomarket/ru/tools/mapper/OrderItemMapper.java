@@ -11,13 +11,20 @@ public class OrderItemMapper {
         if (orderItem == null) {
             return null;
         }
-        return new OrderItemDTO(
-                orderItem.getId(),
-                orderItem.getOrderId(),
-                orderItem.getProductId(),
-                orderItem.getQuantity(),
-                orderItem.getUnitPrice()
-        );
+        OrderItemDTO dto = new OrderItemDTO();
+        dto.setId(orderItem.getId());
+        dto.setOrderId(orderItem.getOrderId());
+        dto.setProductId(orderItem.getProductId());
+        if (orderItem.getProduct() != null) {
+            dto.setProductName(orderItem.getProduct().getName());
+            dto.setProductArticle(orderItem.getProduct().getArticle());
+        }
+        dto.setQuantity(orderItem.getQuantity());
+        dto.setUnitPrice(orderItem.getUnitPrice());
+        if (dto.getUnitPrice() != null && dto.getQuantity() != null) {
+            dto.setLineTotal(dto.getUnitPrice().multiply(new java.math.BigDecimal(dto.getQuantity())));
+        }
+        return dto;
     }
 
     public OrderItem toEntity(OrderItemDTO dto) {
@@ -33,19 +40,4 @@ public class OrderItemMapper {
         return orderItem;
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

@@ -27,7 +27,7 @@ public class CustomerService {
         if (customerRepository.existsByEmail(request.getEmail())) {
             throw new IllegalArgumentException("Пользователь с таким email уже зарегистрирован");
         }
-        
+
         // Проверяем телефон (если он указан)
         if (request.getPhone() != null && !request.getPhone().trim().isEmpty()) {
             // Очищаем телефон от всего, кроме цифр для проверки
@@ -66,7 +66,52 @@ public class CustomerService {
             customer.setCity(request.getCity());
         }
 
-        return customerRepository.save(customer);
+        if (request.getEmail() != null && !request.getEmail().isEmpty()
+                && !request.getEmail().equals(customer.getEmail())) {
+            if (customerRepository.existsByEmail(request.getEmail())) {
+                throw new IllegalArgumentException("Пользователь с таким email уже зарегистрирован");
+            }
+            customer.setEmail(request.getEmail());
+        }
+
+        if (request.getPhone() != null && !request.getPhone().isEmpty()) {
+            String cleanPhone = request.getPhone().replaceAll("\\D+", "");
+            if (cleanPhone.startsWith("7") || cleanPhone.startsWith("8")) {
+                cleanPhone = cleanPhone.substring(1);
+            }
+            if (!cleanPhone.equals(customer.getPhone())) {
+                if (customerRepository.existsByPhone(cleanPhone)) {
+                    throw new IllegalArgumentException("Пользователь с таким номером телефона уже зарегистрирован");
+                }
+                customer.setPhone(cleanPhone);
+            }
+        }
+
+        if (request.getSocialLink() != null) {
+            customer.setSocialLink(request.getSocialLink());
+        }
+
+        Customer saved = customerRepository.save(customer);
+
+        // Если email изменился, нужно обновить Principal в SecurityContext
+        if (request.getEmail() != null && !request.getEmail().isEmpty() && !request.getEmail().equals(email)) {
+            var auth = SecurityContextHolder.getContext().getAuthentication();
+            var newAuth = new org.springframework.security.authentication.UsernamePasswordAuthenticationToken(
+                    saved.getEmail(),
+                    auth.getCredentials(),
+                    auth.getAuthorities());
+            SecurityContextHolder.getContext().setAuthentication(newAuth);
+        }
+
+        return saved;
+    }
+
+    @Transactional
+    public void deleteCurrentProfile() {
+        Customer customer = getCurrentUser();
+        customer.setIsActive(false);
+        customerRepository.save(customer);
+        SecurityContextHolder.clearContext();
     }
 
     public Customer getCurrentUser() {
@@ -80,4 +125,3 @@ public class CustomerService {
                 .orElseThrow(() -> new EntityNotFoundException("Пользователь не найден"));
     }
 }
-

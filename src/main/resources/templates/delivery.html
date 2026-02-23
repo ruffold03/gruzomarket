@@ -1,47 +1,284 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layouts/base}"
-      lang="ru">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layouts/base}" lang="ru">
+
 <head>
     <title>Доставка</title>
 </head>
+
 <body>
-<div layout:fragment="content">
-    <section class="categories-section">
-        <div class="container page-container">
-            <div class="section-title">
-                <h2>Доставка и оплата</h2>
-                <p class="text-muted mt-3">Условия доставки по России и способы оплаты</p>
-            </div>
+    <div layout:fragment="content">
+        <section class="delivery-section py-5">
+            <div class="container">
+                <div class="delivery-header mb-5 text-center">
+                    <h1 class="display-5 fw-bold mb-3"><span class="brand-highlight">Способы</span> доставки</h1>
+                </div>
 
-            <div class="row g-4">
-                <div class="col-md-6">
-                    <div class="feature-card">
-                        <div class="feature-icon"><i class="fas fa-truck"></i></div>
-                        <h3 class="feature-title">Доставка</h3>
-                        <p>Отправка в день заказа при наличии на складе. Срок доставки: 1–5 дней.</p>
-                        <p class="text-muted mb-0">ТК: СДЭК / Деловые линии / Почта России (по согласованию).</p>
+                <div class="row g-4 row-cols-1 row-cols-md-2 row-cols-xl-3">
+                    <!-- Самовывоз -->
+                    <div class="col">
+                        <div class="delivery-card">
+                            <div class="delivery-icon"><i class="fas fa-store"></i></div>
+                            <div class="delivery-content">
+                                <h3 class="delivery-title">Самовывоз</h3>
+                                <p class="delivery-desc">г. Ярославль, Линия 13-я поселок Починки, д. 1</p>
+                                <div class="delivery-meta">
+                                    <span class="badge bg-success">Бесплатно</span>
+                                    <span class="badge bg-danger">Выходной</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Boxberry -->
+                    <div class="col">
+                        <div class="delivery-card">
+                            <div class="delivery-icon"><i class="fas fa-box"></i></div>
+                            <div class="delivery-content">
+                                <h3 class="delivery-title">Boxberry</h3>
+                                <p class="delivery-desc">1 - 1 000 000 ₽, Предоплата 100%</p>
+                                <div class="delivery-info-row">
+                                    <span class="info-label">Отгрузка:</span>
+                                    <span class="info-value">в понедельник</span>
+                                </div>
+                                <div class="delivery-info-row">
+                                    <span class="info-label">Срок:</span>
+                                    <span class="info-value">1–45 дней</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 5post -->
+                    <div class="col">
+                        <div class="delivery-card">
+                            <div class="delivery-icon"><i class="fas fa-shipping-fast"></i></div>
+                            <div class="delivery-content">
+                                <h3 class="delivery-title">5post</h3>
+                                <p class="delivery-desc">1 - 1 000 000 ₽, Предоплата 100%</p>
+                                <div class="delivery-info-row">
+                                    <span class="info-label">Отгрузка:</span>
+                                    <span class="info-value">в понедельник</span>
+                                </div>
+                                <div class="delivery-info-row">
+                                    <span class="info-label">Срок:</span>
+                                    <span class="info-value">1–45 дней</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- VOZOVOZ -->
+                    <div class="col">
+                        <div class="delivery-card">
+                            <div class="delivery-icon"><i class="fas fa-truck-moving"></i></div>
+                            <div class="delivery-content">
+                                <h3 class="delivery-title">VOZOVOZ</h3>
+                                <p class="delivery-desc">1 - 1 000 000 ₽, Предоплата 100%</p>
+                                <div class="delivery-info-row">
+                                    <span class="info-label">Отгрузка:</span>
+                                    <span class="info-value">в понедельник</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Желдорэкспедиция -->
+                    <div class="col">
+                        <div class="delivery-card">
+                            <div class="delivery-icon"><i class="fas fa-train"></i></div>
+                            <div class="delivery-content">
+                                <h3 class="delivery-title">Желдорэкспедиция</h3>
+                                <p class="delivery-desc">1 - 1 000 000 ₽, Предоплата 100%</p>
+                                <div class="delivery-info-row">
+                                    <span class="info-label">Отгрузка:</span>
+                                    <span class="info-value">в понедельник</span>
+                                </div>
+                                <div class="delivery-info-row">
+                                    <span class="info-label">Срок:</span>
+                                    <span class="info-value">1–45 дней</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Мэйджик Транс -->
+                    <div class="col">
+                        <div class="delivery-card">
+                            <div class="delivery-icon"><i class="fas fa-magic"></i></div>
+                            <div class="delivery-content">
+                                <h3 class="delivery-title">Мэйджик Транс</h3>
+                                <p class="delivery-desc">100 - 1 000 000 ₽, Предоплата 100%</p>
+                                <div class="delivery-info-row">
+                                    <span class="info-label">Отгрузка:</span>
+                                    <span class="info-value">в понедельник</span>
+                                </div>
+                                <div class="delivery-info-row">
+                                    <span class="info-label">Срок:</span>
+                                    <span class="info-value">1–45 дней</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Почта России -->
+                    <div class="col">
+                        <div class="delivery-card">
+                            <div class="delivery-icon"><i class="fas fa-mail-bulk"></i></div>
+                            <div class="delivery-content">
+                                <h3 class="delivery-title">Почта России</h3>
+                                <p class="delivery-desc">500 - 5 000 ₽, Предоплата 100%</p>
+                                <div class="delivery-info-row">
+                                    <span class="info-label">Отгрузка:</span>
+                                    <span class="info-value">во вторник</span>
+                                </div>
+                                <div class="delivery-info-row">
+                                    <span class="info-label">Срок:</span>
+                                    <span class="info-value">3–14 дней</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Байкал-Сервис -->
+                    <div class="col">
+                        <div class="delivery-card">
+                            <div class="delivery-icon"><i class="fas fa-ship"></i></div>
+                            <div class="delivery-content">
+                                <h3 class="delivery-title">Байкал-Сервис</h3>
+                                <p class="delivery-desc">от 650 ₽, Предоплата 100%</p>
+                                <div class="delivery-info-row">
+                                    <span class="info-label">Отгрузка:</span>
+                                    <span class="info-value">в понедельник</span>
+                                </div>
+                                <div class="delivery-info-row">
+                                    <span class="info-label">Срок:</span>
+                                    <span class="info-value">2–31 день</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- СДЭК -->
+                    <div class="col">
+                        <div class="delivery-card highlight-card">
+                            <div class="delivery-icon"><i class="fas fa-leaf"></i></div>
+                            <div class="delivery-content">
+                                <h3 class="delivery-title">СДЭК</h3>
+                                <p class="delivery-desc">650 - 5 000 ₽, Предоплата 100%</p>
+                                <div class="delivery-info-row">
+                                    <span class="info-label">Отгрузка:</span>
+                                    <span class="info-value text-accent">в понедельник</span>
+                                </div>
+                                <div class="delivery-info-row">
+                                    <span class="info-label">Срок:</span>
+                                    <span class="info-value">2–31 день</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Деловые линии -->
+                    <div class="col">
+                        <div class="delivery-card">
+                            <div class="delivery-icon"><i class="fas fa-road"></i></div>
+                            <div class="delivery-content">
+                                <h3 class="delivery-title">Деловые линии</h3>
+                                <p class="delivery-desc">от 650 ₽, Предоплата 100%</p>
+                                <div class="delivery-info-row">
+                                    <span class="info-label">Отгрузка:</span>
+                                    <span class="info-value">в понедельник</span>
+                                </div>
+                                <div class="delivery-info-row">
+                                    <span class="info-label">Срок:</span>
+                                    <span class="info-value">2–7 дней</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Энергия -->
+                    <div class="col">
+                        <div class="delivery-card">
+                            <div class="delivery-icon"><i class="fas fa-bolt"></i></div>
+                            <div class="delivery-content">
+                                <h3 class="delivery-title">Энергия</h3>
+                                <p class="delivery-desc">от 650 ₽, Предоплата 100%</p>
+                                <div class="delivery-info-row">
+                                    <span class="info-label">Отгрузка:</span>
+                                    <span class="info-value">в понедельник</span>
+                                </div>
+                                <div class="delivery-info-row">
+                                    <span class="info-label">Срок:</span>
+                                    <span class="info-value">2–31 день</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- KIT -->
+                    <div class="col">
+                        <div class="delivery-card">
+                            <div class="delivery-icon"><i class="fas fa-parachute-box"></i></div>
+                            <div class="delivery-content">
+                                <h3 class="delivery-title">KIT</h3>
+                                <p class="delivery-desc">от 650 ₽</p>
+                                <div class="delivery-info-row">
+                                    <span class="info-label">Отгрузка:</span>
+                                    <span class="info-value">в понедельник</span>
+                                </div>
+                                <div class="delivery-info-row">
+                                    <span class="info-label">Срок:</span>
+                                    <span class="info-value">2–31 день</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ПЭК -->
+                    <div class="col">
+                        <div class="delivery-card">
+                            <div class="delivery-icon"><i class="fas fa-container-storage"></i></div>
+                            <div class="delivery-content">
+                                <h3 class="delivery-title">ПЭК</h3>
+                                <p class="delivery-desc">от 650 ₽, Предоплата 100%</p>
+                                <div class="delivery-info-row">
+                                    <span class="info-label">Отгрузка:</span>
+                                    <span class="info-value">в понедельник</span>
+                                </div>
+                                <div class="delivery-info-row">
+                                    <span class="info-label">Срок:</span>
+                                    <span class="info-value">2–31 день</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Международная доставка -->
+                    <div class="col">
+                        <div class="delivery-card international">
+                            <div class="delivery-icon"><i class="fas fa-globe-americas"></i></div>
+                            <div class="delivery-content">
+                                <h3 class="delivery-title">Международная доставка</h3>
+                                <p class="delivery-desc">от 1 000 ₽, Предоплата 100%</p>
+                                <p class="small text-muted mb-2">Казахстан, Беларусь, Азербайджан, Грузия, Армения,
+                                    Узбекистан</p>
+                                <div class="delivery-info-row">
+                                    <span class="info-label">Срок:</span>
+                                    <span class="info-value">12–31 день</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="feature-card">
-                        <div class="feature-icon"><i class="fas fa-credit-card"></i></div>
-                        <h3 class="feature-title">Оплата</h3>
-                        <p>Безналичная оплата, перевод, оплата при получении (если доступно по ТК).</p>
-                        <p class="text-muted mb-0">После оформления заявки менеджер свяжется для подтверждения.</p>
-                    </div>
+
+                <div class="delivery-footer mt-5 text-center">
+                    <p class="text-muted">После оформления заказа наш менеджер свяжется с вами для уточнения деталей и
+                        подтверждения выбранного способа доставки.</p>
                 </div>
             </div>
-        </div>
-    </section>
-</div>
+        </section>
+    </div>
 </body>
+
 </html>
-
-
-
-
-
-
-

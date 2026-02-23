@@ -55,15 +55,15 @@ document.addEventListener('DOMContentLoaded', function () {
     const nextBtn = brandsCarousel.querySelector('.brand-arrow-next');
 
     const brands = [
-        { id: 1, name: 'КАМАЗ', image: '/images/brands/kamaz.png' },
-        { id: 2, name: 'HOWO', image: '/images/brands/howo.png' },
-        { id: 3, name: 'МАЗ', image: '/images/brands/maz.png' },
-        { id: 4, name: 'МТЗ', image: '/images/brands/mtz.png' },
-        { id: 5, name: 'Урал', image: '/images/brands/ural.png' },
-        { id: 6, name: 'ЗИЛ', image: '/images/brands/zil.png' },
-        { id: 7, name: 'ЯМЗ', image: '/images/brands/ymz.png' },
-        { id: 8, name: 'Shaanxi', image: '/images/brands/shaanxi.png' },
-        { id: 9, name: 'КРАЗ', image: '/images/brands/kraz.png' },
+        { id: 12, name: 'КАМАЗ', image: '/images/brands/kamaz.png' },
+        { id: 1, name: 'HOWO', image: '/images/brands/howo.png' },
+        { id: 16, name: 'МАЗ', image: '/images/brands/maz.png' },
+        { id: 18, name: 'МТЗ', image: '/images/brands/mtz.png' },
+        { id: 26, name: 'Урал', image: '/images/brands/ural.png' },
+        { id: 11, name: 'ЗИЛ', image: '/images/brands/zil.png' },
+        { id: 28, name: 'ЯМЗ', image: '/images/brands/ymz.png' },
+        { id: 2, name: 'Shaanxi', image: '/images/brands/shaanxi.png' },
+        { id: 14, name: 'КРАЗ', image: '/images/brands/kraz.png' },
         { id: 10, name: 'ДТ-75', image: '/images/brands/dt75.png' }
     ];
 
@@ -80,7 +80,7 @@ document.addEventListener('DOMContentLoaded', function () {
             brandItem.dataset.index = index;
 
             brandItem.innerHTML = `
-                <img src="${brand.image}" alt="${brand.name}" class="brand-logo" 
+                <img src="${brand.image}" alt="${brand.name}" class="brand-carousel-logo" 
                      onerror="this.src='/images/engine.jpg'; this.style.opacity='0.5'">
                 <div class="brand-name">${brand.name}</div>
             `;
@@ -88,7 +88,7 @@ document.addEventListener('DOMContentLoaded', function () {
             // Кликабельность - переход в каталог
             brandItem.style.cursor = 'pointer';
             brandItem.addEventListener('click', () => {
-                window.location.href = `/products?brands=${brand.id}`;
+                window.location.href = `/products?brandIds=${brand.id}`;
             });
 
             track.appendChild(brandItem);
@@ -172,24 +172,65 @@ document.addEventListener('DOMContentLoaded', function () {
     brandsCarousel.addEventListener('mouseenter', () => clearInterval(autoSlideInterval));
     brandsCarousel.addEventListener('mouseleave', startAutoSlide);
 
+    // Прокрутка колесиком мышки
+    let brandWheelTimeout;
+    brandsCarousel.addEventListener('wheel', function (e) {
+        e.preventDefault();
+        clearTimeout(brandWheelTimeout);
+        brandWheelTimeout = setTimeout(() => {
+            if (e.deltaY > 5 || e.deltaX > 5) {
+                nextSlide();
+                resetAutoSlide();
+            } else if (e.deltaY < -5 || e.deltaX < -5) {
+                prevSlide();
+                resetAutoSlide();
+            }
+        }, 80);
+    }, { passive: false });
+
     window.addEventListener('resize', updateCarousel);
 
     initCarousel();
 
     // Принудительная подстройка размеров (для анимации и шрифтов)
     function forceSizes() {
-        const activeLogo = track.querySelector('.brand-item.active .brand-logo');
+        const activeLogo = track.querySelector('.brand-item.active .brand-carousel-logo');
         if (activeLogo) {
-            document.querySelectorAll('.brand-logo').forEach(img => {
+            document.querySelectorAll('.brand-carousel-logo').forEach(img => {
                 if (img !== activeLogo) {
-                    img.style.width = '250px';
-                    img.style.height = '250px';
+                    img.style.width = '300px';
+                    img.style.height = '300px';
+                    img.style.maxWidth = 'none';
+                    img.style.maxHeight = 'none';
                 }
             });
-            activeLogo.style.width = '350px';
-            activeLogo.style.height = '350px';
+            activeLogo.style.width = '450px';
+            activeLogo.style.height = '450px';
+            activeLogo.style.maxWidth = 'none';
+            activeLogo.style.maxHeight = 'none';
         }
     }
 
     setInterval(forceSizes, 500);
 });
+
+    // Intersection Observer for scroll-reveal animations
+    const revealCallback = (entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                // Once it's visible, we don't need to observe it anymore
+                observer.unobserve(entry.target);
+            }
+        });
+    };
+
+    const revealObserver = new IntersectionObserver(revealCallback, {
+        root: null,
+        threshold: 0.1, // 10% visibility to trigger
+        rootMargin: '0px 0px -50px 0px' // Trigger slightly before it comes into view
+    });
+
+    document.querySelectorAll('.scroll-reveal').forEach(el => {
+        revealObserver.observe(el);
+    });

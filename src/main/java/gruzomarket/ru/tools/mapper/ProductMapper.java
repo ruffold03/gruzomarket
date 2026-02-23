@@ -12,6 +12,7 @@ public class ProductMapper {
             return null;
         }
         Long categoryId = product.getCategory() != null ? product.getCategory().getId() : null;
+        String categoryName = product.getCategory() != null ? product.getCategory().getName() : null;
         return new ProductDTO(
                 product.getId(),
                 product.getName(),
@@ -20,6 +21,7 @@ public class ProductMapper {
                 product.getPrice(),
                 product.getQuantity(),
                 categoryId,
+                categoryName,
                 product.getOriginalAuto(),
                 product.getIsVisible(),
                 product.getImageUrl(),

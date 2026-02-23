@@ -8,11 +8,6 @@ public class CheckoutRequest {
     private String phone;
     private String email;
     private String notes;
+    private String socialLink;
 }
-
-
-
-
-
-
 

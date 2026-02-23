@@ -55,13 +55,7 @@ public class OrderController {
 
         // Отправляем уведомление в Telegram
         try {
-            telegramService.sendOrderNotification(
-                    createdOrder.getId().toString(),
-                    createdOrder.getCustomerName(),
-                    createdOrder.getPhone(), // Обратите внимание на название поля!
-                    createdOrder.getTotalAmount(),
-                    createdOrder.getStatus()
-            );
+            telegramService.sendOrderNotification(createdOrder);
             log.info("Telegram уведомление отправлено для заказа #{}", createdOrder.getId());
         } catch (Exception e) {
             log.error("Не удалось отправить Telegram уведомление: {}", e.getMessage());
@@ -85,8 +79,7 @@ public class OrderController {
                 telegramService.sendOrderStatusUpdate(
                         updatedOrder.getId().toString(),
                         oldOrder.getStatus(),
-                        updatedOrder.getStatus()
-                );
+                        updatedOrder.getStatus());
                 log.info("Telegram уведомление об изменении статуса отправлено");
             } catch (Exception e) {
                 log.error("Не удалось отправить Telegram уведомление: {}", e.getMessage());
@@ -102,4 +95,3 @@ public class OrderController {
         return ResponseEntity.noContent().build();
     }
 }
-

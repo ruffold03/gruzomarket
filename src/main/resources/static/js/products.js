@@ -132,8 +132,14 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
+    // Проверка авторизации
+    function isAuthenticated() {
+        return !!document.querySelector('meta[name="user-authenticated"]');
+    }
+
     // После функции fetchProducts в init() добавьте:
     async function checkFavoriteStatus() {
+        if (!isAuthenticated()) return; // Не проверяем для анонимных
         try {
             const response = await fetch('/api/favorites/ids');
             if (response.ok) {
@@ -205,7 +211,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     </a>
 
                     <div class="product-content">
-                        <div class="product-category">${product.category?.name || 'Запчасти'}</div>
+                        <div class="product-category">${product.categoryName || 'Запчасти'}</div>
                         <a href="/products/${product.id}" class="text-decoration-none">
                             <h5 class="product-title">${product.name}</h5>
                         </a>
@@ -218,7 +224,7 @@ document.addEventListener('DOMContentLoaded', function () {
                                     ${product.quantity <= 0 ? 'disabled' : ''}>
                                 <i class="fas fa-cart-plus me-2"></i>В корзину
                             </button>
-                            <button class="btn-favorite" onclick="toggleFavorite(${product.id})">
+                            <button class="btn-favorite" onclick="toggleFavorite(${product.id}, this)">
                                 <i class="far fa-heart"></i>
                             </button>
                         </div>
@@ -440,6 +446,25 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         }
 
+        // Читаем brandIds из URL (при переходе из карусели брендов)
+        const brandIdsParam = urlParams.get('brandIds');
+        if (brandIdsParam) {
+            const ids = brandIdsParam.split(',').map(id => parseInt(id));
+            filters.brandIds = ids;
+            ids.forEach(id => {
+                const checkbox = document.querySelector(`.brand-filter[value="${id}"]`);
+                if (checkbox) {
+                    checkbox.checked = true;
+                    // Раскрываем аккордеон, если он закрыт
+                    const collapse = checkbox.closest('.accordion-collapse');
+                    if (collapse) {
+                        const bsCollapse = new bootstrap.Collapse(collapse, { toggle: false });
+                        bsCollapse.show();
+                    }
+                }
+            });
+        }
+
         updateSliderFilled();
         fetchProducts(0);
 
@@ -532,8 +557,13 @@ document.addEventListener('DOMContentLoaded', function () {
             });
     };
 
-    window.toggleFavorite = async function (productId) {
-        const btn = event.currentTarget;
+    window.toggleFavorite = async function (productId, button) {
+        if (!isAuthenticated()) {
+            showNotification('Чтобы добавить в избранное, <a href="/auth/login" style="color: #f15a24; font-weight: bold; text-decoration: underline;">войдите в аккаунт</a>', 'info');
+            return;
+        }
+        const btn = button || event?.currentTarget;
+        if (!btn) return;
         const icon = btn.querySelector('i');
 
         try {
@@ -601,24 +631,26 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function showNotification(message, type = 'info') {
-        // Создаем уведомление
         const notification = document.createElement('div');
         notification.className = `alert alert-${type === 'success' ? 'success' : type === 'error' ? 'danger' : 'info'} alert-dismissible fade show`;
         notification.style.position = 'fixed';
-        notification.style.top = '20px';
-        notification.style.right = '20px';
+        notification.style.top = '90px';
+        notification.style.right = '30px';
         notification.style.zIndex = '9999';
         notification.style.minWidth = '300px';
+        notification.style.boxShadow = '0 10px 30px rgba(0,0,0,0.5)';
+        notification.style.border = 'none';
+        notification.style.transition = 'all 0.3s ease';
         notification.innerHTML = `
-            ${message}
-            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            <div style="color: #000; font-weight: 500;">${message}</div>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert"></button>
         `;
 
         document.body.appendChild(notification);
 
-        // Автоматически удаляем через 3 секунды
         setTimeout(() => {
-            notification.remove();
+            notification.classList.remove('show');
+            setTimeout(() => notification.remove(), 300);
         }, 3000);
     }
 

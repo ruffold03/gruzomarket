@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" lang="ru">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="ru">
 
 <head>
     <meta charset="UTF-8">
@@ -33,6 +34,7 @@
 </head>
 
 <body class="d-flex flex-column min-vh-100">
+    <meta name="user-authenticated" content="true" sec:authorize="isAuthenticated()" />
 
     <header th:replace="~{fragments/header :: header}"></header>
 
