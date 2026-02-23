@@ -12,3 +12,4 @@ public class BrandDTO {
     private String name;
     private long productCount;
 }
+
