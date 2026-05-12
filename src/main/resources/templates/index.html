@@ -16,11 +16,12 @@
                 <div class="row justify-content-start text-start">
                     <div class="col-lg-8 hero-content animate-fadeIn">
                         <h1 class="hero-title display-1 fw-bold mb-4">
-                            Запчасти <span class="brand-highlight">нового</span> поколения
+                            Ваш груз - <span class="brand-highlight">наш маркет</span>
                         </h1>
                         <p class="hero-subtitle lead mb-5">
-                            Экспертный подбор, официальная гарантия и доставка по всей России от 1 дня.
-                            Ваш надежный партнер снабжения запчастями для грузового транспорта.
+                            Экспертный подбор, оригинальные запчасти и доставка по всей России.
+                            Ваш надежный партнер снабжения запчастями для грузового транспорта. Цены ниже рынка.
+                            Если найдете дешевле, пишите нам.
                         </p>
 
                         <div class="hero-search-wrapper">
@@ -51,26 +52,26 @@
                 <div class="row g-4 text-center">
                     <div class="col-6 col-md-3">
                         <div class="stat-card">
-                            <div class="stat-number">10+</div>
+                            <div class="stat-number">5+</div>
                             <div class="stat-label">Лет на рынке</div>
                         </div>
                     </div>
                     <div class="col-6 col-md-3">
                         <div class="stat-card">
-                            <div class="stat-number">50k+</div>
+                            <div class="stat-number">5k+</div>
                             <div class="stat-label">Товаров</div>
                         </div>
                     </div>
                     <div class="col-6 col-md-3">
                         <div class="stat-card">
-                            <div class="stat-number">15k+</div>
+                            <div class="stat-number">1k+</div>
                             <div class="stat-label">Клиентов</div>
                         </div>
                     </div>
                     <div class="col-6 col-md-3">
                         <div class="stat-card">
-                            <div class="stat-number">24/7</div>
-                            <div class="stat-label">Поддержка</div>
+                            <div class="stat-number">10+</div>
+                            <div class="stat-label">Способов доставки</div>
                         </div>
                     </div>
                 </div>
@@ -144,7 +145,7 @@
                             <div class="delivery-icon"><i class="fas fa-shipping-fast"></i></div>
                             <div class="delivery-content">
                                 <h3 class="delivery-title">Быстрая доставка</h3>
-                                <p class="delivery-desc">Отправка в день заказа. Доставка по РФ от 1 до 5 дней.</p>
+                                <p class="delivery-desc">Оперативная отправка. Доставка по РФ через официальные транспортные компании</p>
                             </div>
                         </div>
                     </div>
@@ -153,7 +154,7 @@
                             <div class="delivery-icon"><i class="fas fa-check-circle"></i></div>
                             <div class="delivery-content">
                                 <h3 class="delivery-title">Гарантия качества</h3>
-                                <p class="delivery-desc">Оригинальные запчасти и сертифицированные аналоги.</p>
+                                <p class="delivery-desc">Оригинальные запчасти и проверенные производители.</p>
                             </div>
                         </div>
                     </div>
@@ -161,7 +162,7 @@
                         <div class="delivery-card h-100">
                             <div class="delivery-icon"><i class="fas fa-headset"></i></div>
                             <div class="delivery-content">
-                                <h3 class="delivery-title">Поддержка 24/7</h3>
+                                <h3 class="delivery-title">Оперативная поддержка</h3>
                                 <p class="delivery-desc">Поможем с подбором запчастей и оформлением заказа.</p>
                             </div>
                         </div>
@@ -171,7 +172,7 @@
                             <div class="delivery-icon"><i class="fas fa-shield-alt"></i></div>
                             <div class="delivery-content">
                                 <h3 class="delivery-title">Безопасная оплата</h3>
-                                <p class="delivery-desc">Разные способы оплаты и безопасные транзакции через шлюзы.</p>
+                                <p class="delivery-desc">Фискальные чеки отправляем на e-mail сразу после оплаты</p>
                             </div>
                         </div>
                     </div>
@@ -238,8 +239,10 @@
                                 <div class="product-quick-actions">
                                     <a th:href="@{'/products/' + ${p.id}}" class="action-btn" title="Подробнее"><i
                                             class="fas fa-eye"></i></a>
-                                    <button class="action-btn btn-favorite" type="button" title="В избранное"><i
-                                            class="far fa-heart"></i></button>
+                                    <button class="action-btn btn-favorite" type="button" title="В избранное"
+                                        th:attr="onclick='toggleFavorite(' + ${p.id} + ', this)'">
+                                        <i class="far fa-heart"></i>
+                                    </button>
                                 </div>
                             </div>
                             <div class="product-content">
@@ -250,12 +253,26 @@
                                 <h5 class="product-title" th:text="${p.name}">Товар</h5>
                                 <div class="product-footer d-flex justify-content-between align-items-center mt-3">
                                     <div class="product-price h5 mb-0"
-                                        th:text="${#numbers.formatDecimal(p.price,0,'COMMA',2,'POINT')} + ' ₽'">0.00 ₽
+                                        th:text="${#numbers.formatDecimal(p.price,0,'COMMA',0,'POINT')} + ' ₽'">0 ₽
                                     </div>
-                                    <button class="btn-add-cart-circle" type="button" th:attr="data-product-id=${p.id}"
-                                        th:disabled="${p.quantity == null || p.quantity == 0}" title="В корзину">
-                                        <i class="fas fa-cart-plus"></i>
-                                    </button>
+                                    <div class="cart-controls" th:id="'cart-controls-' + ${p.id}">
+                                        <button class="btn-add-cart-circle" type="button"
+                                            th:attr="onclick='addToCart(' + ${p.id} + ', ' + ${p.quantity} + ')'"
+                                            th:disabled="${p.quantity == null || p.quantity == 0}" title="В корзину">
+                                            <i class="fas fa-cart-plus"></i>
+                                        </button>
+                                        <div class="cart-qty-selector">
+                                            <button class="qty-btn minus"
+                                                th:attr="onclick='updateQty(' + ${p.id} + ', -1, ' + ${p.quantity} + ')'">
+                                                <i class="fas fa-minus"></i>
+                                            </button>
+                                            <span class="qty-value">1</span>
+                                            <button class="qty-btn plus"
+                                                th:attr="onclick='updateQty(' + ${p.id} + ', 1, ' + ${p.quantity} + ')'">
+                                                <i class="fas fa-plus"></i>
+                                            </button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

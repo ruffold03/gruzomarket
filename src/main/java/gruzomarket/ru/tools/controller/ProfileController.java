@@ -1,9 +1,9 @@
 package gruzomarket.ru.tools.controller;
 
 import gruzomarket.ru.tools.dto.ProfileUpdateRequest;
-import gruzomarket.ru.tools.service.CartService;
 import gruzomarket.ru.tools.service.CustomerService;
 import gruzomarket.ru.tools.service.FavoriteService;
+import gruzomarket.ru.tools.service.OrderService;
 import gruzomarket.ru.tools.mapper.ProductMapper;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -22,15 +22,14 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class ProfileController {
 
     private final CustomerService customerService;
-    private final CartService cartService;
     private final FavoriteService favoriteService;
+    private final OrderService orderService;
     private final ProductMapper productMapper;
 
     @GetMapping
     @PreAuthorize("isAuthenticated()")
     public String profilePage(Model model, HttpSession session) {
         model.addAttribute("activePage", "profile");
-        model.addAttribute("cartCount", cartService.count(session));
 
         // Получаем текущего пользователя
         var customer = customerService.getCurrentUser();
@@ -55,6 +54,10 @@ public class ProfileController {
 
         model.addAttribute("favoriteProducts", favoriteDTOs);
         model.addAttribute("favoriteCount", favoriteDTOs.size());
+
+        // Получаем историю заказов
+        var orders = orderService.findByEmail(customer.getEmail());
+        model.addAttribute("orders", orders);
 
         return "profile/index";
     }

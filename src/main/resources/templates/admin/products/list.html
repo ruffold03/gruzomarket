@@ -1,53 +1,60 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layouts/base}"
-      lang="ru">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layouts/base}" lang="ru">
+
 <head>
     <title>Админка — Товары</title>
 </head>
-<body>
-<div layout:fragment="content">
-    <section class="categories-section">
-        <div class="container page-container">
-            <div class="d-flex justify-content-between align-items-center mb-3">
-                <div class="section-title mb-0">
-                    <h2>Товары</h2>
-                </div>
-                <a th:href="@{/admin/products/new}" class="btn btn-primary">Добавить товар</a>
-                <a th:href="@{/admin}" class="btn btn-primary">Назад</a>
-            </div>
 
-            <div class="row mb-4">
-                <div class="col-md-12">
-                    <div class="card bg-dark text-light">
-                        <div class="card-body">
-                            <h5 class="card-title">Фильтры</h5>
-                            <div class="row g-3">
-                                <div class="col-md-3">
-                                    <label for="filterName" class="form-label">По названию</label>
-                                    <input type="text" id="filterName" class="form-control" placeholder="Введите часть названия...">
-                                </div>
-                                <div class="col-md-3">
-                                    <label for="filterArticle" class="form-label">По артикулу</label>
-                                    <input type="text" id="filterArticle" class="form-control" placeholder="Введите артикул...">
-                                </div>
-                                <div class="col-md-3">
-                                    <label class="form-label">По цене (от - до)</label>
-                                    <div class="d-flex gap-2">
-                                        <input type="number" id="filterMinPrice" class="form-control" placeholder="От" min="0">
-                                        <input type="number" id="filterMaxPrice" class="form-control" placeholder="До" min="0">
+<body>
+    <div layout:fragment="content">
+        <section class="categories-section">
+            <div class="container page-container">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <div class="section-title mb-0">
+                        <h2>Товары</h2>
+                    </div>
+                    <a th:href="@{/admin/products/new}" class="btn btn-primary">Добавить товар</a>
+                    <a th:href="@{/admin}" class="btn btn-primary">Назад</a>
+                </div>
+
+                <div class="row mb-4">
+                    <div class="col-md-12">
+                        <div class="card bg-dark text-light">
+                            <div class="card-body">
+                                <h5 class="card-title">Фильтры</h5>
+                                <div class="row g-3">
+                                    <div class="col-md-3">
+                                        <label for="filterName" class="form-label">По названию</label>
+                                        <input type="text" id="filterName" class="form-control"
+                                            placeholder="Введите часть названия...">
                                     </div>
-                                </div>
-                                <div class="col-md-3 d-flex align-items-end">
-                                    <div>
-                                        <div class="form-check">
-                                            <input type="checkbox" id="filterNoArticle" class="form-check-input">
-                                            <label for="filterNoArticle" class="form-check-label">Только без артикула</label>
+                                    <div class="col-md-3">
+                                        <label for="filterArticle" class="form-label">По артикулу</label>
+                                        <input type="text" id="filterArticle" class="form-control"
+                                            placeholder="Введите артикул...">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label class="form-label">По цене (от - до)</label>
+                                        <div class="d-flex gap-2">
+                                            <input type="number" id="filterMinPrice" class="form-control"
+                                                placeholder="От" min="0">
+                                            <input type="number" id="filterMaxPrice" class="form-control"
+                                                placeholder="До" min="0">
                                         </div>
-                                        <div class="form-check">
-                                            <input type="checkbox" id="filterNoName" class="form-check-input">
-                                            <label for="filterNoName" class="form-check-label">Только без названия</label>
+                                    </div>
+                                    <div class="col-md-3 d-flex align-items-end">
+                                        <div>
+                                            <div class="form-check">
+                                                <input type="checkbox" id="filterNoArticle" class="form-check-input">
+                                                <label for="filterNoArticle" class="form-check-label">Только без
+                                                    артикула</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input type="checkbox" id="filterNoName" class="form-check-input">
+                                                <label for="filterNoName" class="form-check-label">Только без
+                                                    названия</label>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -55,49 +62,52 @@
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="table-responsive">
-                <table class="table table-dark table-striped align-middle">
-                    <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Название</th>
-                        <th>Артикул</th>
-                        <th>Цена</th>
-                        <th>Кол-во</th>
-                        <th></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr th:each="p : ${products}">
-                        <td th:text="${p.id}">1</td>
-                        <td th:text="${p.name}">Название</td>
-                        <td th:text="${p.article}">ART</td>
-                        <td th:text="${#numbers.formatDecimal(p.price,0,'COMMA',2,'POINT')} + ' ₽'">0 ₽</td>
-                        <td th:text="${p.quantity}">0</td>
-                        <td class="text-end">
-                            <a th:href="@{'/admin/products/' + ${p.id}}" class="btn btn-sm btn-outline-light me-1">Редактировать</a>
-                            <form th:action="@{'/admin/products/' + ${p.id} + '/delete'}" method="post" class="d-inline">
-                                <button type="submit" class="btn btn-sm btn-outline-danger"
-                                        onclick="return confirm('Удалить товар?')">Удалить</button>
-                            </form>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
+                <div class="table-responsive">
+                    <table class="table table-dark table-striped align-middle">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Название</th>
+                                <th>Артикул</th>
+                                <th>Цена</th>
+                                <th>Кол-во</th>
+                                <th>Видим?</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="p : ${products}">
+                                <td th:text="${p.id}">1</td>
+                                <td th:text="${p.name}">Название</td>
+                                <td th:text="${p.article}">ART</td>
+                                <td th:text="${#numbers.formatDecimal(p.price,0,'COMMA',2,'POINT')} + ' ₽'">0 ₽</td>
+                                <td th:text="${p.quantity}">0</td>
+                                <td>
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input visibility-toggle" type="checkbox"
+                                            th:checked="${p.isVisible}" th:data-id="${p.id}">
+                                    </div>
+                                </td>
+                                <td class="text-end">
+                                    <a th:href="@{'/admin/products/' + ${p.id}}"
+                                        class="btn btn-sm btn-outline-light me-1">Редактировать</a>
+                                    <form th:action="@{'/admin/products/' + ${p.id} + '/delete'}" method="post"
+                                        class="d-inline">
+                                        <button type="submit" class="btn btn-sm btn-outline-danger"
+                                            onclick="return confirm('Удалить товар?')">Удалить</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <script th:src="@{/js/admin-products.js}" defer></script>
-</div>
+        <script th:src="@{/js/admin-products.js}" defer></script>
+    </div>
 </body>
+
 </html>
-
-
-
-
-
-
 

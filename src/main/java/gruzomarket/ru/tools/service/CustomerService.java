@@ -28,11 +28,9 @@ public class CustomerService {
             throw new IllegalArgumentException("Пользователь с таким email уже зарегистрирован");
         }
 
-        // Проверяем телефон (если он указан)
         if (request.getPhone() != null && !request.getPhone().trim().isEmpty()) {
-            // Очищаем телефон от всего, кроме цифр для проверки
             String cleanPhone = request.getPhone().replaceAll("\\D+", "");
-            if (customerRepository.existsByPhone(cleanPhone.substring(1))) { // Ищем по номеру без +7
+            if (customerRepository.existsByPhone(cleanPhone.substring(1))) {
                 throw new IllegalArgumentException("Пользователь с таким номером телефона уже зарегистрирован");
             }
         }

@@ -25,7 +25,6 @@ public class BrandMapper {
         if (dto.getId() != null && dto.getId() > 0) {
             brand.setId(dto.getId());
         } else {
-            // Явно обнуляем ID для нового бренда
             brand.setId(null);
         }
         brand.setName(dto.getName());

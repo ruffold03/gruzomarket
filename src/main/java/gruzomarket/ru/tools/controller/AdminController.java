@@ -25,11 +25,10 @@ public class AdminController {
     private final BrandService brandService;
     private final OrderService orderService;
     private final ImageService imageService;
+    private final ActionLogService actionLogService;
 
     private void common(Model model, HttpSession session) {
         model.addAttribute("activePage", "admin");
-        // cartCount не так важен в админке, можно оставить 0
-        model.addAttribute("cartCount", 0);
     }
 
     @GetMapping
@@ -79,11 +78,6 @@ public class AdminController {
 
             if (additionalImages != null && !additionalImages.isEmpty()) {
                 java.util.List<String> additionalUrls = new java.util.ArrayList<>();
-                // Keep existing images if updating (they will be in the DTO if we add them to
-                // the form)
-                // For now, let's just append new ones.
-                // To keep it simple, we expect the DTO to already have existing URLs if they
-                // were sent back.
 
                 for (MultipartFile file : additionalImages) {
                     if (file != null && !file.isEmpty()) {
@@ -117,6 +111,14 @@ public class AdminController {
     public String deleteProduct(@PathVariable Long id) {
         productService.delete(id);
         return "redirect:/admin/products";
+    }
+
+    @PostMapping("/products/{id}/toggle-visibility")
+    @ResponseBody
+    public void toggleVisibility(@PathVariable Long id, @RequestParam boolean visible) {
+        ProductDTO product = productService.findById(id);
+        product.setIsVisible(visible);
+        productService.update(id, product);
     }
 
     // Categories
@@ -157,7 +159,6 @@ public class AdminController {
             }
         }
 
-        // Явно обнуляем ID, если он пустой или 0 (для создания новой категории)
         if (dto.getId() == null || dto.getId() <= 0) {
             dto.setId(null);
             categoryService.create(dto);
@@ -235,5 +236,13 @@ public class AdminController {
         dto.setStatus(status);
         orderService.update(id, dto);
         return "redirect:/admin/orders/" + id;
+    }
+
+    @GetMapping("/history")
+    public String history(Model model, HttpSession session) {
+        common(model, session);
+        model.addAttribute("activePage", "history");
+        model.addAttribute("logs", actionLogService.getLatestLogs());
+        return "admin/history";
     }
 }

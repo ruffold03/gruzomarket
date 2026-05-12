@@ -30,10 +30,10 @@ public class ImageService {
     public void deleteImage(String imageUrl) {
         if (imageUrl != null && !imageUrl.isEmpty()) {
             try {
-                Path path = Paths.get(imageUrl.substring(1)); // убираем начальный "/"
+                Path path = Paths.get(imageUrl.substring(1));
                 Files.deleteIfExists(path);
             } catch (IOException e) {
-                // логирование ошибки
+
             }
         }
     }

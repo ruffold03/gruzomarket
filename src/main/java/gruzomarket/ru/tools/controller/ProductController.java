@@ -4,21 +4,16 @@ import gruzomarket.ru.tools.dto.CategoryDTO;
 import gruzomarket.ru.tools.dto.CategoryGroupDTO;
 import gruzomarket.ru.tools.dto.ProductDTO;
 import gruzomarket.ru.tools.dto.ProductSearchResponse;
-import gruzomarket.ru.tools.entity.Brand;
-import gruzomarket.ru.tools.service.BrandService;
 import gruzomarket.ru.tools.service.CategoryService;
 import gruzomarket.ru.tools.service.ProductService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api/products")
@@ -65,10 +60,11 @@ public class ProductController {
             @RequestParam(required = false) Boolean inStock,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "12") int size,
-            @RequestParam(defaultValue = "name_asc") String sort
-    ) {
-        return ResponseEntity.ok(productService.search(q, categoryIds, brandIds, minPrice, maxPrice, inStock, page, size, sort));
+            @RequestParam(defaultValue = "name_asc") String sort) {
+        return ResponseEntity
+                .ok(productService.search(q, categoryIds, brandIds, minPrice, maxPrice, inStock, page, size, sort));
     }
+
     @GetMapping("/category-groups")
     public ResponseEntity<List<CategoryGroupDTO>> getCategoryGroups() {
         return ResponseEntity.ok(categoryService.getCategoryGroups());
@@ -100,4 +96,3 @@ public class ProductController {
         return ResponseEntity.noContent().build();
     }
 }
-

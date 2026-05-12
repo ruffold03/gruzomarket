@@ -214,23 +214,26 @@ document.addEventListener('DOMContentLoaded', function () {
     setInterval(forceSizes, 500);
 });
 
-    // Intersection Observer for scroll-reveal animations
-    const revealCallback = (entries, observer) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
-                // Once it's visible, we don't need to observe it anymore
-                observer.unobserve(entry.target);
-            }
-        });
-    };
-
-    const revealObserver = new IntersectionObserver(revealCallback, {
-        root: null,
-        threshold: 0.1, // 10% visibility to trigger
-        rootMargin: '0px 0px -50px 0px' // Trigger slightly before it comes into view
+// Intersection Observer for scroll-reveal animations
+const revealCallback = (entries, observer) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            // Once it's visible, we don't need to observe it anymore
+            observer.unobserve(entry.target);
+        }
     });
+};
 
-    document.querySelectorAll('.scroll-reveal').forEach(el => {
-        revealObserver.observe(el);
-    });
+const revealObserver = new IntersectionObserver(revealCallback, {
+    root: null,
+    threshold: 0.1, // 10% visibility to trigger
+    rootMargin: '0px 0px -50px 0px' // Trigger slightly before it comes into view
+});
+
+// Share observer globally for dynamic content (like search results)
+window.revealObserver = revealObserver;
+
+document.querySelectorAll('.scroll-reveal').forEach(el => {
+    revealObserver.observe(el);
+});

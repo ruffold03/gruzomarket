@@ -20,6 +20,7 @@ public class BrandService {
 
     private final BrandRepository brandRepository;
     private final BrandMapper brandMapper;
+    private final ActionLogService actionLogService;
 
     public List<BrandDTO> findAll() {
         return brandRepository.findAll().stream()
@@ -50,6 +51,7 @@ public class BrandService {
         brand.setId(null);
         brand.setProductCount(null);
         brand = brandRepository.save(brand);
+        actionLogService.success("Создан бренд: " + brand.getName());
         return brandMapper.toDTO(brand);
     }
 
@@ -64,6 +66,7 @@ public class BrandService {
 
         brand.setName(dto.getName());
         brand = brandRepository.save(brand);
+        actionLogService.info("Обновлен бренд: " + brand.getName());
         return brandMapper.toDTO(brand);
     }
 
@@ -72,6 +75,7 @@ public class BrandService {
             throw new NotFoundException("Brand not found with id: " + id);
         }
         brandRepository.deleteById(id);
+        actionLogService.warn("Удален бренд с ID: " + id);
     }
 
     public boolean existsByName(String name) {

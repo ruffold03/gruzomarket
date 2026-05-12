@@ -25,7 +25,7 @@ public class SecurityConfig {
                                 .authorizeHttpRequests(auth -> auth
                                                 .requestMatchers("/", "/products/**", "/brands/**", "/auth/**",
                                                                 "/css/**", "/js/**", "/images/**", "/api/products/**",
-                                                                "/delivery/**", "/about/**", "/contact/**", "/cart/**",
+                                                                "/delivery/**", "/about/**", "/contact/**", "/api/contact", "/cart/**",
                                                                 "/api/test/**", "/api/cart/**", "/uploads/**")
                                                 .permitAll()
                                                 .requestMatchers("/admin/**").hasRole("ADMIN")
@@ -47,7 +47,7 @@ public class SecurityConfig {
                                                 .logoutUrl("/logout")
                                                 .logoutSuccessUrl("/auth/login?logout=true")
                                                 .permitAll())
-                                .csrf(csrf -> csrf.disable()); // Для разработки
+                                .csrf(csrf -> csrf.disable());
 
                 return http.build();
         }
@@ -60,7 +60,7 @@ public class SecurityConfig {
         @Bean
         public CorsConfigurationSource corsConfigurationSource() {
                 CorsConfiguration configuration = new CorsConfiguration();
-                configuration.setAllowedOrigins(List.of("*")); // В продакшене указать конкретные домены
+                configuration.setAllowedOrigins(List.of("*"));
                 configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
                 configuration.setAllowedHeaders(List.of("*"));
                 configuration.setAllowCredentials(false);

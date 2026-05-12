@@ -3,6 +3,7 @@ package gruzomarket.ru.tools.service;
 import gruzomarket.ru.tools.dto.OrderDTO;
 import gruzomarket.ru.tools.dto.OrderItemDTO;
 import gruzomarket.ru.tools.entity.Order;
+import gruzomarket.ru.tools.entity.OrderItem;
 import gruzomarket.ru.tools.repository.OrderItemRepository;
 import gruzomarket.ru.tools.exception.NotFoundException;
 import gruzomarket.ru.tools.mapper.OrderMapper;
@@ -23,6 +24,7 @@ public class OrderService {
     private final OrderItemRepository orderItemRepository;
     private final OrderMapper orderMapper;
     private final TelegramService telegramService;
+    private final ActionLogService actionLogService;
 
     public List<OrderDTO> findAll() {
         return orderRepository.findAll().stream()
@@ -80,19 +82,32 @@ public class OrderService {
                 .orElseThrow(() -> new NotFoundException("Order not found with id: " + id));
 
         String oldStatus = order.getStatus();
+        String newStatus = dto.getStatus();
+
+        // Списание товаров при выполнении заказа
+        if ("ВЫПОЛНЕНО".equalsIgnoreCase(newStatus) && !"ВЫПОЛНЕНО".equalsIgnoreCase(oldStatus)) {
+            List<OrderItem> items = orderItemRepository.findByOrderId(id);
+            for (OrderItem item : items) {
+                gruzomarket.ru.tools.entity.Product product = item.getProduct();
+                if (product != null) {
+                    int currentQty = product.getQuantity() != null ? product.getQuantity() : 0;
+                    int orderQty = item.getQuantity() != null ? item.getQuantity() : 0;
+                    product.setQuantity(Math.max(0, currentQty - orderQty));
+                }
+            }
+        }
 
         order.setCustomerName(dto.getCustomerName());
         order.setPhone(dto.getPhone());
         order.setEmail(dto.getEmail());
-        order.setStatus(dto.getStatus());
+        order.setStatus(newStatus);
         order.setTotalAmount(dto.getTotalAmount());
         order.setNotes(dto.getNotes());
-        // createdAt не обновляется
 
         OrderDTO updatedDto = orderMapper.toDTO(orderRepository.save(order));
 
-        // Отправляем уведомление об изменении статуса
-        if (telegramService != null && !oldStatus.equals(updatedDto.getStatus())) {
+        if (telegramService != null && !oldStatus.equalsIgnoreCase(updatedDto.getStatus())) {
+            actionLogService.info("Смена статуса заказа #" + id + ": " + oldStatus + " -> " + updatedDto.getStatus());
             telegramService.sendOrderStatusUpdate(
                     updatedDto.getId().toString(),
                     oldStatus,

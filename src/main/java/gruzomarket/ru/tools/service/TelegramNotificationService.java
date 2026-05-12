@@ -13,10 +13,10 @@ import org.springframework.web.client.RestTemplate;
 @Service
 public class TelegramNotificationService {
 
-    @Value("${telegram.bot.token}") // Сохраните токен в application.properties или .yml
+    @Value("${telegram.bot.token}")
     private String botToken;
 
-    @Value("${telegram.chat.id}") // Сохраните chat ID там же
+    @Value("${telegram.chat.id}")
     private String chatId;
 
     private final RestTemplate restTemplate;
@@ -28,7 +28,6 @@ public class TelegramNotificationService {
     public void sendNotification(String name, String phone, String part) {
         String url = "https://api.telegram.org/bot" + botToken + "/sendMessage";
 
-        // Подготовка параметров (как form-data)
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         params.add("chat_id", chatId);
         params.add("text", "Новая заявка на автозапчасти!\nИмя: " + name + "\nТелефон: " + phone + "\nЗапчасть: " + part);
@@ -39,13 +38,8 @@ public class TelegramNotificationService {
 
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(params, headers);
 
-        // Отправка POST-запроса
+
         ResponseEntity<String> response = restTemplate.postForEntity(url, request, String.class);
 
-        // Обработка ошибок (опционально)
-        if (!response.getStatusCode().is2xxSuccessful()) {
-            // Логируйте ошибку
-            System.err.println("Ошибка отправки в Telegram: " + response.getBody());
-        }
     }
 }

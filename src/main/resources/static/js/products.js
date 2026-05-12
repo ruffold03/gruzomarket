@@ -186,52 +186,66 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         productsGrid.innerHTML = products.map(product => `
-            <div class="col-md-4 col-lg-3 mb-4">
+            <div class="col-md-4 col-lg-3 mb-4 scroll-reveal">
                 <div class="product-card h-100">
-                    ${product.quantity > 0 ?
-                '<span class="product-badge">В наличии</span>' :
-                '<span class="product-badge" style="background: #2d3748;">Под заказ</span>'
-            }
-
-                    <a href="/products/${product.id}" class="product-image-link">
+                    <div class="product-image-container">
                         ${product.imageUrl ?
-                `<div class="product-image" style="background-image: url('${product.imageUrl}');">
-                                <div class="product-overlay">
-                                    <span class="quick-view-btn">Подробнее</span>
-                                </div>
-                            </div>` :
-                `<div class="product-image no-image-placeholder">
-                                <i class="fas fa-image fa-3x mb-2"></i>
-                                <span>Нет фото</span>
-                                <div class="product-overlay">
-                                    <span class="quick-view-btn">Подробнее</span>
-                                </div>
-                            </div>`
+                `<img src="${product.imageUrl}" alt="${product.name}" class="product-img">` :
+                `<div class="no-img-fallback-catalog">
+                                <i class="fas fa-image fa-2x opacity-25"></i>
+                                <span class="small opacity-50 mt-2">Нет фото</span>
+                             </div>`
             }
-                    </a>
-
-                    <div class="product-content">
-                        <div class="product-category">${product.categoryName || 'Запчасти'}</div>
-                        <a href="/products/${product.id}" class="text-decoration-none">
-                            <h5 class="product-title">${product.name}</h5>
-                        </a>
-                        <div class="product-article">Артикул: ${product.article || 'N/A'}</div>
-                        <div class="product-price">${formatPrice(product.price || 0)} ₽</div>
-
-                        <div class="product-actions">
-                            <button class="btn-add-cart"
-                                    onclick="addToCart(${product.id})"
-                                    ${product.quantity <= 0 ? 'disabled' : ''}>
-                                <i class="fas fa-cart-plus me-2"></i>В корзину
-                            </button>
-                            <button class="btn-favorite" onclick="toggleFavorite(${product.id}, this)">
+                        <div class="product-quick-actions">
+                            <button class="action-btn" title="В избранное" onclick="toggleFavorite(${product.id}, this)">
                                 <i class="far fa-heart"></i>
                             </button>
+                            <a href="/products/${product.id}" class="action-btn" title="Подробнее">
+                                <i class="fas fa-eye"></i>
+                            </a>
+                        </div>
+                        ${product.quantity <= 0 ? '<div class="product-out-of-stock-pill">Под заказ</div>' : ''}
+                    </div>
+
+                    <div class="product-content p-3">
+                        <div class="product-category mb-1">${product.categoryName || 'Запчасти'}</div>
+                        <h5 class="product-title mb-2">
+                            <a href="/products/${product.id}" class="text-white text-decoration-none">${product.name}</a>
+                        </h5>
+                        <div class="product-article mb-3">Арт: ${product.article || 'н/д'}</div>
+                        
+                        <div class="product-footer d-flex justify-content-between align-items-center mt-auto">
+                            <div class="product-price mb-0">${formatPrice(product.price || 0)} ₽</div>
+                            <div class="cart-controls" id="cart-controls-${product.id}">
+                                <button class="btn-add-cart-circle" 
+                                        onclick="addToCart(${product.id}, ${product.quantity})" 
+                                        title="Добавить в корзину"
+                                        ${product.quantity <= 0 ? 'disabled' : ''}>
+                                    <i class="fas fa-shopping-cart"></i>
+                                </button>
+                                <div class="cart-qty-selector">
+                                    <button class="qty-btn minus" onclick="updateQty(${product.id}, -1, ${product.quantity})">
+                                        <i class="fas fa-minus"></i>
+                                    </button>
+                                    <span class="qty-value">1</span>
+                                    <button class="qty-btn plus" onclick="updateQty(${product.id}, 1, ${product.quantity})">
+                                        <i class="fas fa-plus"></i>
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         `).join('');
+
+        // Trigger intersection observer for new items
+        if (typeof window.revealObserver !== 'undefined') {
+            document.querySelectorAll('.scroll-reveal:not(.visible)').forEach(el => {
+                window.revealObserver.observe(el);
+            });
+        }
+
         setTimeout(checkFavoriteStatus, 100);
     }
 
@@ -531,7 +545,7 @@ document.addEventListener('DOMContentLoaded', function () {
         console.log('Быстрый просмотр товара ID:', productId);
     };
 
-    window.addToCart = function (productId) {
+    window.addToCart = function (productId, stock) {
         fetch('/api/cart/add', {
             method: 'POST',
             headers: {
@@ -544,9 +558,10 @@ document.addEventListener('DOMContentLoaded', function () {
         })
             .then(response => {
                 if (response.ok) {
-                    // Показываем уведомление
                     showNotification('Товар добавлен в корзину!', 'success');
                     updateCartCounter();
+                    // Показываем селектор количества
+                    showQtySelector(productId, 1, stock);
                 } else {
                     showNotification('Ошибка добавления товара', 'error');
                 }
@@ -556,6 +571,86 @@ document.addEventListener('DOMContentLoaded', function () {
                 showNotification('Ошибка сети', 'error');
             });
     };
+
+    function showQtySelector(productId, currentQty, stock) {
+        const controls = document.getElementById(`cart-controls-${productId}`);
+        if (!controls) return;
+
+        const btn = controls.querySelector('.btn-add-cart-circle');
+        const selector = controls.querySelector('.cart-qty-selector');
+        const qtyValue = selector.querySelector('.qty-value');
+        const plusBtn = selector.querySelector('.plus');
+
+        btn.style.display = 'none';
+        selector.classList.add('active');
+        selector.style.display = 'flex';
+        qtyValue.textContent = currentQty;
+
+        // Блокируем плюс, если достигнут предел склада
+        if (currentQty >= stock) {
+            plusBtn.disabled = true;
+        } else {
+            plusBtn.disabled = false;
+        }
+    }
+
+    window.updateQty = function (productId, delta, stock) {
+        const controls = document.getElementById(`cart-controls-${productId}`);
+        const qtyValue = controls.querySelector('.qty-value');
+        let currentQty = parseInt(qtyValue.textContent);
+        let newQty = currentQty + delta;
+
+        if (newQty < 1) {
+            // Если меньше 1, возвращаем кнопку "В корзину" и удаляем из корзины? 
+            // Пользователь просил "при нажатии появлялась кнопка выбора".
+            // Для простоты оставим минимум 1, или удалим. Удалим для удобства.
+            removeFromCart(productId);
+            const btn = controls.querySelector('.btn-add-cart-circle');
+            const selector = controls.querySelector('.cart-qty-selector');
+            btn.style.display = 'flex';
+            selector.classList.remove('active');
+            selector.style.display = 'none';
+            return;
+        }
+
+        if (newQty > stock) {
+            showNotification(`Максимально доступно: ${stock}`, 'info');
+            return;
+        }
+
+        // Отправляем на бэкенд (обновление количества в корзине)
+        fetch('/api/cart/update', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                productId: productId,
+                quantity: newQty
+            })
+        })
+            .then(response => {
+                if (response.ok) {
+                    qtyValue.textContent = newQty;
+                    const plusBtn = controls.querySelector('.plus');
+                    plusBtn.disabled = (newQty >= stock);
+                    updateCartCounterGlobal();
+                }
+            });
+    };
+
+    function removeFromCart(productId) {
+        fetch(`/api/cart/remove/${productId}`, { method: 'DELETE' })
+            .then(() => updateCartCounterGlobal());
+    }
+
+    function updateCartCounterGlobal() {
+        fetch('/api/cart/count')
+            .then(res => res.text())
+            .then(count => {
+                document.querySelectorAll('.cart-count').forEach(el => el.textContent = count);
+            });
+    }
 
     window.toggleFavorite = async function (productId, button) {
         if (!isAuthenticated()) {

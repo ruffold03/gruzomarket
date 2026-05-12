@@ -33,8 +33,10 @@ public class Category {
     private Integer productCount;
 
     @Column(name = "image_url")
-    private String imageUrl; // URL к картинке категории
+    private String imageUrl;
 }
+
+
 
 
 

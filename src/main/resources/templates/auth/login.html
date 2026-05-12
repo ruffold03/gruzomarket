@@ -10,7 +10,6 @@
   <div layout:fragment="content">
     <div class="auth-container">
       <div class="auth-wrapper">
-        <!-- Левая часть - информация -->
         <div class="auth-left">
           <a href="/" class="auth-logo">
             <div class="auth-logo-text">
@@ -18,40 +17,8 @@
             </div>
           </a>
 
-          <h1>Добро пожаловать в <span class="highlight">GruzoMarket</span></h1>
-          <p>Войдите в свой аккаунт или создайте новый, чтобы получить доступ к эксклюзивным предложениям, отслеживать
-            заказы и управлять вашими покупками запчастей для грузовых автомобилей.</p>
-
-          <div class="auth-features">
-            <div class="auth-feature">
-              <i class="fas fa-shipping-fast"></i>
-              <div class="auth-feature-content">
-                <h4>Быстрая доставка</h4>
-                <p>Отправка в день заказа по всей России</p>
-              </div>
-            </div>
-            <div class="auth-feature">
-              <i class="fas fa-shield-alt"></i>
-              <div class="auth-feature-content">
-                <h4>Безопасные платежи</h4>
-                <p>Защищенные транзакции и гарантия возврата</p>
-              </div>
-            </div>
-            <div class="auth-feature">
-              <i class="fas fa-tags"></i>
-              <div class="auth-feature-content">
-                <h4>Специальные скидки</h4>
-                <p>Эксклюзивные цены для зарегистрированных пользователей</p>
-              </div>
-            </div>
-            <div class="auth-feature">
-              <i class="fas fa-history"></i>
-              <div class="auth-feature-content">
-                <h4>История заказов</h4>
-                <p>Легкий доступ ко всем вашим покупкам</p>
-              </div>
-            </div>
-          </div>
+          <h1 class="minimal-title">Двигайтесь к <span class="highlight">цели</span></h1>
+          <p class="minimal-subtitle">Надежные запчасти для вашего грузового автопарка. Быстро, качественно, профессионально.</p>
         </div>
 
         <!-- Правая часть - формы -->
@@ -110,24 +77,24 @@
               <span>Войти в аккаунт</span>
             </button>
 
-            <div class="divider">
-              <span>Или войдите через</span>
-            </div>
+<!--            <div class="divider">-->
+<!--              <span>Или войдите через</span>-->
+<!--            </div>-->
 
-            <div class="social-auth">
-              <button type="button" class="btn-social">
-                <i class="fab fa-vk"></i>
-                <span>VK</span>
-              </button>
-              <button type="button" class="btn-social">
-                <i class="fab fa-google"></i>
-                <span>Google</span>
-              </button>
-              <button type="button" class="btn-social">
-                <i class="fab fa-yandex"></i>
-                <span>Яндекс</span>
-              </button>
-            </div>
+<!--            <div class="social-auth">-->
+<!--              <button type="button" class="btn-social">-->
+<!--                <i class="fab fa-vk"></i>-->
+<!--                <span>VK</span>-->
+<!--              </button>-->
+<!--              <button type="button" class="btn-social">-->
+<!--                <i class="fab fa-google"></i>-->
+<!--                <span>Google</span>-->
+<!--              </button>-->
+<!--              <button type="button" class="btn-social">-->
+<!--                <i class="fab fa-yandex"></i>-->
+<!--                <span>Яндекс</span>-->
+<!--              </button>-->
+<!--            </div>-->
           </form>
 
           <!-- Форма регистрации -->
@@ -140,7 +107,7 @@
             </div>
 
             <div class="form-group">
-              <label class="form-label" for="registerLastName">Имя</label>
+              <label class="form-label" for="registerLastName">Фамилия</label>
               <input type="text" id="registerLastName" name="lastName" class="form-control" placeholder="Иванов"
                 required th:value="${lastName}">
             </div>

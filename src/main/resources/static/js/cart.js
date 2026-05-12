@@ -44,7 +44,9 @@
       row.className = "cart-item-row d-flex align-items-center justify-content-between py-3 border-bottom";
       row.innerHTML = `
         <div class="cart-item-info me-3">
-          <div class="cart-item-name fw-bold mb-1">${it.name ?? ""}</div>
+          <div class="cart-item-name fw-bold mb-1">
+            <a href="/products/${it.productId}" class="text-decoration-none text-white hover-orange">${it.name ?? ""}</a>
+          </div>
           <div class="cart-item-meta d-flex gap-3 small text-muted">
             <span>Артикул: ${it.article ?? "N/A"}</span>
             <span>Цена: ${fmtMoneyRub(it.unitPrice ?? 0)}</span>
@@ -287,6 +289,8 @@
     await loadCart();
   });
 })();
+
+
 
 
 

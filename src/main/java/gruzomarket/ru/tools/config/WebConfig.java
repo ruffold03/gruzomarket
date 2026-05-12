@@ -15,10 +15,10 @@ public class WebConfig implements WebMvcConfigurer {
                 .addResourceLocations("classpath:/static/js/");
         registry.addResourceHandler("/images/**")
                 .addResourceLocations("classpath:/static/images/");
-
-        // Добавляем обработчик для папки uploads в корне проекта
         registry.addResourceHandler("/uploads/**")
                 .addResourceLocations("file:uploads/");
     }
 }
+
+
 

@@ -33,7 +33,7 @@ public class CustomerDetails implements UserDetails {
 
     @Override
     public String getUsername() {
-        return customer.getEmail(); // логинимся по email
+        return customer.getEmail();
     }
 
     @Override

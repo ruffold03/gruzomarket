@@ -25,6 +25,7 @@ public class CategoryService {
 
         private final CategoryRepository categoryRepository;
         private final CategoryMapper categoryMapper;
+        private final ActionLogService actionLogService;
 
         public List<CategoryDTO> findAll() {
                 return categoryRepository.findAll().stream()
@@ -61,6 +62,7 @@ public class CategoryService {
                 }
 
                 category = categoryRepository.save(category);
+                actionLogService.success("Создана категория: " + category.getName());
                 return categoryMapper.toDTO(category);
         }
 
@@ -81,6 +83,7 @@ public class CategoryService {
                 }
 
                 category = categoryRepository.save(category);
+                actionLogService.info("Обновлена категория: " + category.getName());
                 return categoryMapper.toDTO(category);
         }
 
@@ -94,6 +97,7 @@ public class CategoryService {
                 }
 
                 categoryRepository.deleteById(id);
+                actionLogService.warn("Удалена категория: " + category.getName());
         }
 
         public List<CategoryGroupDTO> getCategoryGroups() {
@@ -102,14 +106,14 @@ public class CategoryService {
                 // Получаем все категории из базы и мапим в DTO
                 Map<Long, CategoryDTO> allCategories = categoryRepository.findAll()
                                 .stream()
-                                .map(categoryMapper::toDTO) // Используем mapper
+                                .map(categoryMapper::toDTO)
                                 .collect(Collectors.toMap(CategoryDTO::getId, Function.identity()));
 
                 // Двигатель и силовая установка
                 CategoryGroupDTO engineGroup = new CategoryGroupDTO();
                 engineGroup.setGroupName("Двигатель и силовая установка");
                 engineGroup.setCategories(getCategoriesByIds(Arrays.asList(
-                                22L, 8L, 41L, 13L, 23L, 2L, 34L, 32L, 38L // Замените на реальные ID
+                                22L, 8L, 41L, 13L, 23L, 2L, 34L, 32L, 38L
                 ), allCategories));
                 groups.add(engineGroup);
 

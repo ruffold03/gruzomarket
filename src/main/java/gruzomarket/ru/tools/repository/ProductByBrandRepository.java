@@ -13,7 +13,6 @@ public interface ProductByBrandRepository extends JpaRepository<ProductByBrand, 
 
     List<ProductByBrand> findByProductId(Long productId);
 
-    // Добавьте этот метод:
     @Query("SELECT COUNT(DISTINCT pb.product.id) FROM ProductByBrand pb WHERE pb.brand.id = :brandId")
     Long countProductsByBrandId(@Param("brandId") Long brandId);
 }

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layouts/base}" lang="ru">
+
+<head>
+    <title>История команд | GruzoMarket</title>
+</head>
+
+<body>
+    <div layout:fragment="content">
+        <section class="py-5 mt-5">
+            <div class="container">
+                <h1 class="h2 mb-0">История <span class="brand-highlight">команд</span></h1>
+                <p class="text-muted mb-0">Логи системных действий и команд администратора</p>
+            </div>
+        </section>
+
+        <section class="py-5 bg-black">
+            <div class="container">
+                <div class="card bg-dark border-secondary">
+                    <div class="card-header border-secondary d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">Консоль логов</h5>
+                        <span class="badge bg-success">Online</span>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="log-container p-3"
+                            style="height: 500px; overflow-y: auto; font-family: 'Courier New', Courier, monospace; background: #0a0a0a; color: #00ff00;">
+                            <div th:each="log : ${logs}" class="log-line mb-1">
+                                <span class="text-muted"
+                                    th:text="'[' + ${#temporals.format(log.timestamp, 'yyyy-MM-dd HH:mm:ss')} + '] '"></span>
+                                <span
+                                    th:class="${log.level == 'INFO' ? 'text-info' : (log.level == 'SUCCESS' ? 'text-success' : (log.level == 'WARN' ? 'text-warning' : (log.level == 'ERROR' ? 'text-danger' : '')))}"
+                                    th:text="${log.level} + ': '"></span>
+                                <span th:text="${log.message}"></span>
+                            </div>
+                            <div th:if="${#lists.isEmpty(logs)}" class="log-line mb-1">
+                                <span class="text-muted">История команд пуста.</span>
+                            </div>
+                            <div class="log-line blink mt-3">_</div>
+                        </div>
+                    </div>
+                    <div class="card-footer border-secondary text-muted small">
+                        Отображаются последние 50 записей.
+                    </div>
+                </div>
+                <div class="mt-4">
+                    <a th:href="@{/admin}" class="btn btn-outline-light">
+                        <i class="fas fa-arrow-left me-2"></i>К панели управления
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <style>
+            .log-container::-webkit-scrollbar {
+                width: 8px;
+            }
+
+            .log-container::-webkit-scrollbar-track {
+                background: #000;
+            }
+
+            .log-container::-webkit-scrollbar-thumb {
+                background: #333;
+                border-radius: 4px;
+            }
+
+            .log-container::-webkit-scrollbar-thumb:hover {
+                background: #444;
+            }
+
+            .blink {
+                animation: blinker 1s linear infinite;
+            }
+
+            @keyframes blinker {
+                50% {
+                    opacity: 0;
+                }
+            }
+        </style>
+    </div>
+</body>
+
+</html>

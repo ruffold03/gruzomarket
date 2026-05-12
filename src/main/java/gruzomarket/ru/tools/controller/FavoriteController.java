@@ -24,7 +24,6 @@ public class FavoriteController {
     private final FavoriteService favoriteService;
     private final ProductMapper productMapper;
 
-    // Получить текущего пользователя из контекста безопасности
     private String getCurrentUserEmail() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return authentication.getName(); // email пользователя
@@ -44,9 +43,7 @@ public class FavoriteController {
         return ResponseEntity.ok(dtos);
     }
 
-    /**
-     * Добавить товар в избранное
-     */
+
     @PostMapping("/{productId}")
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<?> addToFavorites(@PathVariable Long productId) {
@@ -61,9 +58,7 @@ public class FavoriteController {
         return ResponseEntity.ok(response);
     }
 
-    /**
-     * Удалить товар из избранного
-     */
+
     @DeleteMapping("/{productId}")
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<?> removeFromFavorites(@PathVariable Long productId) {
@@ -78,9 +73,7 @@ public class FavoriteController {
         return ResponseEntity.ok(response);
     }
 
-    /**
-     * Переключить избранное (добавить/удалить)
-     */
+
     @PostMapping("/toggle/{productId}")
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<Map<String, Object>> toggleFavorite(@PathVariable Long productId) {
@@ -95,9 +88,7 @@ public class FavoriteController {
         return ResponseEntity.ok(response);
     }
 
-    /**
-     * Получить количество избранных товаров
-     */
+
     @GetMapping("/count")
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<Long> getFavoritesCount() {
@@ -106,9 +97,7 @@ public class FavoriteController {
         return ResponseEntity.ok(count);
     }
 
-    /**
-     * Проверить, находится ли товар в избранном
-     */
+
     @GetMapping("/check/{productId}")
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<Boolean> isFavorite(@PathVariable Long productId) {
@@ -117,9 +106,7 @@ public class FavoriteController {
         return ResponseEntity.ok(isFavorite);
     }
 
-    /**
-     * Очистить все избранное пользователя
-     */
+
     @DeleteMapping("/clear")
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<?> clearFavorites() {
@@ -128,9 +115,7 @@ public class FavoriteController {
         return ResponseEntity.ok().build();
     }
 
-    /**
-     * Получить ID всех избранных товаров
-     */
+
     @GetMapping("/ids")
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<List<Long>> getFavoriteProductIds() {

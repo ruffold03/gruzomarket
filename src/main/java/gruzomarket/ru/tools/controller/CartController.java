@@ -67,10 +67,11 @@ public class CartController {
             telegramService.sendOrderNotification(dto);
             log.info("Telegram уведомление отправлено для заказа #{}", order.getId());
         } catch (Exception e) {
-            // Логируем ошибку, но не прерываем выполнение
             log.error("Не удалось отправить Telegram уведомление: {}", e.getMessage());
         }
         return ResponseEntity.ok(dto);
     }
 }
+
+
 

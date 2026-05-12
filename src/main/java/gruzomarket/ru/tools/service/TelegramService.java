@@ -63,6 +63,9 @@ public class TelegramService {
                         "📦 <b>Заказ:</b> #%s\n" +
                         "👤 <b>Клиент:</b> %s\n" +
                         "📞 <b>Телефон:</b> %s\n" +
+                        "✉️ <b>Email:</b> %s\n" +
+                        "🔗 <b>Соцсеть/Ссылка:</b> %s\n" +
+                        "💬 <b>Комментарий:</b> %s\n\n" +
                         "%s" +
                         "💰 <b>Сумма:</b> %s руб.\n" +
                         "📊 <b>Статус:</b> %s\n\n" +
@@ -70,6 +73,9 @@ public class TelegramService {
                 order.getId(),
                 order.getCustomerName(),
                 order.getPhone(),
+                order.getEmail() != null ? order.getEmail() : "не указан",
+                order.getSocialLink() != null ? order.getSocialLink() : "не указана",
+                order.getNotes() != null ? order.getNotes() : "отсутствует",
                 productsList.toString(),
                 order.getTotalAmount() != null ? order.getTotalAmount().toString() : "0",
                 order.getStatus(),
@@ -91,6 +97,20 @@ public class TelegramService {
                 java.time.LocalDateTime.now().format(java.time.format.DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm")));
 
         sendNotification(message);
+    }
+
+    public void sendContactMessage(String name, String email, String messageBody) {
+        String msg = String.format(
+                "💬 <b>Новый вопрос с сайта!</b>\n\n" +
+                        "👤 <b>Имя:</b> %s\n" +
+                        "✉️ <b>Email:</b> %s\n" +
+                        "📝 <b>Сообщение:</b>\n<i>%s</i>\n\n" +
+                        "⏰ <i>%s</i>",
+                name,
+                email,
+                messageBody,
+                java.time.LocalDateTime.now().format(java.time.format.DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm")));
+        sendNotification(msg);
     }
 
     private synchronized DefaultAbsSender getBot() {

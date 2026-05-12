@@ -98,11 +98,24 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .auth-left p {
-    font-size: 1.2rem;
+    font-size: 1.4rem;
     color: #a0aec0;
-    line-height: 1.8;
+    line-height: 1.6;
     margin-bottom: 2.5rem;
-    max-width: 90%;
+    max-width: 80%;
+    font-weight: 300;
+}
+
+.minimal-title {
+    font-size: 4.5rem !important;
+    font-weight: 800 !important;
+    letter-spacing: -2px;
+    margin-bottom: 2rem !important;
+}
+
+.minimal-subtitle {
+    border-left: 3px solid #ff6b35;
+    padding-left: 2rem;
 }
 
 .auth-features {
@@ -632,10 +645,8 @@ h1, h2, h3, h4, h5, h6 {
     padding-right: 2rem;
     display: flex;
     flex-direction: column;
-    justify-content: center; /* Центрируем контент по вертикали */
-    min-height: 600px; /* Фиксированная минимальная высота */
-    position: sticky;
-    top: 20px; /* Прилипает при скролле */
+    justify-content: center;
+    min-height: 600px;
 }
 
 .auth-features {
@@ -648,14 +659,12 @@ h1, h2, h3, h4, h5, h6 {
 /* Правая часть - формы */
 .auth-card {
     background: #111111;
-    border-radius: 20px;
+    border-radius: 24px;
     padding: 3.5rem;
-    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
-    border: 1px solid #333333;
+    box-shadow: 0 40px 100px rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.05);
     position: relative;
     overflow: hidden;
-    height: 1000px;
-    min-height: 1000px; /* Такая же минимальная высота */
     display: flex;
     flex-direction: column;
 }

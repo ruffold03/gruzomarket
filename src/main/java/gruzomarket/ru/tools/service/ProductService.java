@@ -34,6 +34,7 @@ public class ProductService {
     private final ProductRepository productRepository;
     private final CategoryRepository categoryRepository;
     private final ProductMapper productMapper;
+    private final ActionLogService actionLogService;
 
     public List<ProductDTO> findAll() {
         return productRepository.findAll().stream()
@@ -148,6 +149,8 @@ public class ProductService {
         }
 
         product = productRepository.save(product);
+        actionLogService
+                .success("Создан новый товар: " + product.getName() + " (Артикул: " + product.getArticle() + ")");
         return productMapper.toDTO(product);
     }
 
@@ -155,7 +158,7 @@ public class ProductService {
         Product product = productRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Product not found with id: " + id));
 
-        if (!product.getArticle().equals(dto.getArticle())
+        if (!java.util.Objects.equals(product.getArticle(), dto.getArticle())
                 && productRepository.findByArticle(dto.getArticle()).isPresent()) {
             throw new AlreadyExistsException("Product with article " + dto.getArticle() + " already exists");
         }
@@ -169,8 +172,6 @@ public class ProductService {
         product.setIsVisible(dto.getIsVisible() != null ? dto.getIsVisible() : true);
         product.setImageUrl(dto.getImageUrl());
 
-        // Handle additional images if provided in DTO (e.g. for existing images during
-        // update)
         if (dto.getAdditionalImageUrls() != null) {
             product.getImages().clear();
             for (String url : dto.getAdditionalImageUrls()) {
@@ -190,14 +191,15 @@ public class ProductService {
         }
 
         product = productRepository.save(product);
+        actionLogService.info("Обновлен товар: " + product.getName() + " (ID: " + id + ")");
         return productMapper.toDTO(product);
     }
 
     public void delete(Long id) {
-        if (!productRepository.existsById(id)) {
-            throw new NotFoundException("Product not found with id: " + id);
-        }
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Product not found with id: " + id));
         productRepository.deleteById(id);
+        actionLogService.warn("Удален товар: " + product.getName() + " (ID: " + id + ")");
     }
 
     public Product getProductById(Long productId) {

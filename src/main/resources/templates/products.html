@@ -10,12 +10,21 @@
 <body>
     <div layout:fragment="content">
 
-        <section class="categories-section">
-            <div class="container page-container">
-                <div class="section-title">
-                    <h2>Каталог</h2>
-                    <p class="text-muted mt-3">Подберите запчасти по фильтрам и добавьте в корзину</p>
-                </div>
+        <section class="py-5 mt-5">
+            <div class="container position-relative">
+                <nav aria-label="breadcrumb" class="mb-3">
+                    <ol class="breadcrumb mb-0">
+                        <li class="breadcrumb-item"><a th:href="@{/}">Главная</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Каталог</li>
+                    </ol>
+                </nav>
+                <h1 class="display-4 fw-bold mb-0">Каталог <span class="brand-highlight">запчастей</span></h1>
+                <div class="title-accent mt-3"></div>
+            </div>
+        </section>
+
+        <section class="catalog-content-section py-5 scroll-reveal">
+            <div class="container">
 
                 <div class="row">
                     <!-- Фильтры -->
@@ -828,25 +837,28 @@
 
                     <!-- Товары -->
                     <div class="col-lg-9">
-                        <div class="d-flex justify-content-between align-items-center mb-4">
-                            <div class="section-title mb-0">
-                                <h2>Товары</h2>
+                        <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-3">
+                            <div class="catalog-results-info">
+                                <h4 class="mb-0">Все товары</h4>
                             </div>
-                            <div class="d-flex align-items-center gap-3">
+                            <div class="catalog-controls d-flex align-items-center gap-3">
                                 <!-- Поиск -->
-                                <div class="search-box">
+                                <div class="catalog-search glass-control">
                                     <i class="fas fa-search"></i>
-                                    <input type="text" id="searchInput" class="form-control search-input"
-                                        placeholder="Поиск по каталогу...">
+                                    <input type="text" id="searchInput" class="form-control"
+                                        placeholder="Поиск по названию или артикулу...">
                                 </div>
                                 <!-- Сортировка -->
-                                <select id="sortSelect" class="sort-select">
-                                    <option value="name,asc">По названию (А-Я)</option>
-                                    <option value="name,desc">По названию (Я-А)</option>
-                                    <option value="price,asc">По цене (возрастание)</option>
-                                    <option value="price,desc">По цене (убывание)</option>
-                                    <option value="createdDate,desc">Новинки</option>
-                                </select>
+                                <div class="catalog-sort glass-control">
+                                    <i class="fas fa-sort-amount-down-alt me-2"></i>
+                                    <select id="sortSelect" class="sort-select border-0 bg-transparent text-white">
+                                        <option value="name,asc">Название (А-Я)</option>
+                                        <option value="name,desc">Название (Я-А)</option>
+                                        <option value="price,asc">Цена (дешевле)</option>
+                                        <option value="price,desc">Цена (дороже)</option>
+                                        <option value="createdDate,desc">Новинки</option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
 

@@ -26,10 +26,11 @@ public class ProductByBrandMapper {
         id.setProductId(dto.getProductId());
         id.setBrandId(dto.getBrandId());
         productByBrand.setId(id);
-        // product и brand устанавливаются отдельно через сервис
         return productByBrand;
     }
 }
+
+
 
 
 

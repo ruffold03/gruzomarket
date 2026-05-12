@@ -25,7 +25,6 @@ public class PasswordResetService {
     @Transactional
     public void generateResetCode(String email) {
         if (!customerRepository.existsByEmail(email)) {
-            // В целях безопасности не сообщаем, существует ли email
             return;
         }
 

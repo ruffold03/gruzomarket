@@ -8,8 +8,7 @@
 
 <body>
     <div layout:fragment="content">
-        <!-- Hero Section -->
-        <section class="contact-hero py-5">
+        <section class="py-5 mt-5">
             <div class="container text-center">
                 <h1 class="display-3 fw-bold mb-4">Наши <span class="brand-highlight">контакты</span></h1>
                 <p class="lead text-light mb-0 mx-auto" style="max-width: 700px; opacity: 0.9;">
@@ -19,43 +18,43 @@
         </section>
 
         <!-- Contact Cards -->
-        <section class="contact-methods pb-5">
+        <section class="contact-methods py-5 mt-4">
             <div class="container">
                 <div class="row g-4">
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <div class="stat-card h-100 text-center">
                             <div class="delivery-icon mx-auto mb-3"><i class="fas fa-phone-alt"></i></div>
                             <h3 class="h5 mb-2">Телефон</h3>
-                            <p class="mb-0 text-white fw-bold">8 (800) 555-35-35</p>
-                            <p class="small text-muted mt-2">Пн–Пт 9:00–18:00</p>
+                            <p class="mb-0 text-white fw-bold">8 (924) 011-05-78</p>
+                            <p class="small text-muted mt-2">Пн–Пт 8:30–18:00</p>
                         </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <div class="stat-card h-100 text-center">
                             <div class="delivery-icon mx-auto mb-3"><i class="fas fa-envelope"></i></div>
                             <h3 class="h5 mb-2">Email</h3>
-                            <p class="mb-0 text-white fw-bold">info@gruzomarket.ru</p>
-                            <p class="small text-muted mt-2">Отвечаем в течение часа</p>
+                            <p class="mb-0 text-white fw-bold">gruzomarket.rus@gmail.com</p>
+                            <p class="small text-muted mt-2">Отвечаем на ваши вопросы</p>
                         </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <div class="stat-card h-100 text-center">
                             <div class="delivery-icon mx-auto mb-3"><i class="fas fa-map-marker-alt"></i></div>
                             <h3 class="h5 mb-2">Адрес</h3>
-                            <p class="mb-0 text-white fw-bold">г. Ярославль, Линия 13-я поселок Починки, д. 1</p>
+                            <p class="mb-0 text-white fw-bold">г. Улан-Удэ, проспект Автомобилистов 3Б</p>
                         </div>
                     </div>
-                    <div class="col-md-3">
-                        <div class="stat-card h-100 text-center">
-                            <div class="delivery-icon mx-auto mb-3"><i class="fas fa-share-alt"></i></div>
-                            <h3 class="h5 mb-2">Соцсети</h3>
-                            <div class="d-flex justify-content-center gap-3">
-                                <a href="#" class="text-accent fs-4"><i class="fab fa-telegram"></i></a>
-                                <a href="#" class="text-accent fs-4"><i class="fab fa-vk"></i></a>
-                                <a href="#" class="text-accent fs-4"><i class="fab fa-whatsapp"></i></a>
-                            </div>
-                        </div>
-                    </div>
+<!--                    <div class="col-md-3">-->
+<!--                        <div class="stat-card h-100 text-center">-->
+<!--                            <div class="delivery-icon mx-auto mb-3"><i class="fas fa-share-alt"></i></div>-->
+<!--                            <h3 class="h5 mb-2">Соцсети</h3>-->
+<!--                            <div class="d-flex justify-content-center gap-3">-->
+<!--                                <a href="#" class="text-accent fs-4"><i class="fab fa-telegram"></i></a>-->
+<!--                                <a href="#" class="text-accent fs-4"><i class="fab fa-vk"></i></a>-->
+<!--                                <a href="#" class="text-accent fs-4"><i class="fab fa-whatsapp"></i></a>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
                 </div>
             </div>
         </section>
@@ -81,28 +80,70 @@
                             <form id="contactForm">
                                 <div class="mb-3">
                                     <label class="form-label text-muted">Ваше имя</label>
-                                    <input type="text" class="form-control bg-dark border-secondary text-white"
+                                    <input type="text" id="contactName" name="name" class="form-control bg-dark border-secondary text-white"
                                         placeholder="Иван Иванов" required>
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label text-muted">Email для связи</label>
-                                    <input type="email" class="form-control bg-dark border-secondary text-white"
+                                    <input type="email" id="contactEmail" name="email" class="form-control bg-dark border-secondary text-white"
                                         placeholder="example@mail.ru" required>
                                 </div>
                                 <div class="mb-4">
                                     <label class="form-label text-muted">Ваше сообщение</label>
-                                    <textarea class="form-control bg-dark border-secondary text-white" rows="4"
+                                    <textarea id="contactMessage" name="message" class="form-control bg-dark border-secondary text-white" rows="4"
                                         placeholder="Введите ваш вопрос..." required></textarea>
                                 </div>
-                                <button type="submit" class="btn btn-auth w-100">
+                                <button type="submit" class="btn btn-orange w-100">
                                     <span>Отправить сообщение</span>
                                 </button>
                             </form>
                         </div>
                     </div>
                 </div>
-            </div>
         </section>
+
+        <script>
+            document.getElementById('contactForm').addEventListener('submit', function (e) {
+                e.preventDefault();
+                const formData = new FormData(this);
+                const submitBtn = this.querySelector('button[type="submit"]');
+                const originalText = submitBtn.innerHTML;
+
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Отправка...';
+
+                const params = new URLSearchParams();
+                params.append('name', document.getElementById('contactName').value);
+                params.append('email', document.getElementById('contactEmail').value);
+                params.append('message', document.getElementById('contactMessage').value);
+
+                fetch('/api/contact', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: params
+                })
+                    .then(response => {
+                        if (response.ok) {
+                            alert('Спасибо! Ваше сообщение отправлено. Мы ответим вам в ближайшее время.');
+                            this.reset();
+                        } else {
+                            alert('Произошла ошибка при отправке. Пожалуйста, попробуйте позже.');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('Ошибка сети. Проверьте соединение.');
+                    })
+                    .finally(() => {
+                        submitBtn.disabled = false;
+                        submitBtn.innerHTML = originalText;
+                    });
+            });
+        </script>
+    </div>
+    </section>
     </div>
 </body>
 

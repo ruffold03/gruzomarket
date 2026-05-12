@@ -4,17 +4,13 @@ import gruzomarket.ru.tools.dto.BrandDTO;
 import gruzomarket.ru.tools.dto.CategoryDTO;
 import gruzomarket.ru.tools.dto.ProductDTO;
 import gruzomarket.ru.tools.entity.Customer;
-import gruzomarket.ru.tools.service.CartService;
-import gruzomarket.ru.tools.service.BrandService;
-import gruzomarket.ru.tools.service.CategoryService;
-import gruzomarket.ru.tools.service.CustomerService;
-import gruzomarket.ru.tools.service.ProductService;
+import gruzomarket.ru.tools.service.*;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -25,17 +21,14 @@ public class WebController {
     private final ProductService productService;
     private final CategoryService categoryService;
     private final BrandService brandService;
-    private final CartService cartService;
     private final CustomerService customerService;
+    private final TelegramService telegramService;
 
     @GetMapping("/")
     public String index(Model model, HttpSession session) {
         model.addAttribute("activePage", "home");
-        model.addAttribute("cartCount", cartService.count(session));
 
         List<CategoryDTO> categories = categoryService.findAll();
-        // Сортируем по количеству товаров (от большего к меньшему), чтобы показать
-        // реально "популярные"
         categories.sort((c1, c2) -> {
             int count1 = c1.getProductCount() != null ? c1.getProductCount() : 0;
             int count2 = c2.getProductCount() != null ? c2.getProductCount() : 0;
@@ -58,7 +51,7 @@ public class WebController {
         return "index";
     }
 
-    @GetMapping("/products") // URL для страницы, например /products
+    @GetMapping("/products")
     public String catalogPage(Model model) {
         List<CategoryDTO> categories = categoryService.findAll();
         List<BrandDTO> brands = brandService.findAll();
@@ -73,14 +66,12 @@ public class WebController {
         ProductDTO product = productService.findById(id);
         model.addAttribute("product", product);
         model.addAttribute("activePage", "products");
-        model.addAttribute("cartCount", cartService.count(session));
         return "product_view";
     }
 
     @GetMapping("/brands")
     public String brands(Model model, HttpSession session) {
         model.addAttribute("activePage", "brands");
-        model.addAttribute("cartCount", cartService.count(session));
         model.addAttribute("brands", brandService.findAll());
         return "brands";
     }
@@ -88,28 +79,34 @@ public class WebController {
     @GetMapping("/delivery")
     public String delivery(Model model, HttpSession session) {
         model.addAttribute("activePage", "delivery");
-        model.addAttribute("cartCount", cartService.count(session));
         return "delivery";
     }
 
     @GetMapping("/about")
     public String about(Model model, HttpSession session) {
         model.addAttribute("activePage", "about");
-        model.addAttribute("cartCount", cartService.count(session));
         return "about";
     }
 
     @GetMapping("/contact")
     public String contact(Model model, HttpSession session) {
         model.addAttribute("activePage", "contact");
-        model.addAttribute("cartCount", cartService.count(session));
         return "contact";
+    }
+
+    @PostMapping("/api/contact")
+    @ResponseBody
+    public ResponseEntity<String> handleContactForm(
+            @RequestParam String name,
+            @RequestParam String email,
+            @RequestParam String message) {
+        telegramService.sendContactMessage(name, email, message);
+        return ResponseEntity.ok("Message sent");
     }
 
     @GetMapping("/cart")
     public String cart(Model model, HttpSession session) {
         model.addAttribute("activePage", "cart");
-        model.addAttribute("cartCount", cartService.count(session));
 
         Customer current = null;
         try {

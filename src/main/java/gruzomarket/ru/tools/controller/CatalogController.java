@@ -11,7 +11,7 @@
 //
 //import java.util.List;
 //
-//@Controller  // Важно: @Controller, а не @RestController
+//@Controller
 //@RequiredArgsConstructor
 //public class CatalogController {
 //    private final CategoryService categoryService;

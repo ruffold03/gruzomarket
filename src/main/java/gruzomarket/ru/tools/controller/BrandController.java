@@ -28,7 +28,6 @@ public class BrandController {
         return ResponseEntity.ok(brandService.findAll());
     }
 
-    // Новый метод для Thymeleaf (без @ResponseBody)
     @GetMapping("/page")
     public String brandsPage(Model model) {
         List<BrandDTO> brands = brandService.findAll();

@@ -23,10 +23,11 @@ public class CategoryMapper {
         category.setId(dto.getId());
         category.setName(dto.getName());
         category.setImageUrl(dto.getImageUrl());
-        // parent устанавливается отдельно через сервис
         return category;
     }
 }
+
+
 
 
 

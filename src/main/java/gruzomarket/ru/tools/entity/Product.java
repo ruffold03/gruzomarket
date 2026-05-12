@@ -49,9 +49,7 @@ public class Product {
     @JoinColumn(name = "category_id")
     private Category category;
 
-    /**
-     * Description of the original car model/brand this part fits.
-     */
+
     private String originalAuto;
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -63,11 +61,9 @@ public class Product {
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ProductImage> images = new ArrayList<>();
 
-    // Поле для совместимости с триггером БД (если есть updated_at в БД)
     @Column(name = "updated_at", insertable = false, updatable = false)
     private LocalDateTime updatedAt;
 
-    // Флаг видимости товара для клиентов (скрытые товары не показываются на сайте)
     @Column(name = "is_visible", nullable = false)
     private Boolean isVisible = true;
 
