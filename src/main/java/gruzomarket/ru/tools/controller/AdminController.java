@@ -214,7 +214,6 @@ public class AdminController {
         return "redirect:/admin/brands";
     }
 
-    // Orders (просмотр и смена статуса)
     @GetMapping("/orders")
     public String orders(Model model, HttpSession session) {
         common(model, session);
